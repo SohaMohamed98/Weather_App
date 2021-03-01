@@ -419,6 +419,7 @@
 
                 <LinearLayout
 
+                    android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -428,7 +429,7 @@
 
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerView"
+                        android:id="@+id/recyclerViewCurrent"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
@@ -436,6 +437,8 @@
 
 
                     <ProgressBar
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
                         android:id="@+id/progressBar"
                         style="?android:attr/progressBarStyle"
                         android:layout_width="match_parent"

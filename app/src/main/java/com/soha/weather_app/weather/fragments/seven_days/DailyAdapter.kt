@@ -1,4 +1,4 @@
-package com.soha.weather_app.weather.fragments.current
+package com.soha.weather_app.weather.fragments.seven_days
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,32 +8,37 @@ import com.soha.weather_app.utils.dayConverter
 import com.soha.weather_app.utils.model.Daily
 import com.soha.weather_app.utils.setImage
 
-class CurrentAdapter(var forecastList: List<Daily>) :
-RecyclerView.Adapter<CurrentAdapter.ForecatViewHolder>() {
+class DailyAdapter(var daysList: List<Daily>) :
+RecyclerView.Adapter<DailyAdapter.DailyViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ForecatViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DailyViewHolder {
 
         val view = ForecastWeatherHourlyItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,false)
 
-        return ForecatViewHolder(view)
+        return DailyViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return forecastList.size
+        return daysList.size
     }
 
 
 
-    override fun onBindViewHolder(holder: ForecatViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: DailyViewHolder, position: Int) {
 
-        holder.bind(forecastList[position])
+        holder.bind(daysList[position])
 
     }
 
+    fun updateHourlyList(newHourlyList: List<Daily>){
+         // forecastList.clear()
+       //  forecastList.(newHourlyList)
+        notifyDataSetChanged()
+    }
 
-    class ForecatViewHolder(var view: ForecastWeatherHourlyItemBinding) :
+    class DailyViewHolder(var view: ForecastWeatherHourlyItemBinding) :
         RecyclerView.ViewHolder(view.root) {
         private val imageview = view.imgForecastItem
 
@@ -46,8 +51,9 @@ RecyclerView.Adapter<CurrentAdapter.ForecatViewHolder>() {
             view.tvForecastPressure.text= (Math.round(forecast.pressure)).toString()
             view.tvForecastTime.text= dayConverter((forecast.dt).toLong())
             view.tvForecastFeelsTemp.text=(Math.round(forecast.feelsLike.day)).toString()
+            view.tvForecastWind.text=(Math.round(forecast.windSpeed)).toString()
 
-           
+
 
             val url = forecast.weather.get(0).icon
             setImage(imageview, url)

@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.soha.weatherapp.model.WeatherResponse
+import com.soha.weather_app.utils.model.WeatherResponse
 
 @Database(
     entities = [WeatherResponse::class],
@@ -58,7 +58,7 @@ abstract class WeatherDatabase : RoomDatabase() {
             Room.databaseBuilder(
                 context.applicationContext,
                 WeatherDatabase::class.java,
-                "weather_db").build()
+                "my_weather").build()
 
     }
 

@@ -6,9 +6,9 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.soha.weather_app.utils.model.WeatherResponse
 import com.soha.weather_app.weather.db.Resource
 import com.soha.weather_app.weather.db.Repository
-import com.soha.weatherapp.model.WeatherResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -53,8 +53,8 @@ class HomeViewModel: ViewModel()  {
 
 
     private suspend fun handleGetWeatherApiData(
-            response: retrofit2.Response<WeatherResponse>,
-            context: Context
+        response: retrofit2.Response<WeatherResponse>,
+        context: Context
     ): Resource<WeatherResponse>? {
         if(response.isSuccessful){
             response.body()?.let {

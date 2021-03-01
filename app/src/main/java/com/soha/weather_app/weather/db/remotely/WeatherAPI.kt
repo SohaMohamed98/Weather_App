@@ -1,7 +1,7 @@
 package com.soha.weather_app.db.remotely
 
 import com.soha.weather_app.utils.Constants.Companion.API_KEY
-import com.soha.weatherapp.model.WeatherResponse
+import com.soha.weather_app.utils.model.WeatherResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
