@@ -7,26 +7,26 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.soha.weather_app.ui.fragments.HomeWeather"
+        android:name="com.soha.weather_app.weather.fragments.current.HomeWeather"
         android:label="fragment_home_weather"
         tools:layout="@layout/fragment_home_weather" />
     <fragment
         android:id="@+id/sevenDayFragment"
-        android:name="com.soha.weather_app.ui.SevenDayWeather"
+        android:name="com.soha.weather_app.weather.fragments.seven_days.SevenDayWeather"
         android:label="fragment_seven_day_weather"
         tools:layout="@layout/fragment_seven_day_weather" />
     <fragment
         android:id="@+id/alarmFragment"
-        android:name="com.soha.weather_app.ui.fragments.AlarmWeather"
+        android:name="com.soha.weather_app.weather.fragments.alarm.AlarmWeather"
         android:label="AlarmWeather" />
     <fragment
         android:id="@+id/favouriteFragment"
-        android:name="com.soha.weather_app.ui.fragments.FavouriteWeather"
+        android:name="com.soha.weather_app.weather.fragments.favourite.FavouriteWeather"
         android:label="fragment_favourite_weather"
         tools:layout="@layout/fragment_favourite_weather" />
     <fragment
         android:id="@+id/settingFragment"
-        android:name="com.soha.weather_app.ui.fragments.SettingWeather"
+        android:name="com.soha.weather_app.weather.fragments.setting.SettingWeather"
         android:label="fragment_setting_weather"
         tools:layout="@layout/fragment_setting_weather" />
 

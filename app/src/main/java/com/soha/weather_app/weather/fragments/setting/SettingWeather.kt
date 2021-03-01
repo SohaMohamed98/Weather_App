@@ -1,4 +1,4 @@
-package com.soha.weather_app.ui.fragments
+package com.soha.weather_app.weather.fragments.setting
 
 import androidx.fragment.app.Fragment
 import com.soha.weather_app.R

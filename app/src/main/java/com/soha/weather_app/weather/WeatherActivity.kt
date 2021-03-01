@@ -1,4 +1,4 @@
-package com.soha.weather_app.ui
+package com.soha.weather_app.weather
 
 
 import android.os.Bundle
