@@ -6,11 +6,13 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.soha.weather_app.utils.model.WeatherResponse
+import com.soha.weather_app.weather.db.Local.ConverterCurrent
+import com.soha.weather_app.weather.db.model.currentModel.CurrentResponse
 
 @Database(
-    entities = [WeatherResponse::class],
-    version = 1)
-@TypeConverters(TypeConvertDataBase::class)
+    entities = [WeatherResponse::class, CurrentResponse::class],
+    version = 2)
+@TypeConverters(TypeConvertDataBase::class, ConverterCurrent::class)
 abstract class WeatherDatabase : RoomDatabase() {
 
     abstract fun getWeatherDao(): WeatherDao

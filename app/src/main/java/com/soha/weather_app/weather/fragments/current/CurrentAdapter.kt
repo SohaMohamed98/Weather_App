@@ -47,7 +47,7 @@ RecyclerView.Adapter<CurrentAdapter.ForecatViewHolder>() {
             view.tvForecastTime.text= dayConverter((forecast.dt).toLong())
             view.tvForecastFeelsTemp.text=(Math.round(forecast.feelsLike.day)).toString()
 
-           
+
 
             val url = forecast.weather.get(0).icon
             setImage(imageview, url)
