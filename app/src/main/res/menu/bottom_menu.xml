@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/homeFragment"
+        android:title="Weather"
+        android:icon="@drawable/ic_breaking_news" />
+
+    <item android:id="@+id/sevenDayFragment"
+        android:title="7Day"
+        android:icon="@drawable/ic_all_news" />
+
+    <item android:id="@+id/alarmFragment"
+        android:title="Alarm"
+        android:icon="@drawable/ic_all_news" />
+    <item android:id="@+id/favouriteFragment"
+        android:title="Favourite"
+        android:icon="@drawable/ic_favorite" />
+
+    <item android:id="@+id/settingFragment"
+        android:title="Setting"
+        android:icon="@drawable/ic_all_news" />
+
+</menu>

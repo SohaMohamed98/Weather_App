@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/weather_nav"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.soha.weather_app.ui.fragments.HomeWeather"
+        android:label="fragment_home_weather"
+        tools:layout="@layout/fragment_home_weather" />
+    <fragment
+        android:id="@+id/sevenDayFragment"
+        android:name="com.soha.weather_app.ui.SevenDayWeather"
+        android:label="fragment_seven_day_weather"
+        tools:layout="@layout/fragment_seven_day_weather" />
+    <fragment
+        android:id="@+id/alarmFragment"
+        android:name="com.soha.weather_app.ui.fragments.AlarmWeather"
+        android:label="AlarmWeather" />
+    <fragment
+        android:id="@+id/favouriteFragment"
+        android:name="com.soha.weather_app.ui.fragments.FavouriteWeather"
+        android:label="fragment_favourite_weather"
+        tools:layout="@layout/fragment_favourite_weather" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.soha.weather_app.ui.fragments.SettingWeather"
+        android:label="fragment_setting_weather"
+        tools:layout="@layout/fragment_setting_weather" />
+
+
+</navigation>
