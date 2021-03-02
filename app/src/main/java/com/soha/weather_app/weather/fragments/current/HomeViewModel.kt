@@ -43,7 +43,7 @@ class HomeViewModel: ViewModel()  {
 
             }
             val weather = newRepo.getWeatherFromRoom(context)
-            val current = newRepo.getCurrentFromRoom(context)
+           // val current = newRepo.getCurrentFromRoom(context)
 
 
             weatherFromRoomLiveData.postValue(handleGetWeatherFromRoom(weather)!!)
@@ -60,7 +60,7 @@ class HomeViewModel: ViewModel()  {
 
         if(response.isSuccessful){
             response.body()?.let {
-                newRepo.insertCurrentToRoom(context,it)
+              //  newRepo.insertCurrentToRoom(context,it)
                 return Resource.Success(it)
             }
         }

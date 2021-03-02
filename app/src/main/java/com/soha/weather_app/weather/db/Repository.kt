@@ -25,10 +25,10 @@ public class Repository {
         WeatherDatabase.getInstance(context).getWeatherDao().getAllWeathers()
 
 
-    public suspend fun insertCurrentToRoom(context: Context, weather: CurrentResponse) {
+   /* public suspend fun insertCurrentToRoom(context: Context, weather: CurrentResponse) {
         WeatherDatabase.getInstance(context).getWeatherDao().insertCurrent(weather)
     }
 
     public suspend fun getCurrentFromRoom(context: Context) =
-        WeatherDatabase.getInstance(context).getWeatherDao().getAllCurrent()
+        WeatherDatabase.getInstance(context).getWeatherDao().getAllCurrent()*/
 }

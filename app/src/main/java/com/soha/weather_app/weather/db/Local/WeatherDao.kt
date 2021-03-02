@@ -15,11 +15,11 @@ interface WeatherDao {
     @Query("SELECT * FROM weatherData")
     fun getAllWeathers(): WeatherResponse
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+ /*   @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCurrent(response:CurrentResponse)
 
     @Query("SELECT * FROM weatherData")
-    fun getAllCurrent(): CurrentResponse
+    fun getAllCurrent(): CurrentResponse*/
 
 
 }

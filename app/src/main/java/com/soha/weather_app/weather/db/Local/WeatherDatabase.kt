@@ -10,8 +10,8 @@ import com.soha.weather_app.weather.db.Local.ConverterCurrent
 import com.soha.weather_app.weather.db.model.currentModel.CurrentResponse
 
 @Database(
-    entities = [WeatherResponse::class, CurrentResponse::class],
-    version = 2)
+    entities = [WeatherResponse::class],
+    version = 1)
 @TypeConverters(TypeConvertDataBase::class, ConverterCurrent::class)
 abstract class WeatherDatabase : RoomDatabase() {
 
