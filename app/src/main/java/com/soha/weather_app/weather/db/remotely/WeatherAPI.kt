@@ -12,8 +12,8 @@ interface WeatherAPI {
     //ar  en lang
 
     @GET("onecall")
-    suspend fun getWeatherData(@Query("lat") lat: String="31.25654",
-                               @Query("lon") lon: String="32.28411",
+    suspend fun getWeatherData(@Query("lat") lat:Double=31.25654,
+                               @Query("lon") lon: Double=32.28411,
                                @Query("units") units: String="metric",
                                @Query(" lang") lang: String="ar",
                               // @Query("exclude") exclude: String="current",

@@ -9,8 +9,8 @@ import com.soha.weather_app.weather.db.model.currentModel.CurrentResponse
 
 public class Repository {
 
-    public suspend fun retrofitWeatherCall() =
-        RetrofitInstance.api.getWeatherData()
+    public suspend fun retrofitWeatherCall(lat:Double=31.25654, lon:Double=32.28411) =
+        RetrofitInstance.api.getWeatherData(lat,lon)
 
     public suspend fun retrofitCurrentCall()=
         RetrofitInstance.api.getCurrentData()
