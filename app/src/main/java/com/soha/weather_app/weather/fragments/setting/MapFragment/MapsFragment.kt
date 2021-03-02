@@ -1,11 +1,9 @@
-package com.soha.weather_app.weather.fragments
+package com.soha.weather_app.weather.fragments.setting.MapFragment
 
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Geocoder
 import androidx.fragment.app.Fragment
 
 import android.os.Bundle
@@ -15,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentTransaction
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -24,30 +23,35 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.soha.weather_app.R
 import com.soha.weather_app.weather.db.Repository
-import com.soha.weather_app.weather.fragments.current.HomeWeather
+import com.soha.weather_app.weather.fragments.seven_days.SevenDayWeather
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MapsFragment : Fragment(R.layout.fragment_maps) {
 
+
     private lateinit var mMap: GoogleMap
     private val LOCATION_REQUEST_CODE = 101
 
     var rep = Repository()
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?, ): View? {
+
         return inflater.inflate(R.layout.fragment_maps, container, false)
     }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+      //  locationManager = ContextCompat.getSystemService(LOCATION_SERVICE) as LocationManager?
+
     }
+
+
 
 
     @SuppressLint("MissingPermission")
@@ -115,7 +119,21 @@ class MapsFragment : Fragment(R.layout.fragment_maps) {
 
     suspend fun moveToCurrent(lat:Double, lon:Double){
         rep.retrofitWeatherCall(lat,lon)
+        loadFragment(SevenDayWeather())
     }
+
+    private fun loadFragment(fragment: Fragment) {
+
+        val fm = fragmentManager
+
+
+        val fragmentTransaction: FragmentTransaction = fm!!.beginTransaction()
+        // replace the FrameLayout with new Fragment
+        fragmentTransaction.replace(R.id.mapContainer, fragment)
+        fragmentTransaction.commit() // save the changes
+    }
+
+
     private fun requestPermission(permissionType: String, requestCode: Int) {
 
         ActivityCompat.requestPermissions(context as Activity, arrayOf(permissionType), requestCode)

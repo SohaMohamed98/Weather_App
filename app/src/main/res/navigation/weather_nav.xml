@@ -31,7 +31,7 @@
         tools:layout="@layout/fragment_setting_weather" />
     <fragment
         android:id="@+id/mapsFragment"
-        android:name="com.soha.weather_app.weather.fragments.MapsFragment"
+        android:name="com.soha.weather_app.weather.fragments.setting.MapFragment.MapsFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" />
 
