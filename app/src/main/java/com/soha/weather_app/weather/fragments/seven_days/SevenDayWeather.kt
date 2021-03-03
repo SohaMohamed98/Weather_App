@@ -11,12 +11,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.soha.weather_app.R
-import com.soha.weather_app.databinding.FragmentHomeWeatherBinding
 import com.soha.weather_app.databinding.FragmentSevenDayWeatherBinding
-import com.soha.weather_app.utils.model.Daily
+import com.soha.weather_app.weather.db.models.DailyModel.Daily
 import com.soha.weather_app.weather.db.Repository
 import com.soha.weather_app.weather.db.Resource
-import com.soha.weather_app.weather.fragments.current.CurrentAdapter
 import com.soha.weather_app.weather.fragments.current.HomeViewModel
 
 class SevenDayWeather : Fragment(R.layout.fragment_seven_day_weather) {

@@ -1,13 +1,17 @@
-package com.soha.weather_app.utils.model
+package com.soha.weather_app.weather.db.models.DailyModel
 
 
 import com.google.gson.annotations.SerializedName
 
-data class FeelsLike(
+data class Temp(
     @SerializedName("day")
     val day: Double,
     @SerializedName("eve")
     val eve: Double,
+    @SerializedName("max")
+    val max: Double,
+    @SerializedName("min")
+    val min: Double,
     @SerializedName("morn")
     val morn: Double,
     @SerializedName("night")

@@ -13,10 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.soha.weather_app.R
 import com.soha.weather_app.databinding.FragmentHomeWeatherBinding
-import com.soha.weather_app.utils.model.Daily
-import com.soha.weather_app.utils.model.WeatherResponse
+import com.soha.weather_app.weather.db.models.DailyModel.Daily
 import com.soha.weather_app.weather.db.Resource
 import com.soha.weather_app.weather.db.Repository
+import com.soha.weather_app.weather.db.models.currentModel.CurrentResponse
 
 
 class HomeWeather : Fragment(R.layout.fragment_home_weather) {
@@ -26,6 +26,7 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
     private var adapt: RecyclerView.Adapter<CurrentAdapter.ForecatViewHolder>? = null
     private var layoutManag: RecyclerView.LayoutManager? = null
     private lateinit var homeViewModel: HomeViewModel
+    private lateinit var currentViewModel: CurrentViewModel
     lateinit var repo: Repository
 
     override fun onCreateView(
@@ -34,44 +35,78 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
         savedInstanceState: Bundle?,
     ): View? {
 
-
+        currentViewModel = ViewModelProvider(this).get(CurrentViewModel::class.java)
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         repo = Repository()
         binding = FragmentHomeWeatherBinding.inflate(layoutInflater)
         val root = binding.root//inflater.inflate(R.layout.fragment_weather, container, false)
         binding.recyclerViewCurrent.isEnabled = false
-        context?.let { homeViewModel.getWeatherAPIData(it) }
+        context?.let {
+            homeViewModel.getWeatherAPIData(it)
+            currentViewModel.getCurrentAPIData(it)
+        }
 
         homeViewModel.WeatherLiveData.observe(viewLifecycleOwner, Observer {
-                when (it) {
-                    is Resource.Success -> {
-                        hideProgressBar()
-                        it.data?.let {
-                            // textView.text = it.current.weather.get(0).description
-                           // System.out.println("" + it.current.humidity)
-                        }
-                    }
-                    is Resource.Loading -> {
-                        showProgressBar()
-                    }
-                    is Resource.Error -> {
-                        showErrorMessage(it.message)
-                    }
-                }
-            })
-
-
-        homeViewModel.weatherFromRoomLiveData.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
-                    it.data?.let { it1 -> displayDailyWeatherToRecycleView(it1.daily) }
-                   // it.data?.let { it1 -> initUI(it1) }
+                    hideProgressBar()
+                    it.data?.let {
+                        // textView.text = it.current.weather.get(0).description
+                        // System.out.println("" + it.current.humidity)
+                    }
+                }
+                is Resource.Loading -> {
+                    showProgressBar()
                 }
                 is Resource.Error -> {
                     showErrorMessage(it.message)
                 }
             }
         })
+
+        currentViewModel.currentLiveData.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is Resource.Success -> {
+                    hideProgressBar()
+                    it.data?.let {
+                        // textView.text = it.current.weather.get(0).description
+                        // System.out.println("" + it.current.humidity)
+                    }
+                }
+                is Resource.Loading -> {
+                    showProgressBar()
+                }
+                is Resource.Error -> {
+                    showErrorMessage(it.message)
+                }
+            }
+        })
+
+
+        homeViewModel.weatherFromRoomLiveData.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is Resource.Success -> {
+                    it.data?.let { it1 -> displayDailyWeatherToRecycleView(it1.daily) }
+                    // it.data?.let { it1 -> initUI(it1) }
+                }
+                is Resource.Error -> {
+                    showErrorMessage(it.message)
+                }
+            }
+        })
+
+        currentViewModel.currentLiveDataFromRoom.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is Resource.Success -> {
+                    it.data?.let { it1 -> displayCurrentWeatherToCard(it1) }
+                    // it.data?.let { it1 -> initUI(it1) }
+                }
+                is Resource.Error -> {
+                    showErrorMessage(it.message)
+                }
+            }
+        })
+
 
         /*    homeViewModel.weatherFromRoomLiveData.observe(viewLifecycleOwner, Observer {
                 when(it){
@@ -100,6 +135,10 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
         return root
     }
 
+    private fun displayCurrentWeatherToCard(it1: CurrentResponse) {
+        binding.humidity.text = it1.sys.country
+
+    }
 
     private fun initUI(data: List<Daily>) {
         var dailyAdapter = CurrentAdapter(data)
@@ -112,12 +151,9 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
         }
     }
 
-     fun displayDailyWeatherToRecycleView(data: List<Daily>) {
+    fun displayDailyWeatherToRecycleView(data: List<Daily>) {
         if (data != null) {
-
             initUI(data)
-            // System.out.println(data.get(0).dewPoint)
-            //  binding.textView.text = data.get(0).dt.toString()
         }
     }
 

@@ -1,11 +1,10 @@
-package com.soha.weather_app.utils.model
+package com.soha.weather_app.weather.db.models.DailyModel
 
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import com.soha.weather_app.weather.db.model.currentModel.Sys
 
 @Entity(
     tableName = "weatherData"

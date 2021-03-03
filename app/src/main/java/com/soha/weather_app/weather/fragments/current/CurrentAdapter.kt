@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.soha.weather_app.databinding.ForecastWeatherHourlyItemBinding
 import com.soha.weather_app.utils.dayConverter
-import com.soha.weather_app.utils.model.Daily
+import com.soha.weather_app.weather.db.models.DailyModel.Daily
 import com.soha.weather_app.utils.setImage
 
 class CurrentAdapter(var forecastList: List<Daily>) :

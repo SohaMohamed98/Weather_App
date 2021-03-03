@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.soha.weather_app.utils.model.WeatherResponse
-import com.soha.weather_app.weather.db.model.currentModel.CurrentResponse
+import com.soha.weather_app.weather.db.models.DailyModel.WeatherResponse
+import com.soha.weather_app.weather.db.models.currentModel.CurrentResponse
 
 @Dao
 interface WeatherDao {
@@ -15,11 +15,11 @@ interface WeatherDao {
     @Query("SELECT * FROM weatherData")
     fun getAllWeathers(): WeatherResponse
 
- /*   @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCurrent(response:CurrentResponse)
 
-    @Query("SELECT * FROM weatherData")
-    fun getAllCurrent(): CurrentResponse*/
+    @Query("SELECT * FROM currentData")
+    fun getAllCurrent(): CurrentResponse
 
 
 }
