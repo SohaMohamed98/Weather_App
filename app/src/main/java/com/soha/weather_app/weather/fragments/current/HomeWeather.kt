@@ -23,9 +23,9 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
     lateinit var binding: FragmentHomeWeatherBinding
 
 
-    private var adapt: RecyclerView.Adapter<CurrentAdapter.ForecatViewHolder>? = null
+    private var adapt: RecyclerView.Adapter<HourlyAdapter.ForecatViewHolder>? = null
     private var layoutManag: RecyclerView.LayoutManager? = null
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var weatherViewModel: WeatherViewModel
     private lateinit var currentViewModel: CurrentViewModel
     lateinit var repo: Repository
 
@@ -36,17 +36,17 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
     ): View? {
 
         currentViewModel = ViewModelProvider(this).get(CurrentViewModel::class.java)
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        weatherViewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
         repo = Repository()
         binding = FragmentHomeWeatherBinding.inflate(layoutInflater)
         val root = binding.root//inflater.inflate(R.layout.fragment_weather, container, false)
         binding.recyclerViewCurrent.isEnabled = false
         context?.let {
-            homeViewModel.getWeatherAPIData(it)
+            weatherViewModel.getWeatherAPIData(it)
             currentViewModel.getCurrentAPIData(it)
         }
 
-        homeViewModel.WeatherLiveData.observe(viewLifecycleOwner, Observer {
+        weatherViewModel.WeatherLiveData.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
                     hideProgressBar()
@@ -83,7 +83,7 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
         })
 
 
-        homeViewModel.weatherFromRoomLiveData.observe(viewLifecycleOwner, Observer {
+        weatherViewModel.weatherFromRoomLiveData.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
                     it.data?.let { it1 -> displayDailyWeatherToRecycleView(it1.daily) }
@@ -141,9 +141,10 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
     }
 
     private fun initUI(data: List<Daily>) {
-        var dailyAdapter = CurrentAdapter(data)
+        var dailyAdapter = HourlyAdapter(data)
         binding.recyclerViewCurrent.apply {
             layoutManag = LinearLayoutManager(context)
+            LinearLayoutManager(context).orientation= LinearLayoutManager.HORIZONTAL
             layoutManager = layoutManag
             adapt = dailyAdapter
             adapter = adapt

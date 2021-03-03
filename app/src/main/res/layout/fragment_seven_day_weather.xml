@@ -5,11 +5,19 @@
     android:layout_height="match_parent"
     tools:context=".weather.fragments.seven_days.SevenDayWeather">
 
+    <ProgressBar
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:id="@+id/progressBarDaily"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
 
         <TextView
             android:id="@+id/tvCountry"
@@ -36,19 +44,10 @@
                 android:id="@+id/recyclerViewDaily"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
                 tools:listitem="@layout/forecast_weather_hourly_item" />
 
-
-            <ProgressBar
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:id="@+id/progressBarDaily"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
         </LinearLayout>
+
 
     </LinearLayout>
 

@@ -15,7 +15,7 @@ import com.soha.weather_app.databinding.FragmentSevenDayWeatherBinding
 import com.soha.weather_app.weather.db.models.DailyModel.Daily
 import com.soha.weather_app.weather.db.Repository
 import com.soha.weather_app.weather.db.Resource
-import com.soha.weather_app.weather.fragments.current.HomeViewModel
+import com.soha.weather_app.weather.fragments.current.WeatherViewModel
 
 class SevenDayWeather : Fragment(R.layout.fragment_seven_day_weather) {
 
@@ -24,7 +24,7 @@ class SevenDayWeather : Fragment(R.layout.fragment_seven_day_weather) {
 
     private var adaptDaily: RecyclerView.Adapter<DailyAdapter.DailyViewHolder>? = null
     private var layoutManagDaily: RecyclerView.LayoutManager? = null
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var weatherViewModel: WeatherViewModel
     lateinit var repo: Repository
 
 
@@ -34,14 +34,14 @@ class SevenDayWeather : Fragment(R.layout.fragment_seven_day_weather) {
         savedInstanceState: Bundle?
     ): View? {
 
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        weatherViewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
         repo = Repository()
         binding = FragmentSevenDayWeatherBinding.inflate(layoutInflater)
         val root = binding.root
         binding.recyclerViewDaily.isEnabled = false
-        context?.let { homeViewModel.getWeatherAPIData(it) }
+        context?.let { weatherViewModel.getWeatherAPIData(it) }
 
-        homeViewModel.weatherFromRoomLiveData.observe(viewLifecycleOwner, Observer {
+        weatherViewModel.weatherFromRoomLiveData.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
                     it.data?.let { it1 -> displayDailyWeatherToRecycleView(it1.daily) }

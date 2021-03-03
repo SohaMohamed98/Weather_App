@@ -14,7 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.IOException
 
-class HomeViewModel: ViewModel()  {
+class WeatherViewModel: ViewModel()  {
     private val newRepo : Repository
     init {
         newRepo = Repository()

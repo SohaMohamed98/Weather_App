@@ -8,8 +8,8 @@ import com.soha.weather_app.utils.dayConverter
 import com.soha.weather_app.weather.db.models.DailyModel.Daily
 import com.soha.weather_app.utils.setImage
 
-class CurrentAdapter(var forecastList: List<Daily>) :
-RecyclerView.Adapter<CurrentAdapter.ForecatViewHolder>() {
+class HourlyAdapter(var forecastList: List<Daily>) :
+RecyclerView.Adapter<HourlyAdapter.ForecatViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ForecatViewHolder {
 

@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
 import com.soha.weather_app.db.Local.TypeConvertDataBase
+import com.soha.weather_app.weather.db.models.DailyModel.Weather
 
 @Entity(
     tableName = "currentData"
@@ -48,6 +49,8 @@ data class CurrentResponse(
     @SerializedName("visibility")
     @ColumnInfo(name = "visibility")
     val visibility: Double,
+    @SerializedName("weather")
+    val weather: List<WeatherX>,
     @SerializedName("wind")
     @ColumnInfo(name = "wind")
     val wind: Wind

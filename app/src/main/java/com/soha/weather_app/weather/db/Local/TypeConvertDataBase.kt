@@ -30,25 +30,25 @@ class TypeConvertDataBase {
     }
     //===================================================================
 
-/*    @TypeConverter
-    fun fromWeather(currentValues: List<Weather?>?): String? {
+    @TypeConverter
+    fun fromWeatherX(currentValues: List<WeatherX?>?): String? {
         if (currentValues == null) {
             return null
         }
         val gson = Gson()
-        val type: Type = object : TypeToken<List<Weather?>?>() {}.type
+        val type: Type = object : TypeToken<List<WeatherX?>?>() {}.type
         return gson.toJson(currentValues, type) //json
     }
 
     @TypeConverter
-    fun toWeather(currentString: String?): List<Weather?>? {
+    fun toWeatherX(currentString: String?): List<WeatherX?>? {
         if (currentString == null) {
             return null
         }
         val gson = Gson()
-        val type: Type = object : TypeToken<List<Weather?>?>() {}.type
-        return gson.fromJson<List<Weather?>?>(currentString, type)
-    }*/
+        val type: Type = object : TypeToken<List<WeatherX?>?>() {}.type
+        return gson.fromJson<List<WeatherX?>?>(currentString, type)
+    }
 
 
 //===============================================================================

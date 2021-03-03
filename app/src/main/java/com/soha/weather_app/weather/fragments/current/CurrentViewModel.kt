@@ -14,7 +14,7 @@ import java.io.IOException
 
 class CurrentViewModel: ViewModel() {
     private lateinit var repo: Repository
-    private val homeViewModel = HomeViewModel()
+    private val homeViewModel = WeatherViewModel()
 
     init {
         repo = Repository()
