@@ -6,7 +6,7 @@
 
     <item android:id="@+id/sevenDayFragment"
         android:title="7Day"
-        android:icon="@drawable/ic_all_news" />
+        android:icon="@drawable/ic_one_day" />
 
     <item android:id="@+id/alarmFragment"
         android:title="Alarm"

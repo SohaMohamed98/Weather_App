@@ -7,13 +7,13 @@ data class Main(
     @SerializedName("feels_like")
     val feelsLike: Double,
     @SerializedName("humidity")
-    val humidity: Int,
+    val humidity: Double,
     @SerializedName("pressure")
-    val pressure: Int,
+    val pressure: Double,
     @SerializedName("temp")
-    val temp: Int,
+    val temp: Double,
     @SerializedName("temp_max")
-    val tempMax: Int,
+    val tempMax: Double,
     @SerializedName("temp_min")
-    val tempMin: Int
+    val tempMin: Double
 )

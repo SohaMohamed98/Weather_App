@@ -7,11 +7,11 @@ data class Sys(
     @SerializedName("country")
     val country: String,
     @SerializedName("id")
-    val id: Int,
+    val id: Double,
     @SerializedName("sunrise")
-    val sunrise: Int,
+    val sunrise: Double,
     @SerializedName("sunset")
-    val sunset: Int,
+    val sunset: Double,
     @SerializedName("type")
-    val type: Int
+    val type: Double
 )

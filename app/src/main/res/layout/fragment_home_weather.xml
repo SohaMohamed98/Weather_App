@@ -25,7 +25,7 @@
 
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/card"
+                    android:id="@+id/cardCurrent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -49,14 +49,14 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/address"
+                                android:id="@+id/tvAddress"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="DHAKA, BD"
                                 android:textSize="22dp" />
 
                             <TextView
-                                android:id="@+id/updated_at"
+                                android:id="@+id/tvUpdated_at"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="20 April 2012, 20:08 PM"
@@ -80,7 +80,7 @@
                                 android:weightSum="3">
 
                                 <TextView
-                                    android:id="@+id/temp"
+                                    android:id="@+id/tvTemp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="20dp"
@@ -91,7 +91,7 @@
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/tvCelcius"
+                                    android:id="@+id/textCelcius"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_weight=".25"
@@ -100,7 +100,7 @@
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/status"
+                                    android:id="@+id/tvStatus"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -110,11 +110,12 @@
                                     android:textSize="16dp" />
 
                                 <ImageView
-                                    android:id="@+id/imgForecastItem"
+                                    android:id="@+id/imgCurrentItem"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
+                                    android:background="@drawable/ic_launcher_background"
                                     android:padding="8dp" />
 
 
@@ -135,7 +136,7 @@
                                     android:text="Min Temp:" />
 
                                 <TextView
-                                    android:id="@+id/temp_min"
+                                    android:id="@+id/tvTemp_min"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="2dp"
@@ -150,7 +151,7 @@
                                     android:text="Max Temp:" />
 
                                 <TextView
-                                    android:id="@+id/temp_max"
+                                    android:id="@+id/tvTemp_max"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:padding="2dp"
@@ -205,7 +206,7 @@
                                             android:textSize="12dp" />
 
                                         <TextView
-                                            android:id="@+id/sunrise"
+                                            android:id="@+id/tvSunrise"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="06:40 AM"
@@ -242,7 +243,7 @@
                                             android:textSize="12dp" />
 
                                         <TextView
-                                            android:id="@+id/sunset"
+                                            android:id="@+id/tvSunset"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="06:40 AM"
@@ -279,10 +280,10 @@
                                             android:textSize="12dp" />
 
                                         <TextView
-                                            android:id="@+id/wind"
+                                            android:id="@+id/tvWind"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="06:40 AM"
+                                            android:text="66 K/m"
                                             android:textSize="14dp" />
                                     </LinearLayout>
                                 </androidx.cardview.widget.CardView>
@@ -326,7 +327,7 @@
                                             android:textSize="12dp" />
 
                                         <TextView
-                                            android:id="@+id/pressure"
+                                            android:id="@+id/tvPressure"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="06:40 AM"
@@ -364,7 +365,7 @@
                                             android:textSize="12dp" />
 
                                         <TextView
-                                            android:id="@+id/humidity"
+                                            android:id="@+id/tvHumidity"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="06:40 AM"
@@ -401,7 +402,7 @@
                                             android:textSize="12dp" />
 
                                         <TextView
-                                            android:id="@+id/vis"
+                                            android:id="@+id/tvVis"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Evan"
@@ -433,7 +434,6 @@
                         android:id="@+id/recyclerViewCurrent"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
                         tools:listitem="@layout/forecast_weather_hourly_item" />
 
 

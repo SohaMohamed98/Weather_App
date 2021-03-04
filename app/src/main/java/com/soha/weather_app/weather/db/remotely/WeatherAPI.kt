@@ -14,8 +14,8 @@ interface WeatherAPI {
     @GET("onecall")
     suspend fun getWeatherData(@Query("lat") lat:Double=31.25654,
                                @Query("lon") lon: Double=32.28411,
-                               @Query("units") units: String="metric",
-                               @Query(" lang") lang: String="ar",
+                               @Query("units") units: String="metric",//metric: Celsius, imperial: Fahrenheit.
+                               @Query(" lang") lang: String="ar",  //metric: metre/sec, imperial: miles/hour
                               // @Query("exclude") exclude: String="current",
                                @Query("APPID") app_id: String = API_KEY): Response<WeatherResponse>
 

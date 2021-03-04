@@ -14,7 +14,11 @@
         android:id="@+id/sevenDayFragment"
         android:name="com.soha.weather_app.weather.fragments.seven_days.SevenDayWeather"
         android:label="fragment_seven_day_weather"
-        tools:layout="@layout/fragment_seven_day_weather" />
+        tools:layout="@layout/fragment_seven_day_weather" >
+        <action
+            android:id="@+id/action_sevenDayFragment_to_favouriteFragment"
+            app:destination="@id/favouriteFragment" />
+    </fragment>
     <fragment
         android:id="@+id/alarmFragment"
         android:name="com.soha.weather_app.weather.fragments.alarm.AlarmWeather"
