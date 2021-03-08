@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import com.soha.weather_app.weather.db.Repository
 import com.soha.weather_app.weather.db.Resource
 import com.soha.weather_app.weather.db.models.currentModel.FavCurrent
+import com.soha.weather_app.weather.db.models.weatherModel.FavouriteData
 import com.soha.weather_app.weather.fragments.setting.MapFragment.LocationViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,8 +19,8 @@ import java.io.IOException
 
 class FavViewModel (application: Application): AndroidViewModel(application){
 
-    var favLiveData = MutableLiveData<Resource<FavCurrent>>()
-    val favFromRoomLiveData = MutableLiveData<Resource<FavCurrent>>()
+    var favLiveData = MutableLiveData<Resource<FavouriteData>>()
+    val favFromRoomLiveData = MutableLiveData<Resource<List<FavouriteData>>>()
     private val newRepo: Repository
     val locationViewModel = LocationViewModel(application)
 
@@ -40,14 +41,14 @@ class FavViewModel (application: Application): AndroidViewModel(application){
         favLiveData.postValue(Resource.Loading())
         try {
             if (hasInternetConnection(context)) {
-                val response = newRepo.retrofitCurrentFavCall(lat, lon, units, long)
+                val response = newRepo.retrofitFavCall(lat, lon, units, long)
                 favLiveData.postValue(handleGetFavApiData(response, context)!!)
 
             } else {
                 favLiveData.postValue(Resource.Error("No internet connection"))
 
             }
-            val weather = newRepo.getFavCurrentFromRoom(context)
+            val weather = newRepo.getFavWeatherFromRoom(context)
 
 
             favFromRoomLiveData.postValue(handleGetFavFromRoom(weather)!!)
@@ -60,7 +61,7 @@ class FavViewModel (application: Application): AndroidViewModel(application){
         }
     }
 
-    private fun handleGetFavFromRoom(weather: FavCurrent): Resource<FavCurrent>? {
+    private fun handleGetFavFromRoom(weather: List<FavouriteData>): Resource<List<FavouriteData>>? {
         if (weather != null) {
             return Resource.Success(weather)
         }
@@ -69,12 +70,12 @@ class FavViewModel (application: Application): AndroidViewModel(application){
 
 
     private suspend fun handleGetFavApiData(
-        response: retrofit2.Response<FavCurrent>,
+        response: retrofit2.Response<FavouriteData>,
         context: Context,
-    ): Resource<FavCurrent>? {
+    ): Resource<FavouriteData>? {
         if (response.isSuccessful) {
             response.body()?.let {
-                newRepo.insertFavCurrentToRoom(context, it)
+                newRepo.insertFavWeatherToRoom(context, it)
                 return Resource.Success(it)
             }
         }

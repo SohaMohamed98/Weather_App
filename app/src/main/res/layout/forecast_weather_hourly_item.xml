@@ -27,7 +27,7 @@
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
-                android:backgroundTint="#75D1FA"
+                android:backgroundTint="#FFE4EAED"
                 android:background="@drawable/underline_item_layout"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
@@ -121,7 +121,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:textSize="8dp"
-                            android:text="Humidity" />
+                            android:text="@string/humidity" />
 
                         <ImageView
                             android:id="@+id/imgForecastHumidty"
@@ -165,7 +165,7 @@
                             android:id="@+id/textForecastPressure"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Pressure"
+                            android:text="@string/pressure"
                             android:textSize="8dp"
                             android:layout_gravity="center"/>
 
@@ -196,7 +196,7 @@
                             android:id="@+id/textForecastWind"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Wind"
+                            android:text="@string/wind"
                             android:textSize="8dp"
                             android:layout_gravity="center"/>
 
@@ -246,7 +246,7 @@
                             android:id="@+id/textForecastFeels"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Feels"
+                            android:text="@string/feels"
                             android:textSize="8dp"
                             android:layout_gravity="center"
                             android:gravity="center"/>
@@ -287,16 +287,16 @@
                         android:gravity="center">
 
                         <TextView
-                            android:id="@+id/textVisibility"
+                            android:id="@+id/textSunrise"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Feels"
+                            android:text="@string/visibility"
                             android:textSize="8dp"
                             android:layout_gravity="center"
                             android:gravity="center"/>
 
                         <ImageView
-                            android:id="@+id/imgVisibility"
+                            android:id="@+id/imgSunrise"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:src="@drawable/ic_visibility"
@@ -333,7 +333,7 @@
                             android:gravity="center"/>
 
                         <ImageView
-                            android:id="@+id/imgFeelsLike"
+                            android:id="@+id/imgSunset"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:src="@drawable/ic_one_day"

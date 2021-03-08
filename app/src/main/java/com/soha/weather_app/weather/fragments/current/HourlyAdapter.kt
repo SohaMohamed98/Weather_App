@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.soha.weather_app.databinding.ForecastWeatherHourlyItemBinding
 import com.soha.weather_app.utils.dayConverter
 import com.soha.weather_app.utils.setImage
+import com.soha.weather_app.utils.timeConverter
 import com.soha.weather_app.weather.db.models.weatherModel.Hourly
 
 class HourlyAdapter(var forecastList: List<Hourly>) :
@@ -44,6 +45,8 @@ class HourlyAdapter(var forecastList: List<Hourly>) :
             view.tvForecastPressure.text = (Math.round(forecast.pressure)).toString()
             view.tvForecastTime.text = dayConverter((forecast.dt).toLong())
             view.tvForecastFeelsTemp.text = (Math.round(forecast.feelsLike)).toString()
+            view.tvVisibility.text= forecast.visibility.toString()
+
 
 
             val url = forecast.weather.get(0).icon

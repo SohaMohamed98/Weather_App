@@ -40,7 +40,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
-                        android:text="Location mode"
+                        android:text="@string/location_mode"
                         android:textSize="20dp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +64,7 @@
                             android:id="@+id/btnGps"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="GPS"
+                            android:text="@string/gps"
                             android:textSize="18dp" />
 
                         <RadioButton
@@ -72,7 +72,7 @@
                             android:layout_marginStart="35dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Location"
+                            android:text="@string/location"
                             android:textSize="18dp" />
 
                     </RadioGroup>
@@ -98,7 +98,7 @@
 
                             <TextView
                                 android:id="@+id/tvAddressLocation"
-                                android:hint="Address"
+                                android:hint="@string/address"
                                 android:textSize="20dp"
                                 android:layout_width="wrap_content"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -108,7 +108,7 @@
 
                             <TextView
                                 android:id="@+id/tvLat"
-                                android:hint="Latitude"
+                                android:hint="@string/latitude"
                                 android:textSize="20dp"
                                 android:layout_width="wrap_content"
                                 app:layout_constraintTop_toBottomOf="@+id/tvAddressLocation"
@@ -117,7 +117,7 @@
                                 android:layout_height="wrap_content" />
                             <TextView
                                 android:id="@+id/tvLon"
-                                android:hint="Longtuide"
+                                android:hint="@string/longtuide"
                                 android:textSize="20dp"
                                 android:layout_width="wrap_content"
                                 app:layout_constraintTop_toBottomOf="@+id/tvLat"
@@ -161,7 +161,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
-                        android:text="Temperature unit"
+                        android:text="@string/temperature_unit"
                         android:textSize="20dp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
@@ -183,7 +183,7 @@
                             android:id="@+id/btnCelicious"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="°C"
+                            android:text="@string/c"
                             android:textSize="18dp" />
 
                         <com.google.android.material.radiobutton.MaterialRadioButton
@@ -191,20 +191,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="35dp"
-                            android:text="°F"
+                            android:text="@string/f"
                             android:textSize="18dp" />
 
                     </RadioGroup>
-
-                    <TextView
-
-                        android:id="@+id/tvTemp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="temp"
-                        app:layout_constraintLeft_toRightOf="@+id/groubTemp"
-                        app:layout_constraintTop_toTopOf="@+id/groubTemp"
-                        android:layout_marginStart="25dp"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -225,7 +215,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
-                        android:text="Wind Speed"
+                        android:text="@string/wind_speed"
                         android:textSize="20dp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
@@ -247,35 +237,17 @@
                             android:id="@+id/btnMs"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="m/s"
+                            android:text="@string/m_s"
                             android:textSize="18dp" />
 
                         <com.google.android.material.radiobutton.MaterialRadioButton
                             android:id="@+id/btnKmh"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Km/h"
-                            android:textSize="18dp" />
-
-                        <com.google.android.material.radiobutton.MaterialRadioButton
-                            android:id="@+id/btnMph"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="mph"
+                            android:text="@string/km_h"
                             android:textSize="18dp" />
 
                     </RadioGroup>
-
-                    <TextView
-
-                        android:id="@+id/tvWind"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="Wind speed"
-                        app:layout_constraintStart_toEndOf="@+id/groubWind"
-                        android:layout_marginStart="30dp"
-                        app:layout_constraintTop_toTopOf="@+id/groubWind" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -295,7 +267,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
-                        android:text="Language"
+                        android:text="@string/language"
                         android:textSize="20dp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
@@ -317,14 +289,14 @@
                             android:id="@+id/btnArabic"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Arabic"
+                            android:text="@string/arabic"
                             android:textSize="18dp" />
 
                         <com.google.android.material.radiobutton.MaterialRadioButton
                             android:id="@+id/btnEnglish"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="English"
+                            android:text="@string/english"
                             android:textSize="18dp" />
 
 

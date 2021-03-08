@@ -41,10 +41,10 @@ public class Repository {
         RetrofitInstance.getWeatherService().getCurrentFavData(lat,lon,units,long)
 
     public suspend fun insertFavCurrentToRoom(context: Context, weather: FavCurrent) {
-        WeatherDatabase.getInstance(context).getWeatherDao().insertFavCurrent(weather)
+        WeatherDatabase.getInstance(context).getWeatherDao().insertFavCurrentData(weather)
     }
     public suspend fun getFavCurrentFromRoom(context: Context) =
-        WeatherDatabase.getInstance(context).getWeatherDao().getFavCurrent()
+        WeatherDatabase.getInstance(context).getWeatherDao().getFavCurrentData()
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -53,11 +53,11 @@ public class Repository {
         RetrofitInstance.getWeatherService().getFavData(lat,lon,units,long)
 
     public suspend fun insertFavWeatherToRoom(context: Context, weather: FavouriteData) {
-        WeatherDatabase.getInstance(context).getWeatherDao().insertFavWeather(weather)
+        WeatherDatabase.getInstance(context).getWeatherDao().insertFavWeatherData(weather)
     }
 
     public suspend fun getFavWeatherFromRoom(context: Context) =
-        WeatherDatabase.getInstance(context).getWeatherDao().getAllWeathers()
+        WeatherDatabase.getInstance(context).getWeatherDao().getFavWetherData()
 
 
 

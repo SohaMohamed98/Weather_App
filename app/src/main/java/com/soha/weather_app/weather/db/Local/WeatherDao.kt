@@ -25,15 +25,17 @@ interface WeatherDao {
     @Query("SELECT * FROM currentData")
     fun getAllCurrent(): CurrentResponse
 
+
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFavWeather(fav : FavouriteData)
+    suspend fun insertFavWeatherData(fav : FavouriteData)
 
     @Query("SELECT * FROM favouriteData")
-    fun getFavWether(): FavouriteData
+    fun getFavWetherData(): List<FavouriteData>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFavCurrent(response: FavCurrent)
+    suspend fun insertFavCurrentData(response: FavCurrent)
 
     @Query("SELECT * FROM currentFavData")
-    fun getFavCurrent():FavCurrent
+    fun getFavCurrentData():List<FavCurrent>
 }

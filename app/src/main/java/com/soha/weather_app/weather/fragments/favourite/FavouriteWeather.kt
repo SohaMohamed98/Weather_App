@@ -32,6 +32,7 @@ import com.soha.weather_app.weather.fragments.current.CurrentViewModel
 import com.soha.weather_app.weather.fragments.current.HourlyAdapter
 import com.soha.weather_app.weather.fragments.current.WeatherViewModel
 import com.soha.weather_app.weather.fragments.setting.MapFragment.LocationViewModel
+import com.soha.weather_app.weather.fragments.setting.SettingWeather
 
 class FavouriteWeather : Fragment(R.layout.fragment_favourite_weather){
 
@@ -74,10 +75,18 @@ lateinit var binding: FragmentFavouriteWeatherBinding
                 }
             }
         })*/
+
+        binding.btnFav.setOnClickListener {
+            loadFragment(SettingWeather())
+        }
         favViewModel.favFromRoomLiveData.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
+                    hideProgressBar()
                     it.data?.let { it1 -> displayDailyWeatherToRecycleView(it1)}
+                }
+                is Resource.Loading-> {
+                    showProgressBar()
                 }
                 is Resource.Error -> {
                     showErrorMessage(it.message)
@@ -88,8 +97,7 @@ lateinit var binding: FragmentFavouriteWeatherBinding
     }
 
 
-    private fun initUI(data: ArrayList<FavCurrent>) {
-
+    private fun initUI(data: List<FavouriteData>) {
         var dailyAdapter = FavouriteAdapter(data)
         binding.favRecyclerView.apply {
             layoutManag = LinearLayoutManager(context)
@@ -100,11 +108,9 @@ lateinit var binding: FragmentFavouriteWeatherBinding
         }
     }
 
-    private fun displayDailyWeatherToRecycleView(data: FavCurrent) {
+    private fun displayDailyWeatherToRecycleView(data: List<FavouriteData>) {
         if (data != null) {
-            val x=ArrayList<FavCurrent>()
-            x.add(data)
-            initUI(x)
+            initUI(data)
         }
     }
 
@@ -113,7 +119,7 @@ lateinit var binding: FragmentFavouriteWeatherBinding
     private fun loadFragment(fragment: Fragment) {
         val fm = fragmentManager
         val fragmentTransaction: FragmentTransaction = fm!!.beginTransaction().addToBackStack(null)
-        fragmentTransaction.replace(R.id.mapContainer, fragment)
+        fragmentTransaction.replace(R.id.favContainer, fragment)
         fragmentTransaction.commit() // save the changes
     }
 

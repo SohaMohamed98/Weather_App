@@ -92,7 +92,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight=".25"
-                            android:hint="°C"
+                            android:hint="@string/c"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -129,7 +129,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="2dp"
-                            android:text="Min Temp:" />
+                            android:text="@string/min_temp" />
 
                         <TextView
                             android:id="@+id/tvTemp_min"
@@ -144,7 +144,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
                             android:padding="2dp"
-                            android:text="Max Temp:" />
+                            android:text="@string/max_temp" />
 
                         <TextView
                             android:id="@+id/tvTemp_max"
@@ -198,7 +198,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Sunrise"
+                                    android:text="@string/sunrise"
                                     android:textSize="12dp" />
 
                                 <TextView
@@ -235,7 +235,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Sunset"
+                                    android:text="@string/sunset"
                                     android:textSize="12dp" />
 
                                 <TextView
@@ -272,7 +272,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Wind"
+                                    android:text="@string/wind"
                                     android:textSize="12dp" />
 
                                 <TextView
@@ -319,7 +319,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Pressure"
+                                    android:text="@string/pressure"
                                     android:textSize="12dp" />
 
                                 <TextView
@@ -357,7 +357,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Humidity"
+                                    android:text="@string/humidity"
                                     android:textSize="12dp" />
 
                                 <TextView
@@ -394,7 +394,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Visibility"
+                                    android:text="@string/visibility"
                                     android:textSize="12dp" />
 
                                 <TextView

@@ -47,8 +47,7 @@
                         android:id="@+id/tvForecastState"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
-                        android:text="WEATHER"
+                        android:hint="WEATHER"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -81,7 +80,7 @@
                         android:id="@+id/textCelcius"
                         android:layout_width="13dp"
                         android:layout_height="12dp"
-                        android:text="°C"
+                        android:text="@string/c"
                         android:textSize="8sp"
                         android:textStyle="bold"
                         app:layout_constraintTop_toTopOf="@+id/tvForecastTemp"
@@ -120,7 +119,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:textSize="8dp"
-                            android:text="Humidity" />
+                            android:text="@string/humidity" />
 
                         <ImageView
                             android:id="@+id/imgForecastHumidty"
@@ -164,7 +163,7 @@
                             android:id="@+id/textForecastPressure"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Pressure"
+                            android:text="@string/pressure"
                             android:textSize="8dp"
                             android:layout_gravity="center"/>
 
@@ -195,9 +194,9 @@
                             android:id="@+id/textForecastWind"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Wind"
-                            android:textSize="8dp"
-                            android:layout_gravity="center"/>
+                            android:layout_gravity="center"
+                            android:text="@string/wind"
+                            android:textSize="8dp" />
 
                         <ImageView
                             android:id="@+id/imgForecastWind"
@@ -223,7 +222,7 @@
                                 android:id="@+id/tvKmH"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="KmH"
+                                android:text="@string/kmh"
                                 android:textStyle="bold"
                                 android:textSize="8sp"/>
                         </LinearLayout>
@@ -245,7 +244,7 @@
                             android:id="@+id/textForecastFeels"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Feels"
+                            android:text="@string/feels"
                             android:textSize="8dp"
                             android:layout_gravity="center"
                             android:gravity="center"/>
@@ -286,16 +285,16 @@
                         android:gravity="center">
 
                         <TextView
-                            android:id="@+id/textVisibility"
+                            android:id="@+id/textSunrise"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Feels"
+                            android:text="@string/sunrise"
                             android:textSize="8dp"
                             android:layout_gravity="center"
                             android:gravity="center"/>
 
                         <ImageView
-                            android:id="@+id/imgVisibility"
+                            android:id="@+id/imgSunrise"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:src="@drawable/ic_sunrise"
@@ -326,13 +325,13 @@
                             android:id="@+id/textTemp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Feels"
+                            android:text="@string/sunset"
                             android:textSize="8dp"
                             android:layout_gravity="center"
                             android:gravity="center"/>
 
                         <ImageView
-                            android:id="@+id/imgFeelsLike"
+                            android:id="@+id/imgSunset"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:src="@drawable/ic_sunset"
@@ -348,13 +347,6 @@
                                 android:textStyle="bold"
                                 android:hint="0.0" />
 
-                            <TextView
-                                android:id="@+id/tvFee"
-                                android:layout_width="4dp"
-                                android:layout_height="8dp"
-                                android:text="°C"
-                                android:textSize="8sp"
-                                android:textStyle="bold"/>
                         </LinearLayout>
 
 

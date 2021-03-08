@@ -5,18 +5,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.soha.weather_app.databinding.FavouriteCardBinding
 import com.soha.weather_app.weather.db.models.currentModel.FavCurrent
-import com.soha.weather_app.weather.db.models.currentModel.WeatherX
 import com.soha.weather_app.weather.db.models.weatherModel.FavouriteData
 
-class FavouriteAdapter(var favList:List<FavCurrent>)
+class FavouriteAdapter(var favList:List<FavouriteData>)
     : RecyclerView.Adapter<FavouriteAdapter.FavViewHolder>() {
 
     class FavViewHolder(var view: FavouriteCardBinding) : RecyclerView.ViewHolder(view.root) {
         private val imageview = view.imgForecastItem
-        fun bind(favList: FavCurrent) {
+        fun bind(favList: FavouriteData) {
 
-            view.tvForecastHumidity.text=favList.name
-            view.tvForecastTemp.text = favList.base
+            view.tvForecastHumidity.text=favList.timezone
+            view.tvForecastTemp.text = favList.current.humidity.toString()
 
         }
 
@@ -57,7 +56,7 @@ class FavouriteAdapter(var favList:List<FavCurrent>)
         return favList.size
     }
 
-    fun setData(d:List<FavCurrent>){
+    fun setData(d:List<FavouriteData>){
         this.favList = d
         notifyDataSetChanged()
 

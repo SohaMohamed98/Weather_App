@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">الطقس</string>
+    <string name="hello_blank_fragment">weatherFragment</string>
+    <string name="feels">شعور</string>
+    <string name="sunset">غروب</string>
+    <string name="sunrise">شروق</string>
+    <string name="location_mode">وضع الموقع</string>
+    <string name="gps">GPS</string>
+    <string name="location">الموقع</string>
+    <string name="address" >العنوان</string>
+    <string name="latitude" >خط العرض</string>
+    <string name="longtuide" >خط الطول</string>
+    <string name="temperature_unit" >درجة الحرارة</string>
+    <string name="c" >س°</string>
+    <string name="f" >°ف</string>
+    <string name="wind_speed" >سرعة الرياح</string>
+    <string name="m_s">م/ث</string>
+    <string name="km_h" >كم/س</string>
+    <string name="language" >اللغة</string>
+    <string name="arabic">العربية</string>
+    <string name="english" >الانجليزية</string>
+    <string name="please_long_click_to_select_your_location" >من فضلك, اضغط لتحديد موقعك</string>
+    <string name="max_temp" >اقصي درجة حرارة:</string>
+    <string name="min_temp" >اقل درجةحرارة:</string>
+    <string name="visibility">الرؤية</string>
+    <string name="pressure" >الضغط</string>
+    <string name="humidity" >الرطوبة</string>
+    <string name="wind">رياح</string>
+    <string name="kmh">كم/س</string>
+</resources>
