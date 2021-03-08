@@ -1,4 +1,4 @@
-package com.soha.weather_app.weather.db.models.DailyModel
+package com.soha.weather_app.weather.db.models.weatherModel
 
 
 import androidx.room.ColumnInfo
@@ -7,10 +7,10 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 @Entity(
-    tableName = "weatherData"
+    tableName = "favouriteData"
 )
-data class WeatherResponse(
-    @PrimaryKey
+data class FavouriteData(
+    @PrimaryKey(autoGenerate = true)
     val id : Int,
     @SerializedName("current")
     @ColumnInfo(name = "current")

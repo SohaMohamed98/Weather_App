@@ -5,10 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.soha.weather_app.databinding.ForecastWeatherHourlyItemBinding
 import com.soha.weather_app.utils.dayConverter
-import com.soha.weather_app.weather.db.models.DailyModel.Daily
 import com.soha.weather_app.utils.setImage
-import com.soha.weather_app.weather.db.models.DailyModel.Hourly
-import com.soha.weather_app.weather.db.models.DailyModel.WeatherResponse
+import com.soha.weather_app.weather.db.models.weatherModel.Hourly
 
 class HourlyAdapter(var forecastList: List<Hourly>) :
     RecyclerView.Adapter<HourlyAdapter.ForecatViewHolder>() {

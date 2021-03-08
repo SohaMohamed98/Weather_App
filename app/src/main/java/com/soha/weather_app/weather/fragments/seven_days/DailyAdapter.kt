@@ -1,29 +1,23 @@
 package com.soha.weather_app.weather.fragments.seven_days
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
-import androidx.navigation.Navigation
+import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.NO_POSITION
-import com.soha.weather_app.R
-import com.soha.weather_app.databinding.ForecastWeatherHourlyItemBinding
+import com.soha.weather_app.databinding.FavouriteCardBinding
 import com.soha.weather_app.utils.dayConverter
-import com.soha.weather_app.weather.db.models.DailyModel.Daily
+import com.soha.weather_app.weather.db.models.weatherModel.Daily
 import com.soha.weather_app.utils.setImage
-import com.soha.weather_app.weather.fragments.current.HomeWeather
+import com.soha.weather_app.utils.timeConverter
 
 class DailyAdapter(var daysList: List<Daily>) :
-RecyclerView.Adapter<DailyAdapter.DailyViewHolder>() {
+    RecyclerView.Adapter<DailyAdapter.DailyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DailyViewHolder {
 
-        val view = ForecastWeatherHourlyItemBinding.inflate(
+        val view = FavouriteCardBinding.inflate(
             LayoutInflater.from(parent.context),
-            parent,false)
+            parent, false)
 
         return DailyViewHolder(view)
     }
@@ -33,49 +27,27 @@ RecyclerView.Adapter<DailyAdapter.DailyViewHolder>() {
     }
 
 
-
     override fun onBindViewHolder(holder: DailyViewHolder, position: Int) {
 
         holder.bind(daysList[position])
-        holder.itemView.setOnClickListener{
-
-                if(position==1){
-                    val activity=it!!.context as AppCompatActivity
-                    val homeFragment= HomeWeather()
-                    activity.supportFragmentManager.beginTransaction().add(R.id.favContainer, homeFragment)
-                        .addToBackStack(null).commit()
-
-                //    Toast.makeText(it!!.context, "efwe", Toast.LENGTH_LONG).show()
-
-
-        }
-          //  val bundle = bundleOf("clouds" to daysList[position])
-          //  Navigation.findNavController(it).navigate(R.id.action_sevenDayFragment_to_favouriteFragment, bundle)
-        }
-
     }
 
-    fun updateHourlyList(newHourlyList: List<Daily>){
-        this.daysList= newHourlyList
-        notifyDataSetChanged()
-    }
 
-    class DailyViewHolder(var view: ForecastWeatherHourlyItemBinding) :
+    class DailyViewHolder(var view: FavouriteCardBinding) :
         RecyclerView.ViewHolder(view.root) {
         private val imageview = view.imgForecastItem
 
 
         fun bind(forecast: Daily) {
-
-            view.tvForecastState.text=forecast.weather.get(0).description
+            view.tvForecastState.text = forecast.weather.get(0).description
             view.tvForecastTemp.text = (Math.round(forecast.temp.day)).toString()
-            view.tvForecastHumidity.text= (Math.round(forecast.humidity)).toString()
-            view.tvForecastPressure.text= (Math.round(forecast.pressure)).toString()
-            view.tvForecastTime.text= dayConverter((forecast.dt).toLong())
-            view.tvForecastFeelsTemp.text=(Math.round(forecast.feelsLike.day)).toString()
-            view.tvForecastWind.text=(Math.round(forecast.windSpeed)).toString()
-
-
+            view.tvForecastHumidity.text = (Math.round(forecast.humidity)).toString()
+            view.tvForecastPressure.text = (Math.round(forecast.pressure)).toString()
+            view.tvForecastTime.text = dayConverter((forecast.dt).toLong())
+            view.tvForecastFeelsTemp.text = (Math.round(forecast.feelsLike.day)).toString()
+            view.tvForecastWind.text = (Math.round(forecast.windSpeed)).toString()
+            view.tvSunrise.text = timeConverter(forecast.sunrise.toLong())
+            view.tvSunset.text = timeConverter(forecast.sunset.toLong())
 
             val url = forecast.weather.get(0).icon
             setImage(imageview, url)

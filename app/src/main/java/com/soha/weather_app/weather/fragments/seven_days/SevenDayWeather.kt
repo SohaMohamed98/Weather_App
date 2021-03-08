@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.soha.weather_app.R
 import com.soha.weather_app.databinding.FragmentSevenDayWeatherBinding
-import com.soha.weather_app.weather.db.models.DailyModel.Daily
+import com.soha.weather_app.weather.db.models.weatherModel.Daily
 import com.soha.weather_app.weather.db.Repository
 import com.soha.weather_app.weather.db.Resource
 import com.soha.weather_app.weather.fragments.current.WeatherViewModel
@@ -31,7 +31,7 @@ class SevenDayWeather : Fragment(R.layout.fragment_seven_day_weather) {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
 
         weatherViewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
@@ -43,7 +43,7 @@ class SevenDayWeather : Fragment(R.layout.fragment_seven_day_weather) {
 
         weatherViewModel.weatherFromRoomLiveData.observe(viewLifecycleOwner, Observer {
             when (it) {
-                is Resource.Loading ->{
+                is Resource.Loading -> {
                     showProgressBar()
                 }
                 is Resource.Success -> {
@@ -80,7 +80,7 @@ class SevenDayWeather : Fragment(R.layout.fragment_seven_day_weather) {
 
     private fun showErrorMessage(message: String?) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show()
-        System.out.println("Error is  :  ---->  " + message)
+        System.out.println("Error is : " + message)
         binding.progressBarDaily.visibility = View.INVISIBLE
     }
 

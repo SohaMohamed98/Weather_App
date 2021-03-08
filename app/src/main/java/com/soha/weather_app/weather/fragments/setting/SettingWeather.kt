@@ -29,6 +29,7 @@ import com.soha.weather_app.weather.db.Resource
 import com.soha.weather_app.weather.fragments.current.CurrentViewModel
 import com.soha.weather_app.weather.fragments.current.HomeWeather
 import com.soha.weather_app.weather.fragments.current.WeatherViewModel
+import com.soha.weather_app.weather.fragments.favourite.FavViewModel
 import com.soha.weather_app.weather.fragments.favourite.FavouriteWeather
 import com.soha.weather_app.weather.fragments.setting.MapFragment.LocationViewModel
 import com.soha.weather_app.weather.fragments.setting.MapFragment.MapsFragment
@@ -47,6 +48,7 @@ class SettingWeather : Fragment(R.layout.fragment_setting_weather) {
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var currentViewModel: CurrentViewModel
     lateinit var weatherViewModel: WeatherViewModel
+    lateinit var favViewModel: FavViewModel
 
     lateinit var model: LocationViewModel
 
@@ -59,6 +61,7 @@ class SettingWeather : Fragment(R.layout.fragment_setting_weather) {
 
         currentViewModel =  ViewModelProvider(this).get(CurrentViewModel::class.java)
         weatherViewModel =  ViewModelProvider(this).get(WeatherViewModel::class.java)
+        favViewModel =  ViewModelProvider(this).get(FavViewModel::class.java)
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
         model = ViewModelProvider(requireActivity()).get(LocationViewModel::class.java)
@@ -121,6 +124,7 @@ class SettingWeather : Fragment(R.layout.fragment_setting_weather) {
             if (binding.tvLat.text == null || binding.tvLon.text == null) {
                 Toast.makeText(context, "dddddf", Toast.LENGTH_LONG).show()
             } else {
+
                 context?.let { it ->
                     currentViewModel.getCurrentAPIData(it,
                         model.getLatData().value.toString(),
@@ -149,6 +153,7 @@ class SettingWeather : Fragment(R.layout.fragment_setting_weather) {
                         }
                     }
                 })
+
                 context?.let {
                     weatherViewModel.getWeatherAPIData(it,
                         model.getLatData().value.toString(),
@@ -157,6 +162,31 @@ class SettingWeather : Fragment(R.layout.fragment_setting_weather) {
                         model.getLanguageData().value.toString())
                 }
                 weatherViewModel.weatherLiveData.observe(viewLifecycleOwner, Observer {
+                    when (it) {
+                        is Resource.Success -> {
+
+                            it.data?.let {
+
+                            }
+                        }
+                        is Resource.Loading -> {
+                            // showProgressBar()
+                        }
+                        is Resource.Error -> {
+                            Toast.makeText(context, "errrrrrrrrrr", Toast.LENGTH_LONG).show()
+                            //showErrorMessage(it.message)
+                        }
+                    }
+                })
+
+                context?.let {
+                    favViewModel.getFavAPIData(it,
+                        model.getLatData().value.toString(),
+                        model.getLonData().value.toString(),
+                        model.getTempData().value.toString(),
+                        model.getLanguageData().value.toString())
+                }
+                favViewModel.favLiveData.observe(viewLifecycleOwner, Observer {
                     when (it) {
                         is Resource.Success -> {
 

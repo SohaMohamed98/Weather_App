@@ -42,7 +42,7 @@ class CurrentViewModel(application: Application) : AndroidViewModel(application)
     //31.25654&lon=32.28411
     fun getCurrentAPIData(
         context: Context, lat: String = this.lat.toString(), lon: String = this.lon.toString(),
-        units: String = this.temp.toString(), long: String = this.long.toString(),
+        units: String = this.temp.toString(), long: String = this.long.toString()
     ) =
         CoroutineScope(Dispatchers.IO).launch {
             currentLiveData.postValue(Resource.Loading())

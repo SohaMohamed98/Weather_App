@@ -9,11 +9,11 @@ import com.google.gson.annotations.SerializedName
 import com.soha.weather_app.db.Local.TypeConvertDataBase
 
 @Entity(
-    tableName = "currentData"
+    tableName = "currentFavData"
 )
 @TypeConverters(TypeConvertDataBase::class)
-data class CurrentResponse(
-    @PrimaryKey
+data class FavCurrent(
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "num")
     val num:Int,
     @SerializedName("base")

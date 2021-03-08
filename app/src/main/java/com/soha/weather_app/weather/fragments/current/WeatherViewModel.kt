@@ -7,7 +7,7 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.soha.weather_app.weather.db.models.DailyModel.WeatherResponse
+import com.soha.weather_app.weather.db.models.weatherModel.WeatherResponse
 import com.soha.weather_app.weather.db.Resource
 import com.soha.weather_app.weather.db.Repository
 import com.soha.weather_app.weather.fragments.setting.MapFragment.LocationViewModel

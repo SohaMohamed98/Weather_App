@@ -20,7 +20,7 @@ import com.soha.weather_app.utils.setImage
 import com.soha.weather_app.utils.timeConverter
 import com.soha.weather_app.weather.db.Resource
 import com.soha.weather_app.weather.db.Repository
-import com.soha.weather_app.weather.db.models.DailyModel.Hourly
+import com.soha.weather_app.weather.db.models.weatherModel.Hourly
 import com.soha.weather_app.weather.db.models.currentModel.CurrentResponse
 import com.soha.weather_app.weather.fragments.setting.MapFragment.LocationViewModel
 
@@ -70,8 +70,6 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
                 is Resource.Success -> {
                     hideProgressBar()
                     it.data?.let {
-                        // textView.text = it.current.weather.get(0).description
-                        // System.out.println("" + it.current.humidity)
                     }
                 }
                 is Resource.Loading -> {

@@ -3,8 +3,8 @@ package com.soha.weather_app.db.Local
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.soha.weather_app.weather.db.models.DailyModel.Weather
-import com.soha.weather_app.weather.db.models.DailyModel.*
+import com.soha.weather_app.weather.db.models.weatherModel.Weather
+import com.soha.weather_app.weather.db.models.weatherModel.*
 import com.soha.weather_app.weather.db.models.currentModel.*
 import java.lang.reflect.Type
 

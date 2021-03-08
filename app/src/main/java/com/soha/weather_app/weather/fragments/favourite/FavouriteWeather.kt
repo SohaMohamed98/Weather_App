@@ -1,64 +1,83 @@
 package com.soha.weather_app.weather.fragments.favourite
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.HorizontalScrollView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.soha.weather_app.R
 import com.soha.weather_app.databinding.FragmentFavouriteWeatherBinding
-import com.soha.weather_app.databinding.FragmentSevenDayWeatherBinding
+import com.soha.weather_app.databinding.FragmentHomeWeatherBinding
+import com.soha.weather_app.utils.dayConverter
+import com.soha.weather_app.utils.setImage
+import com.soha.weather_app.utils.timeConverter
 import com.soha.weather_app.weather.db.Repository
 import com.soha.weather_app.weather.db.Resource
-import com.soha.weather_app.weather.db.models.DailyModel.Daily
-import com.soha.weather_app.weather.db.models.DailyModel.WeatherResponse
 import com.soha.weather_app.weather.db.models.currentModel.CurrentResponse
+import com.soha.weather_app.weather.db.models.currentModel.FavCurrent
 import com.soha.weather_app.weather.db.models.currentModel.WeatherX
+import com.soha.weather_app.weather.db.models.weatherModel.Current
+import com.soha.weather_app.weather.db.models.weatherModel.FavouriteData
+import com.soha.weather_app.weather.db.models.weatherModel.Hourly
 import com.soha.weather_app.weather.fragments.current.CurrentViewModel
-import com.soha.weather_app.weather.fragments.current.HomeWeather
+import com.soha.weather_app.weather.fragments.current.HourlyAdapter
 import com.soha.weather_app.weather.fragments.current.WeatherViewModel
-import com.soha.weather_app.weather.fragments.seven_days.DailyAdapter
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.soha.weather_app.weather.fragments.setting.MapFragment.LocationViewModel
 
-class FavouriteWeather : Fragment(R.layout.fragment_favourite_weather) ,FavouriteAdapter.OnFavouriteItemClickListner{
-    //lateinit var databinding:FragmentFavouriteWeatherBinding
+class FavouriteWeather : Fragment(R.layout.fragment_favourite_weather){
 
-//        databinding = DataBindingUtil.inflate(inflater, R.layout.fragment_favourite_weather, container, false)
-//        var root = databinding.root
-//
-//        var cityDailyResponse = arguments?.getParcelable<Daily>("cityWeatherDetail")
-//        databinding.detail= cityDailyResponse
-//        return root
 lateinit var binding: FragmentFavouriteWeatherBinding
 
 
-    private var adaptDaily: RecyclerView.Adapter<FavouriteAdapter.FavViewHolder>? = null
-    private var layoutManagDaily: RecyclerView.LayoutManager? = null
-    private lateinit var weatherViewModel: FavViewModel
+    private var adapt: RecyclerView.Adapter<FavouriteAdapter.FavViewHolder>? = null
+    private var layoutManag: RecyclerView.LayoutManager? = null
+    private lateinit var favViewModel: FavViewModel
+    private lateinit var locationViewModel: LocationViewModel
     lateinit var repo: Repository
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        weatherViewModel = ViewModelProvider(this).get(FavViewModel::class.java)
-        repo = Repository()
-        binding = FragmentFavouriteWeatherBinding.inflate(layoutInflater)
-        val root = binding.root
-        binding.favRecyclerView.isEnabled = false
-        context?.let { weatherViewModel.readAllLiveData }
+        favViewModel = ViewModelProvider(this).get(FavViewModel::class.java)
+        locationViewModel = ViewModelProvider(this).get(LocationViewModel::class.java)
 
-        weatherViewModel.readAllLiveData.observe(viewLifecycleOwner, Observer {
+
+        binding = FragmentFavouriteWeatherBinding.inflate(layoutInflater)
+        repo = Repository()
+       // binding.favRecyclerView.isEnabled = false
+        val root = binding.root
+
+        context?.let {
+            favViewModel.getFavAPIData(it)
+        }
+
+      /*  favViewModel.favLiveData.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
-                    it.data?.let { it1 -> displayDailyWeatherToRecycleView(it1) }
+                    hideProgressBar()
+                    it.data?.let { it1 -> displayDailyWeatherToRecycleView(it1)}
+                }
+                is Resource.Loading -> {
+                    showProgressBar()
+                }
+                is Resource.Error -> {
+                    showErrorMessage(it.message)
+                }
+            }
+        })*/
+        favViewModel.favFromRoomLiveData.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is Resource.Success -> {
+                    it.data?.let { it1 -> displayDailyWeatherToRecycleView(it1)}
                 }
                 is Resource.Error -> {
                     showErrorMessage(it.message)
@@ -69,34 +88,26 @@ lateinit var binding: FragmentFavouriteWeatherBinding
     }
 
 
-    private fun initUI(data: List<CurrentResponse>) {
+    private fun initUI(data: ArrayList<FavCurrent>) {
 
-        var dailyAdapter = FavouriteAdapter(data,this)
+        var dailyAdapter = FavouriteAdapter(data)
         binding.favRecyclerView.apply {
-            layoutManagDaily = LinearLayoutManager(context)
-            layoutManager = layoutManagDaily
-            adaptDaily = dailyAdapter
-            adapter = adaptDaily
+            layoutManag = LinearLayoutManager(context)
+            layoutManager = layoutManag
+            adapt = dailyAdapter
+            adapter = adapt
 
         }
     }
 
-    private fun displayDailyWeatherToRecycleView(data: List<CurrentResponse>) {
+    private fun displayDailyWeatherToRecycleView(data: FavCurrent) {
         if (data != null) {
-            initUI(data)
+            val x=ArrayList<FavCurrent>()
+            x.add(data)
+            initUI(x)
         }
     }
 
-    private fun showErrorMessage(message: String?) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show()
-        System.out.println("Error is  :  ---->  " + message)
-
-    }
-
-    override fun onItemClick(item: CurrentResponse, position: Int) {
-        Toast.makeText(context,"frrrr",Toast.LENGTH_LONG).show()
-        loadFragment(HomeWeather())
-    }
 
 
     private fun loadFragment(fragment: Fragment) {
@@ -106,6 +117,24 @@ lateinit var binding: FragmentFavouriteWeatherBinding
         fragmentTransaction.commit() // save the changes
     }
 
+    private fun showProgressBar() {
+       // binding.progressBar.visibility = View.VISIBLE
+    }
+
+    private fun hideProgressBar() {
+      //  binding.progressBar.visibility = View.INVISIBLE
+    }
+
+    private fun showErrorMessage(message: String?) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show()
+        System.out.println("Error is  :  ---->  " + message)
+        //binding.progressBar.visibility = View.INVISIBLE
+    }
 
 }
+
+
+
+
+
 
