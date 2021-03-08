@@ -81,9 +81,9 @@ class MapsFragment : Fragment(R.layout.fragment_maps) {
             mMap.clear()
 
             var getcoordinates = LatLng(latLon.latitude, latLon.longitude)
-            val title = model.getAddressGeocoder(getcoordinates)
+            //   val title = model.getAddressGeocoder(getcoordinates)
 
-            model.setAddressData(title)
+            // model.setAddressData(title)
             model.setLatData(latLon.latitude)
             model.setLonData(latLon.longitude)
 
@@ -106,8 +106,8 @@ class MapsFragment : Fragment(R.layout.fragment_maps) {
 
     private fun loadFragment(fragment: Fragment) {
         val fm = fragmentManager
-        val fragmentTransaction: FragmentTransaction = fm!!.beginTransaction()
-        fragmentTransaction.replace(R.id.mapContainer, fragment)
+        val fragmentTransaction: FragmentTransaction = fm!!.beginTransaction().addToBackStack(null)
+        fragmentTransaction.replace(R.id.relativeMap, fragment)
         fragmentTransaction.commit() // save the changes
     }
 

@@ -9,11 +9,13 @@ import com.soha.weather_app.weather.db.models.currentModel.CurrentResponse
 
 public class Repository {
 
-    public suspend fun retrofitWeatherCall(lat:Double=31.25654, lon:Double=32.28411) =
-        RetrofitInstance.api.getWeatherData(lat,lon)
+    public suspend fun retrofitWeatherCall(lat:String="31.25654", lon:String="32.28411",
+                                           units:String="metric", long:String="ar") =
+        RetrofitInstance.getWeatherService().getWeatherData(lat,lon,units,long)
 
-    public suspend fun retrofitCurrentCall(lat:Double=31.25654, lon:Double=32.28411)=
-        RetrofitInstance.api.getCurrentData(lat,lon)
+    public suspend fun retrofitCurrentCall(lat:String="31.25654", lon:String="32.28411",
+                                           units:String="metric", long:String="ar")=
+        RetrofitInstance.getWeatherService().getCurrentData(lat,lon,units,long)
 
 
 
@@ -31,4 +33,13 @@ public class Repository {
 
     public suspend fun getCurrentFromRoom(context: Context) =
         WeatherDatabase.getInstance(context).getWeatherDao().getAllCurrent()
+
+    fun getAllData(context: Context): List<WeatherResponse> =
+        WeatherDatabase.getInstance(context).getWeatherDao().getAllListWeatherData()
+
+    fun getAllCureentListData(context: Context): List<CurrentResponse> =
+        WeatherDatabase.getInstance(context).getWeatherDao().getAllCurrentListData()
+
+
+
 }

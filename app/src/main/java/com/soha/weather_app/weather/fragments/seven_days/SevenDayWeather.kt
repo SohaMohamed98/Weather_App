@@ -43,7 +43,11 @@ class SevenDayWeather : Fragment(R.layout.fragment_seven_day_weather) {
 
         weatherViewModel.weatherFromRoomLiveData.observe(viewLifecycleOwner, Observer {
             when (it) {
+                is Resource.Loading ->{
+                    showProgressBar()
+                }
                 is Resource.Success -> {
+                    hideProgressBar()
                     it.data?.let { it1 -> displayDailyWeatherToRecycleView(it1.daily) }
                 }
                 is Resource.Error -> {
@@ -70,6 +74,7 @@ class SevenDayWeather : Fragment(R.layout.fragment_seven_day_weather) {
     private fun displayDailyWeatherToRecycleView(data: List<Daily>) {
         if (data != null) {
             initUI(data)
+            adaptDaily!!.notifyDataSetChanged()
         }
     }
 

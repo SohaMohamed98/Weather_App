@@ -2,9 +2,9 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="200dp"
-    android:layout_height="320dp"
-    android:layout_margin="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="12dp"
     app:cardCornerRadius="20dp">
 
     <LinearLayout
@@ -27,11 +27,11 @@
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
-                android:backgroundTint="#75D1FA"
+                android:backgroundTint="#28C3B6BE"
                 android:background="@drawable/underline_item_layout"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:padding="3dp"
                 android:layout_margin="8dp">
 
@@ -40,7 +40,7 @@
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:weightSum="3"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_marginStart="8dp"
@@ -55,8 +55,8 @@
 
                     <ImageView
                         android:id="@+id/imgForecastItem"
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
                         android:layout_marginEnd="10dp"
                         android:layout_marginBottom="8dp"
                         android:layout_marginTop="8dp"
@@ -72,7 +72,7 @@
                         android:textStyle="bold"
                         android:layout_marginTop="8dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                       android:hint="555"
+                        android:hint="555"
                         app:layout_constraintStart_toStartOf="@+id/tvForecastState"
                         app:layout_constraintTop_toBottomOf="@id/tvForecastState"/>
 
@@ -96,7 +96,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:layout_marginTop="28dp"
             android:layout_margin="2dp">
             <LinearLayout
                 android:layout_width="match_parent"

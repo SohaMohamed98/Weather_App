@@ -16,22 +16,6 @@ abstract class WeatherDatabase : RoomDatabase() {
 
     abstract fun getWeatherDao(): WeatherDao
 
-  /*  companion object {
-        @Volatile
-        private var instance: WeatherDatabase? = null
-        private val LOCK = Any()
-
-        operator fun invoke(context: Context) = instance ?: synchronized(LOCK) {
-            instance ?: createDatabase(context).also { instance = it }
-        }
-        private fun createDatabase(context: Context) =
-                Room.databaseBuilder(
-                        context.applicationContext,
-                        WeatherDatabase::class.java,
-                        "weather_db").build()
-
-    }*/
-
     companion object {
         @Volatile
         private var instance: WeatherDatabase? = null
@@ -43,17 +27,6 @@ abstract class WeatherDatabase : RoomDatabase() {
             }
 
         }
-
-        /*companion object{
-            @Volatile var db: WeatherDatabase? = null
-            fun getInstance(application: Context): WeatherDatabase?{
-                if(db ==null){
-                    db =Room.databaseBuilder(application.applicationContext,
-                            WeatherDatabase::class.java,"day_db").allowMainThreadQueries().build()
-                }
-                return db
-            }
-        }*/
 
         private fun createDatabase(context: Context) =
             Room.databaseBuilder(

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/favContainer"
     tools:context=".weather.fragments.favourite.FavouriteWeather">
 
 
@@ -12,4 +13,20 @@
         android:layout_height="match_parent"
         android:text="fav" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/favRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/favourite_card">
+    </androidx.recyclerview.widget.RecyclerView>
+
+<com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/btnFav"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="bottom|right"
+    android:layout_margin="22dp"
+    android:src="@drawable/ic_favorite">
+
+</com.google.android.material.floatingactionbutton.FloatingActionButton>
 </FrameLayout>

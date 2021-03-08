@@ -1,15 +1,20 @@
 package com.soha.weather_app.weather.fragments.seven_days
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.NO_POSITION
 import com.soha.weather_app.R
 import com.soha.weather_app.databinding.ForecastWeatherHourlyItemBinding
 import com.soha.weather_app.utils.dayConverter
 import com.soha.weather_app.weather.db.models.DailyModel.Daily
 import com.soha.weather_app.utils.setImage
+import com.soha.weather_app.weather.fragments.current.HomeWeather
 
 class DailyAdapter(var daysList: List<Daily>) :
 RecyclerView.Adapter<DailyAdapter.DailyViewHolder>() {
@@ -33,15 +38,25 @@ RecyclerView.Adapter<DailyAdapter.DailyViewHolder>() {
 
         holder.bind(daysList[position])
         holder.itemView.setOnClickListener{
-            val bundle = bundleOf("cityWeatherDetail" to daysList[position])
-            Navigation.findNavController(it).navigate(R.id.action_sevenDayFragment_to_favouriteFragment, bundle)
+
+                if(position==1){
+                    val activity=it!!.context as AppCompatActivity
+                    val homeFragment= HomeWeather()
+                    activity.supportFragmentManager.beginTransaction().add(R.id.favContainer, homeFragment)
+                        .addToBackStack(null).commit()
+
+                //    Toast.makeText(it!!.context, "efwe", Toast.LENGTH_LONG).show()
+
+
+        }
+          //  val bundle = bundleOf("clouds" to daysList[position])
+          //  Navigation.findNavController(it).navigate(R.id.action_sevenDayFragment_to_favouriteFragment, bundle)
         }
 
     }
 
     fun updateHourlyList(newHourlyList: List<Daily>){
-         // forecastList.clear()
-       //  forecastList.(newHourlyList)
+        this.daysList= newHourlyList
         notifyDataSetChanged()
     }
 

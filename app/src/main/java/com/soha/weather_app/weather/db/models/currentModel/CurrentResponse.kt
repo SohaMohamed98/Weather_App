@@ -15,7 +15,8 @@ import com.soha.weather_app.weather.db.models.DailyModel.Weather
 @TypeConverters(TypeConvertDataBase::class)
 data class CurrentResponse(
     @PrimaryKey
-    val num: Int,
+    @ColumnInfo(name = "num")
+    val num:Int,
     @SerializedName("base")
     @ColumnInfo(name = "base")
     val base: String,
@@ -33,7 +34,7 @@ data class CurrentResponse(
     val dt: Double,
     @SerializedName("id")
     @ColumnInfo(name = "id")
-    val id: Double,
+    val id: Int,
     @SerializedName("main")
     @ColumnInfo(name = "main")
     val main: Main,

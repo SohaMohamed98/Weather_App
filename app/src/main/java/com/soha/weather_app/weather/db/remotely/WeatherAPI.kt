@@ -12,19 +12,23 @@ interface WeatherAPI {
     //ar  en lang
 
     @GET("onecall")
-    suspend fun getWeatherData(@Query("lat") lat:Double=31.25654,
-                               @Query("lon") lon: Double=32.28411,
-                               @Query("units") units: String="metric",//metric: Celsius, imperial: Fahrenheit.
-                               @Query(" lang") lang: String="ar",  //metric: metre/sec, imperial: miles/hour
-                              // @Query("exclude") exclude: String="current",
-                               @Query("APPID") app_id: String = API_KEY): Response<WeatherResponse>
+    suspend fun getWeatherData(
+        @Query("lat") lat: String = "31.25654",
+        @Query("lon") lon: String = "32.28411",
+        @Query("units") units: String = "metric",//metric: Celsius, imperial: Fahrenheit.
+        @Query("lang") lang: String = "ar",  //metric: metre/sec, imperial: miles/hour
+        // @Query("exclude") exclude: String="current",
+        @Query("APPID") app_id: String = API_KEY,
+    ): Response<WeatherResponse>
 
     @GET("weather")
-    suspend fun getCurrentData(@Query("lat") lat: Double=31.25654,
-                               @Query("lon") lon: Double=32.28411,
-                               @Query("units") units: String="metric",
-                               @Query(" lang") lang: String="ar",
-                               @Query("APPID") app_id: String = API_KEY): Response<CurrentResponse>
+    suspend fun getCurrentData(
+        @Query("lat") lat: String="31.25654",
+        @Query("lon") lon: String="32.28411",
+        @Query("units") units: String="metric",
+        @Query("lang") lang: String="ar",
+        @Query("APPID") app_id: String = API_KEY,
+    ): Response<CurrentResponse>
 
 
 }
