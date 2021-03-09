@@ -29,12 +29,13 @@ import com.soha.weather_app.weather.db.models.weatherModel.Current
 import com.soha.weather_app.weather.db.models.weatherModel.FavouriteData
 import com.soha.weather_app.weather.db.models.weatherModel.Hourly
 import com.soha.weather_app.weather.fragments.current.CurrentViewModel
+import com.soha.weather_app.weather.fragments.current.HomeWeather
 import com.soha.weather_app.weather.fragments.current.HourlyAdapter
 import com.soha.weather_app.weather.fragments.current.WeatherViewModel
 import com.soha.weather_app.weather.fragments.setting.MapFragment.LocationViewModel
 import com.soha.weather_app.weather.fragments.setting.SettingWeather
 
-class FavouriteWeather : Fragment(R.layout.fragment_favourite_weather){
+class FavouriteWeather : Fragment(R.layout.fragment_favourite_weather), FavouriteAdapter.OnItemClickListener{
 
 lateinit var binding: FragmentFavouriteWeatherBinding
 
@@ -54,7 +55,6 @@ lateinit var binding: FragmentFavouriteWeatherBinding
 
         binding = FragmentFavouriteWeatherBinding.inflate(layoutInflater)
         repo = Repository()
-       // binding.favRecyclerView.isEnabled = false
         val root = binding.root
 
         context?.let {
@@ -98,7 +98,7 @@ lateinit var binding: FragmentFavouriteWeatherBinding
 
 
     private fun initUI(data: List<FavouriteData>) {
-        var dailyAdapter = FavouriteAdapter(data)
+        var dailyAdapter = FavouriteAdapter(data, this)
         binding.favRecyclerView.apply {
             layoutManag = LinearLayoutManager(context)
             layoutManager = layoutManag
@@ -124,17 +124,21 @@ lateinit var binding: FragmentFavouriteWeatherBinding
     }
 
     private fun showProgressBar() {
-       // binding.progressBar.visibility = View.VISIBLE
+        binding.favProgressBar.visibility = View.VISIBLE
     }
 
     private fun hideProgressBar() {
-      //  binding.progressBar.visibility = View.INVISIBLE
+        binding.favProgressBar.visibility = View.INVISIBLE
     }
 
     private fun showErrorMessage(message: String?) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show()
         System.out.println("Error is  :  ---->  " + message)
         //binding.progressBar.visibility = View.INVISIBLE
+    }
+
+    override fun onItemClick(contact: FavouriteData) {
+        loadFragment(HomeWeather())
     }
 
 }

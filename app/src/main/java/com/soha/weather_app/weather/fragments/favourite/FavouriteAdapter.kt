@@ -7,15 +7,27 @@ import com.soha.weather_app.databinding.FavouriteCardBinding
 import com.soha.weather_app.weather.db.models.currentModel.FavCurrent
 import com.soha.weather_app.weather.db.models.weatherModel.FavouriteData
 
-class FavouriteAdapter(var favList:List<FavouriteData>)
+class FavouriteAdapter(var favList:List<FavouriteData>,listener: OnItemClickListener)
     : RecyclerView.Adapter<FavouriteAdapter.FavViewHolder>() {
+
+
+    private var listenerContact: OnItemClickListener = listener
+
+    interface OnItemClickListener {
+        fun onItemClick(contact: FavouriteData)
+    }
+
 
     class FavViewHolder(var view: FavouriteCardBinding) : RecyclerView.ViewHolder(view.root) {
         private val imageview = view.imgForecastItem
-        fun bind(favList: FavouriteData) {
+        fun bind(favList: FavouriteData, listener: OnItemClickListener) {
 
             view.tvForecastHumidity.text=favList.timezone
             view.tvForecastTemp.text = favList.current.humidity.toString()
+
+            itemView.setOnClickListener {
+                listener.onItemClick(favList)
+            }
 
         }
 
@@ -41,7 +53,7 @@ class FavouriteAdapter(var favList:List<FavouriteData>)
     }
 
     override fun onBindViewHolder(holder: FavViewHolder, position: Int) {
-        holder.bind(favList[position])
+        holder.bind(favList[position], listenerContact)
 
 
 
