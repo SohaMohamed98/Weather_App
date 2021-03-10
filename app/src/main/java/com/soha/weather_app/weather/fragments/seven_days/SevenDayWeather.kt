@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.soha.weather_app.R
 import com.soha.weather_app.databinding.FragmentSevenDayWeatherBinding
-import com.soha.weather_app.weather.db.models.weatherModel.Daily
+import com.soha.weather_app.weather.db.model.Daily
 import com.soha.weather_app.weather.db.Repository
 import com.soha.weather_app.weather.db.Resource
 import com.soha.weather_app.weather.fragments.current.WeatherViewModel

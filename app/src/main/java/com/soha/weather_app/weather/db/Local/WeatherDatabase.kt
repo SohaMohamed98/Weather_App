@@ -5,14 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.soha.weather_app.weather.db.models.weatherModel.FavouriteData
-import com.soha.weather_app.weather.db.models.weatherModel.WeatherResponse
-import com.soha.weather_app.weather.db.models.currentModel.CurrentResponse
-import com.soha.weather_app.weather.db.models.currentModel.FavCurrent
+import com.soha.weather_app.weather.db.model.entity.FavouriteData
+import com.soha.weather_app.weather.db.model.entity.WeatherResponse
 
 @Database(
-    entities = [WeatherResponse::class, CurrentResponse::class, FavouriteData::class, FavCurrent::class],
-    version = 1)
+    entities = [WeatherResponse::class, FavouriteData::class],
+    version = 2)
 @TypeConverters(TypeConvertDataBase::class)
 abstract class WeatherDatabase : RoomDatabase() {
 

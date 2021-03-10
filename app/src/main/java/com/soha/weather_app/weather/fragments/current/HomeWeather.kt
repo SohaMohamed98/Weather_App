@@ -20,8 +20,8 @@ import com.soha.weather_app.utils.setImage
 import com.soha.weather_app.utils.timeConverter
 import com.soha.weather_app.weather.db.Resource
 import com.soha.weather_app.weather.db.Repository
-import com.soha.weather_app.weather.db.models.weatherModel.Hourly
-import com.soha.weather_app.weather.db.models.currentModel.CurrentResponse
+import com.soha.weather_app.weather.db.model.Hourly
+import com.soha.weather_app.weather.db.model.entity.WeatherResponse
 import com.soha.weather_app.weather.fragments.setting.MapFragment.LocationViewModel
 
 
@@ -32,9 +32,7 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
     private var adapt: RecyclerView.Adapter<HourlyAdapter.ForecatViewHolder>? = null
     private var layoutManag: RecyclerView.LayoutManager? = null
     private lateinit var weatherViewModel: WeatherViewModel
-    private lateinit var currentViewModel: CurrentViewModel
     private lateinit var locationViewModel:LocationViewModel
-    lateinit var repo: Repository
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +40,6 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
         savedInstanceState: Bundle?,
     ): View? {
 
-        currentViewModel = ViewModelProvider(this).get(CurrentViewModel::class.java)
         weatherViewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
         locationViewModel = ViewModelProvider(this).get(LocationViewModel::class.java)
 
@@ -61,7 +58,6 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
         binding.recyclerViewCurrent.isEnabled = false
         context?.let {
             weatherViewModel.getWeatherAPIData(it)
-            currentViewModel.getCurrentAPIData(it)
            // currentViewModel.getCurrentAPIData(it,"32.154872","31.25415")
         }
 
@@ -81,29 +77,16 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
             }
         })
 
-        currentViewModel.currentLiveData.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                is Resource.Success -> {
-                    hideProgressBar()
-                    it.data?.let {
-                        // textView.text = it.current.weather.get(0).description
-                        // System.out.println("" + it.current.humidity)
-                    }
-                }
-                is Resource.Loading -> {
-                    showProgressBar()
-                }
-                is Resource.Error -> {
-                    showErrorMessage(it.message)
-                }
-            }
-        })
+
 
 
         weatherViewModel.weatherFromRoomLiveData.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
-                    it.data?.let { it1 -> displayDailyWeatherToRecycleView(it1.hourly) }
+                    it.data?.let {
+                        displayDailyWeatherToRecycleView(it.hourly)
+                        displayCurrentWeatherToCard(it)
+                    }
                     // it.data?.let { it1 -> initUI(it1) }
                 }
                 is Resource.Error -> {
@@ -112,38 +95,30 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
             }
         })
 
-        currentViewModel.currentLiveDataFromRoom.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                is Resource.Success -> {
-                    it.data?.let { it1 -> displayCurrentWeatherToCard(it1) }
-                    // it.data?.let { it1 -> initUI(it1) }
-                }
-                is Resource.Error -> {
-                    showErrorMessage(it.message)
-                }
-            }
-        })
+
 
         return root
     }
 
-    private fun displayCurrentWeatherToCard(it1: CurrentResponse) {
-        binding.tvAddress.text = it1.name
-        binding.tvTemp.text = Math.round(it1.main.temp).toString()
-        binding.tvTempMax.text = Math.round(it1.main.tempMax).toString()
-        binding.tvTempMin.text = Math.round(it1.main.tempMin).toString()
-        binding.tvHumidity.text = Math.round(it1.main.humidity).toString()
-        binding.tvUpdatedAt.text= dayConverter(it1.dt.toLong())
-        binding.tvStatus.text =it1.weather.get(0).description
-        binding.tvWind.text = Math.round(it1.wind.speed).toString()
-        binding.tvPressure.text = Math.round(it1.main.pressure).toString()
-        binding.tvSunrise.text= timeConverter(it1.sys.sunrise.toLong())
-        binding.tvSunset.text= timeConverter(it1.sys.sunset.toLong())
-        binding.tvVis.text = it1.visibility.toString()//mm
-        val url = it1.weather.get(0).icon
+    private fun displayCurrentWeatherToCard(it1: WeatherResponse) {
+        binding.tvAddress.text = it1.timezone
+        binding.tvTemp.text = Math.round(it1.daily.get(0).temp.day).toString()
+        binding.tvTempMax.text = Math.round(it1.daily.get(0).temp.max).toString()
+        binding.tvTempMin.text = Math.round(it1.daily.get(0).temp.min).toString()
+        binding.tvHumidity.text = Math.round(it1.current.humidity).toString()
+        binding.tvUpdatedAt.text= dayConverter(it1.current.dt.toLong())
+        binding.tvStatus.text =it1.current.weather.get(0).description
+        binding.tvWind.text = Math.round(it1.current.windSpeed).toString()
+        binding.tvPressure.text = Math.round(it1.current.pressure).toString()
+        binding.tvSunrise.text= timeConverter(it1.current.sunrise.toLong())
+        binding.tvSunset.text= timeConverter(it1.current.sunset.toLong())
+        binding.tvVis.text = it1.current.visibility.toString()//mm
+        val url = it1.current.weather.get(0).icon
 
-            setImage(binding.imgCurrentItem,  url)
+        setImage(binding.imgCurrentItem,  url)
     }
+
+
 
     @SuppressLint("WrongConstant")
     private fun initUI(data: List<Hourly>) {

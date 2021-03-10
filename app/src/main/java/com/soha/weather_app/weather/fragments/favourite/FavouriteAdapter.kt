@@ -4,10 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.soha.weather_app.databinding.FavouriteCardBinding
-import com.soha.weather_app.weather.db.models.currentModel.FavCurrent
-import com.soha.weather_app.weather.db.models.weatherModel.FavouriteData
+import com.soha.weather_app.weather.db.model.entity.FavouriteData
 
-class FavouriteAdapter(var favList:List<FavouriteData>,listener: OnItemClickListener)
+class FavouriteAdapter(var favList:List<FavouriteData>, listener: OnItemClickListener)
     : RecyclerView.Adapter<FavouriteAdapter.FavViewHolder>() {
 
 

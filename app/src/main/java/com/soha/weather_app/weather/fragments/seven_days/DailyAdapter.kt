@@ -2,11 +2,10 @@ package com.soha.weather_app.weather.fragments.seven_days
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.soha.weather_app.databinding.FavouriteCardBinding
 import com.soha.weather_app.utils.dayConverter
-import com.soha.weather_app.weather.db.models.weatherModel.Daily
+import com.soha.weather_app.weather.db.model.Daily
 import com.soha.weather_app.utils.setImage
 import com.soha.weather_app.utils.timeConverter
 

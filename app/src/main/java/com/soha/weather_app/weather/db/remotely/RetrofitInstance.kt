@@ -10,7 +10,7 @@ object RetrofitInstance {
 
     //lazy: means we only initialize this here wants
 
-    public fun getWeatherService(): WeatherAPI {
+  /*  public fun getWeatherService(): WeatherAPI {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -18,9 +18,9 @@ object RetrofitInstance {
             .create(WeatherAPI::class.java)
 
     }
-}
+}*/
 
-/*private val retrofit by lazy {
+private val retrofit by lazy {
     val logging = HttpLoggingInterceptor()
     logging.setLevel(HttpLoggingInterceptor.Level.BODY)
     val client = OkHttpClient.Builder()
@@ -36,4 +36,4 @@ object RetrofitInstance {
 val api by lazy {
     retrofit.create(WeatherAPI::class.java)
 }
-}*/
+}

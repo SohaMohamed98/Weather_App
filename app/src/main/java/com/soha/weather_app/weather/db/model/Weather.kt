@@ -1,4 +1,4 @@
-package com.soha.weather_app.weather.db.models.weatherModel
+package com.soha.weather_app.weather.db.model
 
 
 import com.google.gson.annotations.SerializedName

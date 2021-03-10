@@ -3,9 +3,7 @@ package com.soha.weather_app.db.Local
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.soha.weather_app.weather.db.models.weatherModel.Weather
-import com.soha.weather_app.weather.db.models.weatherModel.*
-import com.soha.weather_app.weather.db.models.currentModel.*
+import com.soha.weather_app.weather.db.model.*
 import java.lang.reflect.Type
 
 class TypeConvertDataBase {
@@ -29,26 +27,6 @@ class TypeConvertDataBase {
         return gson.fromJson<Current>(currentString, type)
     }
     //===================================================================
-
-    @TypeConverter
-    fun fromWeatherX(currentValues: List<WeatherX?>?): String? {
-        if (currentValues == null) {
-            return null
-        }
-        val gson = Gson()
-        val type: Type = object : TypeToken<List<WeatherX?>?>() {}.type
-        return gson.toJson(currentValues, type) //json
-    }
-
-    @TypeConverter
-    fun toWeatherX(currentString: String?): List<WeatherX?>? {
-        if (currentString == null) {
-            return null
-        }
-        val gson = Gson()
-        val type: Type = object : TypeToken<List<WeatherX?>?>() {}.type
-        return gson.fromJson<List<WeatherX?>?>(currentString, type)
-    }
 
 
 //===============================================================================
@@ -163,112 +141,9 @@ class TypeConvertDataBase {
     }
 //////////////////////////////////////////////////////////////////////////////////
 
-    @TypeConverter
-    fun fromClouds(currentValues: Clouds?): String? {
-        if (currentValues == null) {
-            return null
-        }
-        val gson = Gson()
-        val type: Type = object : TypeToken<Clouds?>() {}.type
-        return gson.toJson(currentValues, type) //json
-    }
 
-    @TypeConverter
-    fun toClouds(currentString: String?): Clouds? {
-        if (currentString == null) {
-            return null
-        }
-        val gson = Gson()
-        val type: Type = object : TypeToken<Clouds?>() {}.type
-        return gson.fromJson<Clouds?>(currentString, type)
-    }
-
-    //==========================================================================
-
-    @TypeConverter
-    fun fromCoord(currentValues: Coord?): String? {
-        if (currentValues == null) {
-            return null
-        }
-        val gson = Gson()
-        val type: Type = object : TypeToken<Coord?>() {}.type
-        return gson.toJson(currentValues, type) //json
-    }
-
-    @TypeConverter
-    fun toCoord(currentString: String?): Coord? {
-        if (currentString == null) {
-            return null
-        }
-        val gson = Gson()
-        val type: Type = object : TypeToken<Coord?>() {}.type
-        return gson.fromJson<Coord?>(currentString, type)
-    }
-
-    //===================================================================
-    @TypeConverter
-    fun fromMain(currentValues: Main?): String? {
-        if (currentValues == null) {
-            return null
-        }
-        val gson = Gson()
-        val type: Type = object : TypeToken<Main?>() {}.type
-        return gson.toJson(currentValues, type) //json
-    }
-
-    @TypeConverter
-    fun toMain(currentString: String?): Main? {
-        if (currentString == null) {
-            return null
-        }
-        val gson = Gson()
-        val type: Type = object : TypeToken<Main?>() {}.type
-        return gson.fromJson<Main?>(currentString, type)
-    }
 
 //===========================================================================================
-
-    @TypeConverter
-    fun fromSys(currentValues: Sys?): String? {
-        if (currentValues == null) {
-            return null
-        }
-        val gson = Gson()
-        val type: Type = object : TypeToken<Sys?>() {}.type
-        return gson.toJson(currentValues, type) //json
-    }
-
-    @TypeConverter
-    fun toSys(currentString: String?): Sys? {
-        if (currentString == null) {
-            return null
-        }
-        val gson = Gson()
-        val type: Type = object : TypeToken<Sys?>() {}.type
-        return gson.fromJson<Sys?>(currentString, type)
-    }
-
-    //=============================================================================
-
-    @TypeConverter
-    fun fromWind(currentValues: Wind?): String? {
-        if (currentValues == null) {
-            return null
-        }
-        val gson = Gson()
-        val type: Type = object : TypeToken<Wind?>() {}.type
-        return gson.toJson(currentValues, type) //json
-    }
-
-    @TypeConverter
-    fun toWind(currentString: String?): Wind? {
-        if (currentString == null) {
-            return null
-        }
-        val gson = Gson()
-        val type: Type = object : TypeToken<Wind>() {}.type
-        return gson.fromJson<Wind?>(currentString, type)
-    }
 
 
 //=====================================================================================

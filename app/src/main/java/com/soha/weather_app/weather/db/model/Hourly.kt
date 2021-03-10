@@ -1,9 +1,9 @@
-package com.soha.weather_app.weather.db.models.weatherModel
+package com.soha.weather_app.weather.db.model
 
 
 import com.google.gson.annotations.SerializedName
 
-data class Current(
+data class Hourly(
     @SerializedName("clouds")
     val clouds: Double,
     @SerializedName("dew_point")
@@ -14,12 +14,12 @@ data class Current(
     val feelsLike: Double,
     @SerializedName("humidity")
     val humidity: Double,
+    @SerializedName("pop")
+    val pop: Double,
     @SerializedName("pressure")
     val pressure: Double,
-    @SerializedName("sunrise")
-    val sunrise: Double,
-    @SerializedName("sunset")
-    val sunset: Double,
+    @SerializedName("rain")
+    val rain: Rain,
     @SerializedName("temp")
     val temp: Double,
     @SerializedName("uvi")

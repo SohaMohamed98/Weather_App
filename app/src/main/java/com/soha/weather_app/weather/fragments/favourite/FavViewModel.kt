@@ -9,8 +9,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.soha.weather_app.weather.db.Repository
 import com.soha.weather_app.weather.db.Resource
-import com.soha.weather_app.weather.db.models.currentModel.FavCurrent
-import com.soha.weather_app.weather.db.models.weatherModel.FavouriteData
+import com.soha.weather_app.weather.db.model.entity.FavouriteData
 import com.soha.weather_app.weather.fragments.setting.MapFragment.LocationViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

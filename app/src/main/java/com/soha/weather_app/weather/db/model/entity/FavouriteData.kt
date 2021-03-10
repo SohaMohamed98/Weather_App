@@ -1,10 +1,14 @@
-package com.soha.weather_app.weather.db.models.weatherModel
+package com.soha.weather_app.weather.db.model.entity
 
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import com.soha.weather_app.weather.db.model.Current
+import com.soha.weather_app.weather.db.model.Daily
+import com.soha.weather_app.weather.db.model.Hourly
+import com.soha.weather_app.weather.db.model.Minutely
 
 @Entity(
     tableName = "favouriteData"

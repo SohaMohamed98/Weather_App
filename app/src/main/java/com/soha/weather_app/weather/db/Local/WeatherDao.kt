@@ -4,10 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.soha.weather_app.weather.db.models.weatherModel.FavouriteData
-import com.soha.weather_app.weather.db.models.weatherModel.WeatherResponse
-import com.soha.weather_app.weather.db.models.currentModel.CurrentResponse
-import com.soha.weather_app.weather.db.models.currentModel.FavCurrent
+import com.soha.weather_app.weather.db.model.entity.FavouriteData
+import com.soha.weather_app.weather.db.model.entity.WeatherResponse
 
 @Dao
 interface WeatherDao {
@@ -19,13 +17,6 @@ interface WeatherDao {
     @Query("SELECT * FROM weatherData")
     fun getAllWeathers(): WeatherResponse
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCurrent(response: CurrentResponse)
-
-    @Query("SELECT * FROM currentData")
-    fun getAllCurrent(): CurrentResponse
-
-
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFavWeatherData(fav : FavouriteData)
@@ -33,9 +24,8 @@ interface WeatherDao {
     @Query("SELECT * FROM favouriteData")
     fun getFavWetherData(): List<FavouriteData>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFavCurrentData(response: FavCurrent)
+    @Query("select * from favouriteData where id in (:num)")
+   fun getDataById(num: Int): FavouriteData
 
-    @Query("SELECT * FROM currentFavData")
-    fun getFavCurrentData():List<FavCurrent>
+
 }

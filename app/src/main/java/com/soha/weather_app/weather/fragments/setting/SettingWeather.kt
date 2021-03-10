@@ -26,7 +26,6 @@ import com.soha.weather_app.databinding.FragmentHomeWeatherBinding
 import com.soha.weather_app.databinding.FragmentSettingWeatherBinding
 import com.soha.weather_app.weather.db.Repository
 import com.soha.weather_app.weather.db.Resource
-import com.soha.weather_app.weather.fragments.current.CurrentViewModel
 import com.soha.weather_app.weather.fragments.current.HomeWeather
 import com.soha.weather_app.weather.fragments.current.WeatherViewModel
 import com.soha.weather_app.weather.fragments.favourite.FavViewModel
@@ -46,7 +45,6 @@ class SettingWeather : Fragment(R.layout.fragment_setting_weather) {
 
     lateinit var binding: FragmentSettingWeatherBinding
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    lateinit var currentViewModel: CurrentViewModel
     lateinit var weatherViewModel: WeatherViewModel
     lateinit var favViewModel: FavViewModel
 
@@ -59,7 +57,6 @@ class SettingWeather : Fragment(R.layout.fragment_setting_weather) {
     ):
             View? {
 
-        currentViewModel =  ViewModelProvider(this).get(CurrentViewModel::class.java)
         weatherViewModel =  ViewModelProvider(this).get(WeatherViewModel::class.java)
         favViewModel =  ViewModelProvider(this).get(FavViewModel::class.java)
 
@@ -124,35 +121,6 @@ class SettingWeather : Fragment(R.layout.fragment_setting_weather) {
             if (binding.tvLat.text == null || binding.tvLon.text == null) {
                 Toast.makeText(context, "dddddf", Toast.LENGTH_LONG).show()
             } else {
-
-                context?.let { it ->
-                    currentViewModel.getCurrentAPIData(it,
-                        model.getLatData().value.toString(),
-                        model.getLonData().value.toString(),
-                        model.getTempData().value.toString(),
-                        model.getLanguageData().value.toString())
-
-
-                }
-                currentViewModel.currentLiveData.observe(viewLifecycleOwner, Observer {
-                    when (it) {
-                        is Resource.Success -> {
-
-                            it.data?.let {
-                                Toast.makeText(context, "${it.name}", Toast.LENGTH_LONG).show()
-                                binding.tvAddressLocation.text = it.name
-
-                            }
-                        }
-                        is Resource.Loading -> {
-                            // showProgressBar()
-                        }
-                        is Resource.Error -> {
-                            Toast.makeText(context, "errrrrrrrrrr", Toast.LENGTH_LONG).show()
-                            //showErrorMessage(it.message)
-                        }
-                    }
-                })
 
                 context?.let {
                     weatherViewModel.getWeatherAPIData(it,
