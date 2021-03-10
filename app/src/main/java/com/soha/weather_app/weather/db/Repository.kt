@@ -3,8 +3,8 @@ package com.soha.weather_app.weather.db
 import android.content.Context
 import com.soha.weather_app.db.Local.WeatherDatabase
 import com.soha.weather_app.db.remotely.RetrofitInstance
-import com.soha.weather_app.weather.db.model.entity.WeatherResponse
-import com.soha.weather_app.weather.db.model.entity.FavouriteData
+import com.soha.weather_app.weather.db.entity.WeatherResponse
+import com.soha.weather_app.weather.db.entity.FavouriteData
 
 
 public class Repository {

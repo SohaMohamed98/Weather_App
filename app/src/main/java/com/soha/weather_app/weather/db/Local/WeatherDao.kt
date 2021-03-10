@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.soha.weather_app.weather.db.model.entity.FavouriteData
-import com.soha.weather_app.weather.db.model.entity.WeatherResponse
+import com.soha.weather_app.weather.db.entity.FavouriteData
+import com.soha.weather_app.weather.db.entity.WeatherResponse
 
 @Dao
 interface WeatherDao {

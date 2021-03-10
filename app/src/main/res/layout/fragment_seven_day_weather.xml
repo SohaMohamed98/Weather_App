@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".weather.fragments.seven_days.SevenDayWeather">
+    tools:context=".weather.view.fragments.seven_days.SevenDayWeather">
 
     <ProgressBar
         android:layout_gravity="center"
@@ -44,7 +44,7 @@
                 android:id="@+id/recyclerViewDaily"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:listitem="@layout/forecast_weather_hourly_item" />
+                tools:listitem="@layout/seven_day_card" />
 
         </LinearLayout>
 

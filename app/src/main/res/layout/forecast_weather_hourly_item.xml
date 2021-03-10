@@ -27,7 +27,7 @@
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
-                android:backgroundTint="#FFE4EAED"
+                android:backgroundTint="#B692FA"
                 android:background="@drawable/underline_item_layout"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"

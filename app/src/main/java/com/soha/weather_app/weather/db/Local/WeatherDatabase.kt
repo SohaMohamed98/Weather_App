@@ -5,8 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.soha.weather_app.weather.db.model.entity.FavouriteData
-import com.soha.weather_app.weather.db.model.entity.WeatherResponse
+import com.soha.weather_app.weather.db.entity.FavouriteData
+import com.soha.weather_app.weather.db.entity.WeatherResponse
 
 @Database(
     entities = [WeatherResponse::class, FavouriteData::class],

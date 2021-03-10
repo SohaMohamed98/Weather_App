@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".weather.fragments.favourite.FavouriteWeather">
+    tools:context=".weather.view.fragments.favourite.FavouriteWeather">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/favContainer"
@@ -31,13 +31,13 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="@+id/txt"
             app:layout_constraintTop_toBottomOf="@id/txt"
-            tools:listitem="@layout/favourite_card"></androidx.recyclerview.widget.RecyclerView>
+            tools:listitem="@layout/seven_day_card"></androidx.recyclerview.widget.RecyclerView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnFav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="35dp"
+            android:layout_margin="20dp"
             android:src="@drawable/ic_favorite"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"></com.google.android.material.floatingactionbutton.FloatingActionButton>

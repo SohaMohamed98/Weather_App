@@ -7,7 +7,7 @@
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".weather.fragments.setting.MapFragment.MapsFragment"
+    tools:context=".weather.view.fragments.setting.MapFragment.MapsFragment"
     tools:ignore="InvalidId">
 <RelativeLayout
     android:id="@+id/relativeMap"

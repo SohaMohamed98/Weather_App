@@ -9,7 +9,7 @@
     You can also add your credentials to an existing key, using these values:
 
     Package name:
-    com.soha.weather_app.weather.fragments
+    com.soha.weather_app.weather.view.fragments
 
     SHA-1 certificate fingerprint:
     1A:B5:DF:19:12:63:17:A5:CF:98:57:5A:CC:4D:A8:75:41:99:60:16
