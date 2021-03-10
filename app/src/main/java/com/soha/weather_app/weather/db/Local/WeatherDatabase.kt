@@ -10,7 +10,7 @@ import com.soha.weather_app.weather.db.model.entity.WeatherResponse
 
 @Database(
     entities = [WeatherResponse::class, FavouriteData::class],
-    version = 2)
+    version = 3)
 @TypeConverters(TypeConvertDataBase::class)
 abstract class WeatherDatabase : RoomDatabase() {
 

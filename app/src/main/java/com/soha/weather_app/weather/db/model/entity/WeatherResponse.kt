@@ -5,10 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import com.soha.weather_app.weather.db.model.Current
-import com.soha.weather_app.weather.db.model.Daily
-import com.soha.weather_app.weather.db.model.Hourly
-import com.soha.weather_app.weather.db.model.Minutely
+import com.soha.weather_app.weather.db.model.*
 
 @Entity(
     tableName = "weatherData"
@@ -39,7 +36,8 @@ data class WeatherResponse(
     val timezone: String,
     @SerializedName("timezone_offset")
     @ColumnInfo(name = "timezone_offset")
-    val timezoneOffset: Double
+    val timezoneOffset: Double,
+
 
 
     )
