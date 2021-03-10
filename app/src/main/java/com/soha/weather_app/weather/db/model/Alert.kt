@@ -1,16 +1,17 @@
 package com.soha.weather_app.weather.db.model
 
+
 import com.google.gson.annotations.SerializedName
 
-class Alert (
-    @SerializedName("sender_name")
-    val senderName: String,
-    @SerializedName("start")
-    val start: Int,
+data class Alert(
     @SerializedName("description")
-    val description: String,
+    val description: String?,
     @SerializedName("end")
-    val end: Int,
+    val end: Int?,
     @SerializedName("event")
-    val event: String
+    val event: String?,
+    @SerializedName("sender_name")
+    val senderName: String?,
+    @SerializedName("start")
+    val start: Int?
 )

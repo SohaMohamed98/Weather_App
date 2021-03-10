@@ -19,7 +19,6 @@ import com.soha.weather_app.utils.dayConverter
 import com.soha.weather_app.utils.setImage
 import com.soha.weather_app.utils.timeConverter
 import com.soha.weather_app.weather.db.Resource
-import com.soha.weather_app.weather.db.Repository
 import com.soha.weather_app.weather.db.model.Hourly
 import com.soha.weather_app.weather.db.model.entity.WeatherResponse
 import com.soha.weather_app.weather.fragments.setting.MapFragment.LocationViewModel

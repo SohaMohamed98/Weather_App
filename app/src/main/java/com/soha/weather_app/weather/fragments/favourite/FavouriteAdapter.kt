@@ -21,8 +21,8 @@ class FavouriteAdapter(var favList:List<FavouriteData>, listener: OnItemClickLis
         private val imageview = view.imgForecastItem
         fun bind(favList: FavouriteData, listener: OnItemClickListener) {
 
-            view.tvForecastHumidity.text=favList.timezone
-            view.tvForecastTemp.text = favList.current.humidity.toString()
+            view.tvForecastHumidity.text=favList.lat.toString()
+            view.tvForecastTemp.text = favList.lon.toString()
 
             itemView.setOnClickListener {
                 listener.onItemClick(favList)

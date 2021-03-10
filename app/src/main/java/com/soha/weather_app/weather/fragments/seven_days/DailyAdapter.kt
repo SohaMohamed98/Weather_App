@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.soha.weather_app.databinding.FavouriteCardBinding
 import com.soha.weather_app.utils.dayConverter
-import com.soha.weather_app.weather.db.model.Daily
 import com.soha.weather_app.utils.setImage
 import com.soha.weather_app.utils.timeConverter
+import com.soha.weather_app.weather.db.model.Daily
 
 class DailyAdapter(var daysList: List<Daily>) :
     RecyclerView.Adapter<DailyAdapter.DailyViewHolder>() {

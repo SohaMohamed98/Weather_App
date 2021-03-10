@@ -9,7 +9,7 @@ data class Daily(
     @SerializedName("dew_point")
     val dewPoint: Double,
     @SerializedName("dt")
-    val dt: Double,
+    val dt: Int,
     @SerializedName("feels_like")
     val feelsLike: FeelsLike,
     @SerializedName("humidity")
@@ -20,6 +20,8 @@ data class Daily(
     val pressure: Double,
     @SerializedName("rain")
     val rain: Double,
+    @SerializedName("snow")
+    val snow: Double,
     @SerializedName("sunrise")
     val sunrise: Double,
     @SerializedName("sunset")

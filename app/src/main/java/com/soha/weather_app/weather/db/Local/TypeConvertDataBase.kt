@@ -120,30 +120,6 @@ class TypeConvertDataBase {
 
     //============================================================================
 
-    @TypeConverter
-    fun fromMinutely(currentValues: List<Minutely?>?): String? {
-        if (currentValues == null) {
-            return null
-        }
-        val gson = Gson()
-        val type: Type = object : TypeToken<List<Minutely?>?>() {}.type
-        return gson.toJson(currentValues, type) //json
-    }
-
-    @TypeConverter
-    fun toMinutely(currentString: String?): List<Minutely?>? {
-        if (currentString == null) {
-            return null
-        }
-        val gson = Gson()
-        val type: Type = object : TypeToken<List<Minutely?>?>() {}.type
-        return gson.fromJson<List<Minutely?>?>(currentString, type)
-    }
-//////////////////////////////////////////////////////////////////////////////////
-
-
-
-//===========================================================================================
 
 
 //=====================================================================================
