@@ -8,7 +8,7 @@
         android:title="7Day"
         android:icon="@drawable/ic_one_day" />
 
-    <item android:id="@+id/alarmFragment"
+    <item android:id="@+id/alertsFragment"
         android:title="Alarm"
         android:icon="@drawable/ic_all_news" />
 

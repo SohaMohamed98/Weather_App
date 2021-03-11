@@ -1,9 +1,8 @@
 package com.soha.weather_app.db.Local
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.lifecycle.LiveData
+import androidx.room.*
+import com.soha.weather_app.weather.db.entity.AlertEntity
 import com.soha.weather_app.weather.db.entity.FavouriteData
 import com.soha.weather_app.weather.db.entity.WeatherResponse
 
@@ -26,6 +25,22 @@ interface WeatherDao {
 
     @Query("select * from favouriteData where id in (:num)")
    fun getDataById(num: Int): FavouriteData
+
+    @Delete
+    fun deleteFav(Fav: FavouriteData)
+
+   /////////////////////////////////////////////////////////////
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+
+    suspend fun insertAlert(alertDatabase: AlertEntity)
+
+    @Query("select * from alert_table")
+    fun getAlerts(): LiveData<MutableList<AlertEntity>>
+
+    @Delete
+     fun deleteAlert(alertDatabase: AlertEntity)
+
 
 
 }

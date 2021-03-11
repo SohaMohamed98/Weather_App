@@ -10,6 +10,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.soha.weather_app.weather.db.Repository
 import com.soha.weather_app.weather.db.Resource
+import com.soha.weather_app.weather.db.entity.AlertEntity
 import com.soha.weather_app.weather.db.entity.FavouriteData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -125,4 +126,6 @@ class FavViewModel (application: Application): AndroidViewModel(application){
         }
         return false
     }
+
+
 }

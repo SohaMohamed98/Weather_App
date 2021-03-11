@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.soha.weather_app.databinding.FavouriteItemBinding
 import com.soha.weather_app.utils.setImage
+import com.soha.weather_app.weather.db.entity.AlertEntity
 import com.soha.weather_app.weather.db.entity.FavouriteData
 
-class FavouriteAdapter(var favList:List<FavouriteData>, listener: OnItemClickListener)
+class FavouriteAdapter(var favList:MutableList<FavouriteData>, listener: OnItemClickListener)
     : RecyclerView.Adapter<FavouriteAdapter.FavViewHolder>() {
 
 
@@ -46,11 +47,20 @@ class FavouriteAdapter(var favList:List<FavouriteData>, listener: OnItemClickLis
 
     }
 
+   public fun getFavByVH(viewHolder: RecyclerView.ViewHolder): FavouriteData {
+        return favList.get(viewHolder.adapterPosition)
+    }
+    fun removeFavItem(viewHolder: RecyclerView.ViewHolder){
+       favList.removeAt(viewHolder.adapterPosition)
+        notifyItemRemoved(viewHolder.adapterPosition)
+
+    }
+
     override fun getItemCount(): Int {
         return favList.size
     }
 
-    fun setData(d:List<FavouriteData>){
+    fun setData(d:MutableList<FavouriteData>){
         this.favList = d
         notifyDataSetChanged()
 

@@ -18,9 +18,9 @@
 
     </fragment>
     <fragment
-        android:id="@+id/alarmFragment"
-        android:name="com.soha.weather_app.weather.view.fragments.alarm.AlarmWeather"
-        android:label="AlarmWeather" />
+        android:id="@+id/alertsFragment"
+        android:name="com.soha.alert.view.AlertsFragment"
+        android:label="AlertsFragment" />
     <fragment
         android:id="@+id/favouriteFragment"
         android:name="com.soha.weather_app.weather.view.fragments.favourite.FavouriteWeather"
@@ -49,6 +49,7 @@
         android:name="com.soha.weather_app.weather.view.fragments.favourite.FavouriteDetails"
         android:label="fragment_favourite_details"
         tools:layout="@layout/fragment_favourite_details" />
+
 
 
 </navigation>
