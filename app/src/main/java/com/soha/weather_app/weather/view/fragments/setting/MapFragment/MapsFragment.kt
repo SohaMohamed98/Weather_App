@@ -23,7 +23,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.soha.weather_app.R
-import com.soha.weather_app.utils.getAddressGeocoder
+import com.soha.weather_app.weather.utils.getAddressGeocoder
 import com.soha.weather_app.weather.view.fragments.setting.MapFragment.SettingWeather
 import com.soha.weather_app.weather.viewModel.LocationViewModel
 
@@ -79,7 +79,7 @@ class MapsFragment : Fragment(R.layout.fragment_maps) {
 
         mapSettings?.isZoomGesturesEnabled = true
 
-            mMap.setOnMapLongClickListener { latLon ->
+            mMap.setOnMapClickListener { latLon ->
             mMap.clear()
 
             var getcoordinates = LatLng(latLon.latitude, latLon.longitude)

@@ -14,7 +14,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.google.gson.Gson
-import com.soha.weather_app.utils.formateTime
 import com.soha.weather_app.weather.db.Repository
 import com.soha.weather_app.weather.db.entity.WeatherResponse
 import com.soha.weather_app.weather.db.model.Alert
@@ -34,7 +33,7 @@ class AlertWork(context: Context, workerParams: WorkerParameters) :
     private var lang: String? = null
     private var units: String? = null
     private var windSpeed: String? = null
-    private val mCtx = context
+    private val context = context
     private var requestCodeList = ArrayList<Int>()
     private val gson = Gson()
     private lateinit var alarmManager: AlarmManager
@@ -55,10 +54,8 @@ class AlertWork(context: Context, workerParams: WorkerParameters) :
     }
 
     fun init() {
-        alarmManager = mCtx.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        sharedPreferences = mCtx.getSharedPreferences(
-            "prefs",
-            Context.MODE_PRIVATE
+        alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        sharedPreferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE
         )
         editor = sharedPreferences.edit()
 
@@ -107,10 +104,10 @@ class AlertWork(context: Context, workerParams: WorkerParameters) :
 
     fun fetchWeather(): MutableLiveData<WeatherResponse> {
 
-        Log.v("alertTest",lat!!)
-        Log.v("alertTest",lon!!)
-        Log.v("alertTest",units!!)
-        Log.v("alertTest",lang!!)
+//        Log.v("alertTest",lat!!)
+//        Log.v("alertTest",lon!!)
+//        Log.v("alertTest",units!!)
+//        Log.v("alertTest",lang!!)
        GlobalScope.launch {
             Dispatchers.IO
 
@@ -142,19 +139,19 @@ class AlertWork(context: Context, workerParams: WorkerParameters) :
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     fun setNotification(startTime: Int, event: String, description: String) {
-        val intent = Intent(mCtx, AlertReceiver::class.java)
+        val intent = Intent(context, AlertReceiver::class.java)
         intent.putExtra("event", event)
         intent.putExtra("desc", description)
         val r = Random()
         val i1 = r.nextInt(99)
 
-        val pendingIntent = PendingIntent.getBroadcast(mCtx, i1, intent, 0)
+        val pendingIntent = PendingIntent.getBroadcast(context, i1, intent, 0)
         requestCodeList.add(i1)
         val alertTime: Long = startTime.toLong()
         Log.v("alertTime", alertTime.toString())
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, alertTime, pendingIntent)
         // Toast.makeText(mCtx, R.string.set_alarm, Toast.LENGTH_LONG).show()
-        mCtx.registerReceiver(AlertReceiver(), IntentFilter())
+        context.registerReceiver(AlertReceiver(), IntentFilter())
     }
 }

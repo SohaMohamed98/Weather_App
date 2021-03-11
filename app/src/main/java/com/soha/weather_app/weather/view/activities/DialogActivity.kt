@@ -1,4 +1,4 @@
-package com.soha.alert.view
+package com.soha.weather_app.weather.view.activities
 
 import android.annotation.SuppressLint
 import android.app.Dialog

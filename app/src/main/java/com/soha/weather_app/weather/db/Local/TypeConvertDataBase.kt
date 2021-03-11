@@ -1,4 +1,4 @@
-package com.soha.weather_app.db.Local
+package com.soha.weather_app.weather.db.Local
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

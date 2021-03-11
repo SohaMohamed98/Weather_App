@@ -3,10 +3,12 @@ package com.soha.weather_app.weather.view.fragments.current
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.soha.weather_app.databinding.ForecastWeatherHourlyItemBinding
-import com.soha.weather_app.utils.dayConverter
-import com.soha.weather_app.utils.setImage
 import com.soha.weather_app.weather.db.model.Hourly
+import com.soha.weather_app.weather.utils.dayConverter
+import com.soha.weather_app.weather.utils.getImage
+import com.soha.weather_app.weather.utils.setImage
 
 class HourlyAdapter(var forecastList: List<Hourly>) :
     RecyclerView.Adapter<HourlyAdapter.ForecatViewHolder>() {
@@ -27,13 +29,14 @@ class HourlyAdapter(var forecastList: List<Hourly>) :
     override fun onBindViewHolder(holder: ForecatViewHolder, position: Int) {
 
         holder.bind(forecastList[position])
+      //  Glide.with(it).load(getImage(forecastList[position].weather.get(0).icon)).into(holder.view.imgForecastItem)
 
     }
 
 
     class ForecatViewHolder(var view: ForecastWeatherHourlyItemBinding) :
         RecyclerView.ViewHolder(view.root) {
-        private val imageview = view.imgForecastItem
+       private val imageview = view.imgForecastItem
 
 
         fun bind(forecast: Hourly) {
@@ -45,6 +48,8 @@ class HourlyAdapter(var forecastList: List<Hourly>) :
             view.tvForecastTime.text = dayConverter((forecast.dt).toLong())
             view.tvForecastFeelsTemp.text = (Math.round(forecast.feelsLike)).toString()
             view.tvVisibility.text= forecast.visibility.toString()
+
+
 
 
 

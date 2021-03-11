@@ -1,4 +1,4 @@
-package com.soha.alert.view
+package com.soha.weather_app.weather.view.activities
 
 import android.app.*
 import android.content.*
@@ -21,11 +21,13 @@ import com.soha.alert.viewModel.AlertAdapter
 import com.soha.alert.viewModel.AlertsViewModel
 import com.soha.weather_app.R
 import com.soha.weather_app.databinding.FragmentAlertsBinding
-import com.soha.weather_app.utils.formateTime
 import com.soha.weather_app.weather.db.entity.AlertEntity
 import com.soha.weather_app.weather.db.model.Alert
+import com.soha.weather_app.weather.provider.Setting
 import com.soha.weather_app.weather.receiver.AlertReceiver
 import com.soha.weather_app.weather.receiver.DialogReceiver
+import com.soha.weather_app.weather.utils.formateTime
+import com.soha.weather_app.weather.viewModel.WeatherViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -43,7 +45,7 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
     private lateinit var alarmManager: AlarmManager
     lateinit var sharedPreferences: SharedPreferences
     lateinit var editor: SharedPreferences.Editor
-   // private lateinit var viewModel: WeatherViewModel
+    private lateinit var viewModel: WeatherViewModel
     private lateinit var alertViewModel: AlertsViewModel
     private lateinit var alertAdapter: AlertAdapter
     private lateinit var alertList: List<Alert>
@@ -87,9 +89,7 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
 
     private fun init() {
         sharedPreferences = requireActivity().getSharedPreferences(
-            "prefs",
-            Context.MODE_PRIVATE
-        )
+            "prefs", Context.MODE_PRIVATE)
         editor = sharedPreferences.edit()
         alarmManager =
             requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -100,15 +100,14 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
         ItemTouchHelper(itemTouchHelper).attachToRecyclerView( binding.alertRV)
         alertViewModel = ViewModelProvider(this).get(AlertsViewModel::class.java)
 
-    //    viewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
+       viewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
         prefs = PreferenceManager.getDefaultSharedPreferences(context)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alerts, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        binding= FragmentAlertsBinding.inflate(layoutInflater)
+      //  binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alerts, container, false)
         binding.alertDate.setOnClickListener {
             getDate()
         }
@@ -191,12 +190,14 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
                     }
                 }
             } else {
-                Toast.makeText(requireActivity(), "Please Enter Data", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireActivity(), "Data is empty", Toast.LENGTH_LONG).show()
             }
         }
 
         return binding.root
     }
+
+
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     fun setNotification(
         hour: Int,
@@ -228,6 +229,8 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
 
         addAlert(i1, event, date, description, true)
     }
+
+
     private fun getAlertFromDB() {
         alertViewModel.getAlert(requireContext()).observe(viewLifecycleOwner,  {
             it?.let {
@@ -239,13 +242,10 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
 
     }
 
-    private fun addAlert(
-        requestCode: Int,
-        event: String,
-        start: String,
-        description: String,
-        status: Boolean
-    ) {
+
+
+    private fun addAlert(requestCode: Int, event: String, start: String,
+                         description: String, status: Boolean) {
         val alert = AlertEntity(requestCode, event, start, description, status)
         GlobalScope.launch {
             Dispatchers.IO
@@ -254,6 +254,8 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
 
 
     }
+
+
     private fun setAlaram(event: String, desc: String,
                           hour: Int, min: Int,
                           day: Int, month: Int, year: Int
@@ -281,6 +283,7 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
     }
 
 
+
     private fun getDate() {
         val c = Calendar.getInstance()
         var year = c.get(Calendar.YEAR)
@@ -298,6 +301,8 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
         dpd.datePicker.minDate = System.currentTimeMillis() - 1000
         dpd.show()
     }
+
+
 
     private fun getTime() {
         val c = Calendar.getInstance()
@@ -327,6 +332,7 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
 
         tpd.show()
     }
+
 
 
     // swipe for delete
@@ -359,10 +365,12 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
             }
         }
 
+
     // delete favorite item
     suspend fun deleteFavoriteItemFromDB(alertDB: AlertEntity) {
         alertViewModel.deleteAlert(alertDB,requireContext())
     }
+
 
     fun cancelAlarm(requestCode: Int) {
         val intent = Intent(requireContext(), AlertReceiver::class.java)

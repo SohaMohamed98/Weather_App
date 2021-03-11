@@ -3,7 +3,7 @@ package com.soha.weather_app.weather.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.soha.alert.view.DialogActivity
+import com.soha.weather_app.weather.view.activities.DialogActivity
 
 class DialogReceiver : BroadcastReceiver() {
 

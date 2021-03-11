@@ -19,9 +19,9 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.soha.weather_app.R
 import com.soha.weather_app.databinding.FragmentSettingWeatherBinding
-import com.soha.weather_app.utils.getAddressGeocoder
-import com.soha.weather_app.utils.setLocale
 import com.soha.weather_app.weather.db.Resource
+import com.soha.weather_app.weather.utils.getAddressGeocoder
+import com.soha.weather_app.weather.utils.setLocale
 import com.soha.weather_app.weather.viewModel.WeatherViewModel
 import com.soha.weather_app.weather.viewModel.FavViewModel
 import com.soha.weather_app.weather.viewModel.LocationViewModel

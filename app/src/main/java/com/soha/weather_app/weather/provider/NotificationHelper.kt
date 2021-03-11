@@ -1,4 +1,4 @@
-package com.soha.alert.provider
+package com.soha.weather_app.weather.provider
 
 import android.annotation.TargetApi
 import android.app.NotificationChannel

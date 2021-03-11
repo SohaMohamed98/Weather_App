@@ -1,6 +1,5 @@
-package com.soha.weather_app.db.remotely
-
-import com.soha.weather_app.utils.Constants.Companion.BASE_URL
+package com.soha.weather_app.weather.db.remotely
+import com.soha.weather_app.weather.utils.Constants.Companion.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

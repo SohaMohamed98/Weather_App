@@ -20,12 +20,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.soha.weather_app.R
 import com.soha.weather_app.databinding.FragmentHomeWeatherBinding
-import com.soha.weather_app.utils.dayConverter
-import com.soha.weather_app.utils.setImage
-import com.soha.weather_app.utils.timeConverter
 import com.soha.weather_app.weather.db.Resource
 import com.soha.weather_app.weather.db.model.Hourly
 import com.soha.weather_app.weather.db.entity.WeatherResponse
+import com.soha.weather_app.weather.utils.dayConverter
+import com.soha.weather_app.weather.utils.setImage
+import com.soha.weather_app.weather.utils.timeConverter
 import com.soha.weather_app.weather.viewModel.LocationViewModel
 import com.soha.weather_app.weather.viewModel.WeatherViewModel
 
@@ -135,7 +135,6 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
             layoutManager = layoutManag
             adapt = dailyAdapter
             adapter = adapt
-
         }
     }
 

@@ -1,4 +1,4 @@
-package com.soha.weather_app.db.Local
+package com.soha.weather_app.weather.db.Local
 
 import androidx.lifecycle.LiveData
 import androidx.room.*

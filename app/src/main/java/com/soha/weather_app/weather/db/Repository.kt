@@ -3,14 +3,13 @@ package com.soha.weather_app.weather.db
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.soha.weather_app.db.Local.WeatherDatabase
-import com.soha.weather_app.db.remotely.RetrofitInstance
-import com.soha.weather_app.db.remotely.WeatherAPI
-import com.soha.weather_app.utils.Constants.Companion.API_KEY
+import com.soha.weather_app.weather.db.Local.WeatherDatabase
 import com.soha.weather_app.weather.db.entity.AlertEntity
 import com.soha.weather_app.weather.db.entity.WeatherResponse
 import com.soha.weather_app.weather.db.entity.FavouriteData
 import com.soha.weather_app.weather.db.model.GeoModel.GeoModel
+import com.soha.weather_app.weather.db.remotely.RetrofitInstance
+import com.soha.weather_app.weather.utils.Constants.Companion.API_KEY
 import kotlinx.coroutines.*
 import retrofit2.Call
 import java.lang.Exception

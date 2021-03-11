@@ -1,9 +1,9 @@
-package com.soha.weather_app.db.remotely
+package com.soha.weather_app.weather.db.remotely
 
-import com.soha.weather_app.utils.Constants.Companion.API_KEY
 import com.soha.weather_app.weather.db.entity.WeatherResponse
 import com.soha.weather_app.weather.db.entity.FavouriteData
 import com.soha.weather_app.weather.db.model.GeoModel.GeoModel
+import com.soha.weather_app.weather.utils.Constants.Companion.API_KEY
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET

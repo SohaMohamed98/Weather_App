@@ -31,14 +31,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/.
-        -->
+        <receiver
+            android:name="com.soha.weather_app.weather.receiver.DialogReceiver"
+            android:enabled="true"
+            android:exported="true">
+
+        </receiver>
+        <receiver
+            android:name="com.soha.weather_app.weather.receiver.AlertReceiver"
+            android:enabled="true"
+            android:exported="true">
+
+        </receiver>
+
+        <activity android:name="com.soha.weather_app.weather.view.activities.DialogActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog" android:launchMode="singleTop"/>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />

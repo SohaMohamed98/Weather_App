@@ -1,4 +1,4 @@
-package com.soha.weather_app.utils
+package com.soha.weather_app.weather.utils
 
 
 import android.app.Activity
@@ -11,6 +11,10 @@ import com.soha.weather_app.R
 import java.text.SimpleDateFormat
 import java.util.*
 
+
+fun getImage(icon: String): String {
+    return "http://openweathermap.org/img/w/${icon}.png"
+}
 
 fun setLocale(activity: Activity, languageCode: String?): Unit {
     val locale = Locale(languageCode)
