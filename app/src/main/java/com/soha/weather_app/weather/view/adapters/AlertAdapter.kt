@@ -1,4 +1,4 @@
-package com.soha.alert.viewModel
+package com.soha.weather_app.weather.view.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,39 +11,45 @@ import com.soha.weather_app.weather.db.entity.AlertEntity
 
 import java.util.*
 
-class AlertAdapter (val context: Context) : RecyclerView.Adapter<AlertAdapter.ViewHolder>() {
-    private  var alertList  : MutableList<AlertEntity>
+class AlertAdapter(val context: Context) : RecyclerView.Adapter<AlertAdapter.ViewHolder>() {
+    private var alertList: MutableList<AlertEntity>
 
 
     init {
         alertList = ArrayList<AlertEntity>()
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.alert_item,parent,false)
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.alert_item, parent, false)
         return ViewHolder(v)
     }
+
     override fun getItemCount(): Int {
         return alertList.size
     }
-    fun fetchData (alertList : MutableList<AlertEntity>, context: Context){
+
+    fun fetchData(alertList: MutableList<AlertEntity>, context: Context) {
         this.alertList = alertList
     }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.time.text = alertList[position].start
     }
+
     /*
   SetUp Of Delete Item
    */
     fun getItemByVH(viewHolder: RecyclerView.ViewHolder): AlertEntity {
         return alertList.get(viewHolder.adapterPosition)
     }
-    fun removeAlertItem(viewHolder: RecyclerView.ViewHolder){
+
+    fun removeAlertItem(viewHolder: RecyclerView.ViewHolder) {
         alertList.removeAt(viewHolder.adapterPosition)
         notifyItemRemoved(viewHolder.adapterPosition)
 
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val time = itemView.findViewById(R.id.time) as TextView
 
 

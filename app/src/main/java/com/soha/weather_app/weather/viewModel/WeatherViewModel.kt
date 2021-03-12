@@ -8,6 +8,7 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.preference.PreferenceManager
 import com.soha.weather_app.weather.db.entity.WeatherResponse
 import com.soha.weather_app.weather.db.Resource
 import com.soha.weather_app.weather.db.Repository
@@ -17,60 +18,60 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 
 class WeatherViewModel(application: Application) : AndroidViewModel(application) {
+    lateinit var sp: SharedPreferences
     private val newRepo: Repository
-    val locationViewModel = LocationViewModel(application)
+    val locationViewModel = SettingViewModel(application)
+
+    val checkRoom=MutableLiveData<Boolean>()
 
     init {
         newRepo = Repository()
+        sp = PreferenceManager.getDefaultSharedPreferences(getApplication())
     }
 
-    val lat = locationViewModel.getLatData().value
-    val lon = locationViewModel.getLonData().value
-    val temp = locationViewModel.getTempData().value
-    val long = locationViewModel.getLonData().value
-
-
+    val lat1 = sp.getString("lat", "")
+    val lon1 = sp.getString("lon", "")
+    val temp = sp.getString("temp", "")
+    val long = sp.getString("lang", "")
 
     val weatherLiveData = MutableLiveData<Resource<WeatherResponse>>()
     val weatherFromRoomLiveData = MutableLiveData<Resource<WeatherResponse>>()
 
-    fun getWeatherAPIData(  context: Context, lat: String = this.lat.toString(), lon: String = this.lon.toString(),
-                            units: String = this.temp.toString(), long: String = this.long.toString())
-    = CoroutineScope(Dispatchers.IO).launch {
-        weatherLiveData.postValue(Resource.Loading())
-        try {
-            if (hasInternetConnection(context)) {
-                val response = newRepo.retrofitWeatherCall(lat, lon, units, long)
-                weatherLiveData.postValue(handleGetWeatherApiData(response, context)!!)
+    fun getWeatherAPIData(
+        context: Context, lat: String = lat1.toString(), lon: String = lon1.toString(),
+        units: String = temp.toString(), long: String = this.long.toString(),
+    ) {
+        CoroutineScope(Dispatchers.IO).launch {
+            weatherLiveData.postValue(Resource.Loading())
+            try {
+                if (hasInternetConnection(context)) {
+                    val response = newRepo.retrofitWeatherCall(lat, lon, units, long)
+                    weatherLiveData.postValue(handleGetWeatherApiData(response, context)!!)
 
-            } else {
-                weatherLiveData.postValue(Resource.Error("No internet connection"))
+                } else {
+                    weatherLiveData.postValue(Resource.Error("No internet connection"))
 
-            }
-            val weather = newRepo.getWeatherFromRoom(context)
+                }
+                val weather = newRepo.getWeatherFromRoom(context)
 
 
-            weatherFromRoomLiveData.postValue(handleGetWeatherFromRoom(weather)!!)
+                weatherFromRoomLiveData.postValue(handleGetWeatherFromRoom(weather)!!)
 
-        } catch (t: Throwable) {
-            when (t) {
-                is IOException -> weatherLiveData.postValue(Resource.Error("Network failuar"))
-                else -> weatherLiveData.postValue(Resource.Error("Conversion Error" + t))
+            } catch (t: Throwable) {
+                when (t) {
+                    is IOException -> weatherLiveData.postValue(Resource.Error("Network failuar"))
+                    else -> weatherLiveData.postValue(Resource.Error("Conversion Error" + t))
+                }
             }
         }
     }
 
-   /* private fun handleGetWeatherFromRoomList(weather2: List<Daily>): Resource<List<Daily>>? {
-        if (weather2 != null) {
-            return Resource.Success(weather2)
-        }
-        return Resource.Error("Room is empty")
-    }*/
 
     private fun handleGetWeatherFromRoom(weather: WeatherResponse): Resource<WeatherResponse>? {
         if (weather != null) {
             return Resource.Success(weather)
         }
+        checkRoom.postValue(true)
         return Resource.Error("Room is empty")
     }
 

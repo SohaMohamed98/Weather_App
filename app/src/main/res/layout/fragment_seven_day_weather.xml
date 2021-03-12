@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:textSize="28dp"
+            android:textSize="22dp"
             android:hint="Country"
             android:textStyle="bold"
 
@@ -37,7 +37,6 @@
             android:layout_margin="8dp"
             android:layout_weight="5.5"
             android:orientation="vertical">
-
 
 
             <androidx.recyclerview.widget.RecyclerView

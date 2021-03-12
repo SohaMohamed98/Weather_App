@@ -18,57 +18,46 @@ import com.soha.weather_app.R
 import com.soha.weather_app.databinding.FragmentFavouriteWeatherBinding
 import com.soha.weather_app.weather.db.Repository
 import com.soha.weather_app.weather.db.Resource
-import com.soha.weather_app.weather.db.entity.AlertEntity
 import com.soha.weather_app.weather.db.entity.FavouriteData
-import com.soha.weather_app.weather.view.fragments.current.HomeWeather
-import com.soha.weather_app.weather.viewModel.LocationViewModel
+import com.soha.weather_app.weather.utils.getAddressGeocoder
+import com.soha.weather_app.weather.view.adapters.FavouriteAdapter
+import com.soha.weather_app.weather.view.fragments.home.HomeWeather
+import com.soha.weather_app.weather.viewModel.SettingViewModel
 import com.soha.weather_app.weather.view.fragments.setting.MapFragment.SettingWeather
 import com.soha.weather_app.weather.viewModel.FavViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class FavouriteWeather : Fragment(R.layout.fragment_favourite_weather), FavouriteAdapter.OnItemClickListener{
+class FavouriteWeather : Fragment(R.layout.fragment_favourite_weather),
+    FavouriteAdapter.OnItemClickListener {
 
-lateinit var binding: FragmentFavouriteWeatherBinding
-
+    lateinit var binding: FragmentFavouriteWeatherBinding
 
     private var adapt: RecyclerView.Adapter<FavouriteAdapter.FavViewHolder>? = null
     private var layoutManag: RecyclerView.LayoutManager? = null
     private lateinit var favViewModel: FavViewModel
-    lateinit var dailyAdapter:FavouriteAdapter
-    private lateinit var locationViewModel: LocationViewModel
+    lateinit var dailyAdapter: FavouriteAdapter
+    private lateinit var settingViewModel: SettingViewModel
     lateinit var repo: Repository
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
 
         favViewModel = ViewModelProvider(this).get(FavViewModel::class.java)
-        locationViewModel = ViewModelProvider(this).get(LocationViewModel::class.java)
-
-
+        settingViewModel = ViewModelProvider(this).get(SettingViewModel::class.java)
         binding = FragmentFavouriteWeatherBinding.inflate(layoutInflater)
-        repo = Repository()
+        repo = Repository() //delete
         val root = binding.root
-        ItemTouchHelper(itemTouchHelper).attachToRecyclerView( binding.favRecyclerView)
+        ItemTouchHelper(itemTouchHelper).attachToRecyclerView(binding.favRecyclerView)
         context?.let {
             favViewModel.getFavAPIData(it)
         }
 
-      /*  favViewModel.favLiveData.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                is Resource.Success -> {
-                    hideProgressBar()
-                    it.data?.let { it1 -> displayDailyWeatherToRecycleView(it1)}
-                }
-                is Resource.Loading -> {
-                    showProgressBar()
-                }
-                is Resource.Error -> {
-                    showErrorMessage(it.message)
-                }
-            }
-        })*/
 
         binding.btnFav.setOnClickListener {
             loadFragment(SettingWeather())
@@ -79,14 +68,14 @@ lateinit var binding: FragmentFavouriteWeatherBinding
         return root
     }
 
-    private fun getFavDataFromRoom(){
+    private fun getFavDataFromRoom() {
         favViewModel.favFromRoomLiveData.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
                     hideProgressBar()
-                    it.data?.let { it1 -> displayDailyWeatherToRecycleView(it1 as MutableList<FavouriteData> )}
+                    it.data?.let { it1 -> displayDailyWeatherToRecycleView(it1 as MutableList<FavouriteData>) }
                 }
-                is Resource.Loading-> {
+                is Resource.Loading -> {
                     showProgressBar()
                 }
                 is Resource.Error -> {
@@ -98,7 +87,8 @@ lateinit var binding: FragmentFavouriteWeatherBinding
 
 
     private fun initUI(data: MutableList<FavouriteData>) {
-         dailyAdapter = FavouriteAdapter(data, this)
+        dailyAdapter = FavouriteAdapter(data, this)
+        context?.let { dailyAdapter.setData(data, it) }
         binding.favRecyclerView.apply {
             layoutManag = LinearLayoutManager(context)
             layoutManager = layoutManag
@@ -113,8 +103,6 @@ lateinit var binding: FragmentFavouriteWeatherBinding
             initUI(data)
         }
     }
-
-
 
     private fun loadFragment(fragment: Fragment) {
         val fm = fragmentManager
@@ -137,11 +125,16 @@ lateinit var binding: FragmentFavouriteWeatherBinding
         //binding.progressBar.visibility = View.INVISIBLE
     }
 
+
     override fun onItemClick(contact: FavouriteData) {
-        locationViewModel.setLatData(contact.lat)
-        locationViewModel.setLonData(contact.lon)
-        locationViewModel.setTempData("impirial")
-        locationViewModel.setLanguageData("ar")
+        val Add = getAddressGeocoder(contact.lat, contact.lon, context)
+        context?.let {
+            settingViewModel.writeDataWeatherInSharedPreference(contact.lat.toString(),
+                contact.lon.toString(),
+                Add!!,
+                it)
+            binding.btnFav.visibility = View.GONE
+        }
         loadFragment(HomeWeather())
     }
 
@@ -152,7 +145,7 @@ lateinit var binding: FragmentFavouriteWeatherBinding
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
+                target: RecyclerView.ViewHolder,
             ): Boolean {
                 return false
             }
@@ -166,7 +159,7 @@ lateinit var binding: FragmentFavouriteWeatherBinding
                             CoroutineScope(Dispatchers.IO).launch {
                                 deleteFavItemFromDB(alertItemDeleted)
                             }
-                           dailyAdapter.removeFavItem(viewHolder)
+                            dailyAdapter.removeFavItem(viewHolder)
                         })
                     .setNegativeButton("No",
                         DialogInterface.OnClickListener { dialog, id ->
@@ -179,7 +172,7 @@ lateinit var binding: FragmentFavouriteWeatherBinding
 
     // delete favorite item
     suspend fun deleteFavItemFromDB(favData: FavouriteData) {
-       repo.deleteFav(favData,requireContext())
+        repo.deleteFav(favData, requireContext())
     }
 
 

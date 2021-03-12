@@ -24,8 +24,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.soha.weather_app.R
 import com.soha.weather_app.weather.utils.getAddressGeocoder
-import com.soha.weather_app.weather.view.fragments.setting.MapFragment.SettingWeather
-import com.soha.weather_app.weather.viewModel.LocationViewModel
+import com.soha.weather_app.weather.viewModel.SettingViewModel
 
 class MapsFragment : Fragment(R.layout.fragment_maps) {
 
@@ -33,7 +32,7 @@ class MapsFragment : Fragment(R.layout.fragment_maps) {
     private lateinit var mMap: GoogleMap
     private val LOCATION_REQUEST_CODE = 101
 
-    lateinit var model: LocationViewModel
+    lateinit var model: SettingViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,9 +46,7 @@ class MapsFragment : Fragment(R.layout.fragment_maps) {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
-        model = ViewModelProvider(requireActivity()).get(LocationViewModel::class.java)
-
-        //  locationManager = ContextCompat.getSystemService(LOCATION_SERVICE) as LocationManager?
+        model = ViewModelProvider(requireActivity()).get(SettingViewModel::class.java)
 
     }
 
@@ -74,23 +71,26 @@ class MapsFragment : Fragment(R.layout.fragment_maps) {
         }
 
         val mapSettings = mMap?.uiSettings
-        //zoom controllers
+
         mapSettings?.isZoomControlsEnabled = true
 
         mapSettings?.isZoomGesturesEnabled = true
 
-            mMap.setOnMapClickListener { latLon ->
+        mMap.setOnMapClickListener { latLon ->
             mMap.clear()
 
             var getcoordinates = LatLng(latLon.latitude, latLon.longitude)
-               val title = getAddressGeocoder(latLon.latitude, latLon.longitude, context)
+            context?.let {
+                val title = getAddressGeocoder(latLon.latitude, latLon.longitude, it)
+                model.setAddressData(title)
+                model.setLatData(latLon.latitude)
+                model.setLonData(latLon.longitude)
+                loadFragment(SettingWeather())
+                val markerOption = MarkerOptions().position(getcoordinates)
+                markerOption.title(title)
 
-            model.setAddressData(title)
-            model.setLatData(latLon.latitude)
-            model.setLonData(latLon.longitude)
-            loadFragment(SettingWeather())
+            }
 
-            //   val markerOption= MarkerOptions().position(getcoordinates)
 
 
             mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(getcoordinates, 4f))
@@ -113,7 +113,7 @@ class MapsFragment : Fragment(R.layout.fragment_maps) {
     }
 
 
-    private fun requestPermission(permissionType: String, requestCode: Int) {
+    fun requestPermission(permissionType: String, requestCode: Int) {
 
         ActivityCompat.requestPermissions(context as Activity, arrayOf(permissionType), requestCode)
     }

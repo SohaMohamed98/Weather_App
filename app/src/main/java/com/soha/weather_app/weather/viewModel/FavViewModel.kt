@@ -2,7 +2,6 @@ package com.soha.weather_app.weather.viewModel
 
 import android.app.Application
 import android.content.Context
-import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
@@ -10,37 +9,19 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.soha.weather_app.weather.db.Repository
 import com.soha.weather_app.weather.db.Resource
-import com.soha.weather_app.weather.db.entity.AlertEntity
 import com.soha.weather_app.weather.db.entity.FavouriteData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.IOException
 
-class FavViewModel (application: Application): AndroidViewModel(application){
+class FavViewModel(application: Application) : AndroidViewModel(application) {
 
     var favLiveData = MutableLiveData<Resource<FavouriteData>>()
     val favFromRoomLiveData = MutableLiveData<Resource<List<FavouriteData>>>()
     private val newRepo: Repository
-    val locationViewModel = LocationViewModel(application)
+    val locationViewModel = SettingViewModel(application)
 
-    lateinit var SP: SharedPreferences
-
-
-    fun writeAddressInSharedPreference(latLon: String, address: String, context: Context) {
-
-        var editor = SP.edit()
-        editor.putString("LatLng_Map", latLon)
-        editor.putString("Address_Map", address)
-        editor.commit()
-    }
-    private fun retrive() {
-        var latlon = SP.getString("LatLng_Map", "null")
-        var address = SP.getString("Address_Map", "null")
-        var favValue = SP.getBoolean("Fav_State", false)
-        if (!latlon!!.equals("null") || !address!!.equals("null")) {
-
-        }}
 
     init {
         newRepo = Repository()
@@ -52,10 +33,10 @@ class FavViewModel (application: Application): AndroidViewModel(application){
     val long = locationViewModel.getLonData().value
 
 
-
-    fun getFavAPIData(  context: Context, lat: String = this.lat.toString(), lon: String = this.lon.toString(),
-                            units: String = this.temp.toString(), long: String = this.long.toString())
-            = CoroutineScope(Dispatchers.IO).launch {
+    fun getFavAPIData(
+        context: Context, lat: String = this.lat.toString(), lon: String = this.lon.toString(),
+        units: String = this.temp.toString(), long: String = this.long.toString(),
+    ) = CoroutineScope(Dispatchers.IO).launch {
         favLiveData.postValue(Resource.Loading())
         try {
             if (hasInternetConnection(context)) {

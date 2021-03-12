@@ -11,9 +11,9 @@ class AlertReceiver : BroadcastReceiver() {
 
         val notificationHelper =
             NotificationHelper(context,intent)
-        val nb: NotificationCompat.Builder =
+        val builder: NotificationCompat.Builder =
             notificationHelper.channelNotification
-        notificationHelper.manager?.notify(1, nb.build())
+        notificationHelper.manager?.notify(1, builder.build())
 
     }
 }

@@ -1,4 +1,4 @@
-package com.soha.weather_app.weather.view.activities
+package com.soha.weather_app.weather.view.fragments.alarm
 
 import android.app.*
 import android.content.*
@@ -11,26 +11,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.soha.alert.viewModel.AlertAdapter
+import com.soha.weather_app.weather.view.adapters.AlertAdapter
 import com.soha.alert.viewModel.AlertsViewModel
 import com.soha.weather_app.R
 import com.soha.weather_app.databinding.FragmentAlertsBinding
 import com.soha.weather_app.weather.db.entity.AlertEntity
 import com.soha.weather_app.weather.db.model.Alert
-import com.soha.weather_app.weather.provider.Setting
 import com.soha.weather_app.weather.receiver.AlertReceiver
 import com.soha.weather_app.weather.receiver.DialogReceiver
-import com.soha.weather_app.weather.utils.formateTime
 import com.soha.weather_app.weather.viewModel.WeatherViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -45,47 +41,13 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
     private lateinit var alarmManager: AlarmManager
     lateinit var sharedPreferences: SharedPreferences
     lateinit var editor: SharedPreferences.Editor
-    private lateinit var viewModel: WeatherViewModel
+    private lateinit var weatherViewModel: WeatherViewModel
     private lateinit var alertViewModel: AlertsViewModel
     private lateinit var alertAdapter: AlertAdapter
     private lateinit var alertList: List<Alert>
     private var notificationOrAlarm = "notification"
     lateinit var prefs: SharedPreferences
 
-
-    /* private fun loadSettings() {
-        val unit_system = sharedPreferences.getString("UNIT_SYSTEM", "")
-        val language_system = sharedPreferences.getString("LANGUAGE_SYSTEM", "")
-        val device_Location = sharedPreferences.getBoolean("USE_DEVICE_LOCATION", false)
-        val notifications = sharedPreferences.getBoolean("USE_NOTIFICATIONS_ALERT", false)
-        val custom_Locations = sharedPreferences.getString("CUSTOM_LOCATION", "")
-        val wind_speed = sharedPreferences.getString("WIND_SPEED", "")
-        val mapLocation = sharedPreferences.getBoolean("MAP_LOCATION", false)
-
-
-        if (unit_system != null) {
-            Setting.unitSystem = unit_system
-        }
-        if (language_system != null) {
-            Setting.languageSystem = language_system
-        }
-
-        if (device_Location != null) {
-            Setting.deviceLocation = device_Location
-        }
-
-        if (notifications != null) {
-            Setting.notifications = notifications
-        }
-
-        if (custom_Locations != null) {
-            Setting.customLocations = custom_Locations
-        }
-//        if (wind_speed != null) {
-//            Settings. = wind_speed
-//        }
-        Setting.mapLocation = mapLocation!!
-    }*/
 
     private fun init() {
         sharedPreferences = requireActivity().getSharedPreferences(
@@ -99,19 +61,17 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
         alertAdapter = AlertAdapter(requireContext())
         ItemTouchHelper(itemTouchHelper).attachToRecyclerView( binding.alertRV)
         alertViewModel = ViewModelProvider(this).get(AlertsViewModel::class.java)
-
-       viewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
+       weatherViewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
         prefs = PreferenceManager.getDefaultSharedPreferences(context)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding= FragmentAlertsBinding.inflate(layoutInflater)
-      //  binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alerts, container, false)
-        binding.alertDate.setOnClickListener {
+        binding.layoutDate.setOnClickListener {
             getDate()
         }
-        binding.alertTime.setOnClickListener {
+        binding.layoutTime.setOnClickListener {
             getTime()
         }
         binding.radioGroupNOrA.setOnCheckedChangeListener({ group, checkedId ->
@@ -122,71 +82,45 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
                 }
             })
         init()
-        //loadSettings()
 
-        getAlertFromDB()
+        getAlertFromDBToRecyclerView()
+
+
         binding.btnAdd.setOnClickListener {
-            binding.alertTime.text = " "
-            binding.alertDate.text = " "
+            binding.tvTime.text = " "
+            binding.tvDate.text = " "
             if (myHour != null && myMin != null && myDay != null && myMon != null && myYear != null) {
                 val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm")
 
                 val date: String =
                     myDay.toString() + "-" + myMon + "-" + myYear + " " + myHour + ":" + myMin
                 val dateLong = sdf.parse(date)!!.time
-                Log.v("datelong", dateLong.toString())
                 if (alertList.size > 0) {
                     for (alertItem in alertList) {
                         if (dateLong / 1000 > alertItem.start!! && dateLong / 1000 < alertItem.end!!) {
+                            //"From ${formateTime(alertItem.start)} to ${formateTime(alertItem.end)}"
                             if (notificationOrAlarm.equals("notification")) {
-                                setNotification(
-                                    myHour!!,
-                                    myMin!!,
-                                    myDay!!,
-                                    myMon!!,
-                                    myYear!!,
-                                    alertItem.event!!,
-                                    "From ${formateTime(alertItem.start)} to ${formateTime(alertItem.end)}"
-                                )
-                                Log.v("gg", "ggggg")
-
+                                setNotification(myHour!!, myMin!!,
+                                    myDay!!, myMon!!, myYear!!,
+                                    alertItem.event!!, alertItem.description!!)
                             } else {
-                                setAlaram(
-                                    alertItem.event!!,
-                                    alertItem.description!!, myHour!!,
-                                    myMin!!,
-                                    myDay!!,
-                                    myMon!!,
-                                    myYear!!
+                                setAlaram(alertItem.event!!, alertItem.description!!,
+                                    myHour!!, myMin!!,
+                                    myDay!!, myMon!!, myYear!!
                                 )
-                                Log.v("gg", "gggg2g")
                             }
                             break
-
                         }
                     }
                 }else{
                     if (notificationOrAlarm.equals("notification")) {
-                        setNotification(
-                            myHour!!,
-                            myMin!!,
-                            myDay!!,
-                            myMon!!,
-                            myYear!!,
-                            "Nothing",
-                            "No Dangerous Alert"
-                        )
-                        Log.v("gg","1")
+                        setNotification(myHour!!, myMin!!,
+                            myDay!!, myMon!!, myYear!!,
+                            "NOT Event", "NOT Dangerous Weather!!")
                     } else {
-                        setAlaram(
-                            "Nothing",
-                            "No Dangerous Alert", myHour!!,
-                            myMin!!,
-                            myDay!!,
-                            myMon!!,
-                            myYear!!
-                        )
-                        Log.v("gg","2")
+                        setAlaram("NOT Event", "NOT Dangerous Weather!!",
+                            myHour!!, myMin!!,
+                            myDay!!, myMon!!, myYear!!)
                     }
                 }
             } else {
@@ -198,40 +132,8 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.KITKAT)
-    fun setNotification(
-        hour: Int,
-        min: Int,
-        day: Int,
-        month: Int,
-        year: Int,
-        event: String,
-        description: String
-    ) {
-        val intentA = Intent(context, AlertReceiver::class.java)
-        intentA.putExtra("event", event)
-        intentA.putExtra("desc", description)
-        val r = Random()
-        val i1 = r.nextInt(99)
-        val pendingIntentA = PendingIntent.getBroadcast(context, i1, intentA, 0)
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, hour)
-        calendar.set(Calendar.MINUTE, min)
-        calendar[Calendar.MONTH] = month - 1
-        calendar[Calendar.DATE] = day
-        calendar[Calendar.YEAR] = year
-        calendar[Calendar.SECOND] = 0
-        val alarmtime: Long = calendar.timeInMillis
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmtime, pendingIntentA)
-        Toast.makeText(context,"Done!", Toast.LENGTH_LONG).show()
-        requireActivity().registerReceiver(AlertReceiver(), IntentFilter())
-        var date = day.toString() + "/" + month + "/" + year + " " + hour + ":" + min
 
-        addAlert(i1, event, date, description, true)
-    }
-
-
-    private fun getAlertFromDB() {
+    private fun getAlertFromDBToRecyclerView() {
         alertViewModel.getAlert(requireContext()).observe(viewLifecycleOwner,  {
             it?.let {
                 alertAdapter.fetchData(it, requireContext())
@@ -247,8 +149,7 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
     private fun addAlert(requestCode: Int, event: String, start: String,
                          description: String, status: Boolean) {
         val alert = AlertEntity(requestCode, event, start, description, status)
-        GlobalScope.launch {
-            Dispatchers.IO
+        CoroutineScope(Dispatchers.IO).launch {
             alertViewModel.addAlert(alert,requireContext())
         }
 
@@ -260,12 +161,12 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
                           hour: Int, min: Int,
                           day: Int, month: Int, year: Int
     ) {
-        val intentA = Intent(context, DialogReceiver::class.java)
-        intentA.putExtra("event", event)
-        intentA.putExtra("desc", desc)
-        val r = Random()
-        val i1 = r.nextInt(99)
-        val pendingIntentA = PendingIntent.getBroadcast(context, i1, intentA, 0)
+        val intentDialogueReciever = Intent(context, DialogReceiver::class.java)
+        intentDialogueReciever.putExtra("event", event)
+        intentDialogueReciever.putExtra("desc", desc)
+        val random = Random()
+        val requestCode = random.nextInt(99)
+        val pendingIntentDialogueReciever = PendingIntent.getBroadcast(context, requestCode, intentDialogueReciever, 0)
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.HOUR_OF_DAY, hour)
         calendar.set(Calendar.MINUTE, min)
@@ -274,13 +175,41 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
         calendar[Calendar.YEAR] = year
         calendar[Calendar.SECOND] = 0
         val alarmtime: Long = calendar.timeInMillis
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmtime, pendingIntentA)
-        Toast.makeText(context,"Done!", Toast.LENGTH_LONG).show()
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmtime, pendingIntentDialogueReciever)
+        Toast.makeText(context,"Alert is Done!", Toast.LENGTH_LONG).show()
         requireActivity().registerReceiver(DialogReceiver(), IntentFilter())
         var date = day.toString() + "/" + month + "/" + year + " " + hour + ":" + min
 
-        addAlert(i1, event, date, desc, true)
+        addAlert(requestCode, event, date, desc, true)
     }
+
+
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    fun setNotification(hour: Int, min: Int,
+                        day: Int, month: Int, year: Int,
+                        event: String, description: String) {
+        val intentAlertReciever = Intent(context, AlertReceiver::class.java)
+        intentAlertReciever.putExtra("event", event)
+        intentAlertReciever.putExtra("desc", description)
+        val random = Random()
+        val requestCode = random.nextInt(99)
+        val pendingIntentAlertReciever = PendingIntent.getBroadcast(context, requestCode, intentAlertReciever, 0)
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, hour)
+        calendar.set(Calendar.MINUTE, min)
+        calendar[Calendar.MONTH] = month - 1
+        calendar[Calendar.DATE] = day
+        calendar[Calendar.YEAR] = year
+        calendar[Calendar.SECOND] = 0
+        val alarmtime: Long = calendar.timeInMillis
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmtime, pendingIntentAlertReciever)
+        Toast.makeText(context,"Alert is done!", Toast.LENGTH_LONG).show()
+        requireActivity().registerReceiver(AlertReceiver(), IntentFilter())
+        var date = day.toString() + "/" + month + "/" + year + " " + hour + ":" + min
+
+        addAlert(requestCode, event, date, description, true)
+    }
+
 
 
 
@@ -289,17 +218,17 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
         var year = c.get(Calendar.YEAR)
         var month = c.get(Calendar.MONTH)
         var day = c.get(Calendar.DAY_OF_MONTH)
-        val dpd = DatePickerDialog(requireContext(), { view, year, monthOfYear, dayOfMonth ->
-                binding.alertDate.setText("" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year)
-                binding.alertDate.visibility = View.VISIBLE
+        val datePickerDialog = DatePickerDialog(requireContext(), { view, year, monthOfYear, dayOfMonth ->
+                binding.tvDate.setText("" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year)
+                binding.tvDate.visibility = View.VISIBLE
 
                 myMon = monthOfYear + 1
                 myYear = year
                 myDay = dayOfMonth
             }, year, month, day
         )
-        dpd.datePicker.minDate = System.currentTimeMillis() - 1000
-        dpd.show()
+        datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+        datePickerDialog.show()
     }
 
 
@@ -310,27 +239,26 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
         val minute = c.get(Calendar.MINUTE)
         val datetime = Calendar.getInstance()
 
-        val tpd = TimePickerDialog(
-            requireContext(),
+        val timePickerDialog = TimePickerDialog(requireContext(),
             TimePickerDialog.OnTimeSetListener(function = { view, h, m ->
-                c[Calendar.HOUR_OF_DAY] = h
+                //Hour_of_Day
+                c[Calendar.HOUR] = h
                 c[Calendar.MINUTE] = m
                 if (c.timeInMillis >= datetime.timeInMillis) {
-                    binding.alertTime.setText("" + h + ":" + m)
-                    binding.alertTime.visibility = View.VISIBLE
+                    binding.tvTime.setText("" + h + ":" + m)
+                    binding.tvTime.visibility = View.VISIBLE
 
                     myHour = h
                     myMin = m
                     Log.v("alert", "" + myHour + ":" + myMin)
                 } else {
-                    Toast.makeText(requireActivity(), "Invalide Data", Toast.LENGTH_LONG).show()
-                    binding.alertTime.setText(" ")
-                    binding.alertTime.visibility = View.VISIBLE
+                    Toast.makeText(requireActivity(), "Invalide Date or Time", Toast.LENGTH_LONG).show()
+                    binding.tvTime.setText(" ")
+                    binding.tvTime.visibility = View.VISIBLE
                 }
-            }), hour, minute, false
-        )
+            }), hour, minute, false)
 
-        tpd.show()
+        timePickerDialog.show()
     }
 
 
@@ -359,7 +287,7 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
                         })
                     .setNegativeButton("No",
                         DialogInterface.OnClickListener { dialog, id ->
-                            getAlertFromDB()
+                            getAlertFromDBToRecyclerView()
                         }).show()
 
             }

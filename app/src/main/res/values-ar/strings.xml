@@ -13,9 +13,7 @@
     <string name="longtuide" >خط الطول</string>
     <string name="temperature_unit" >درجة الحرارة</string>
     <string name="c" >س°</string>
-    <string name="f" >°ف</string>
     <string name="wind_speed" >سرعة الرياح</string>
-    <string name="m_s">م/ث</string>
     <string name="km_h" >كم/س</string>
     <string name="language" >اللغة</string>
     <string name="arabic">العربية</string>
@@ -27,5 +25,14 @@
     <string name="pressure" >الضغط</string>
     <string name="humidity" >الرطوبة</string>
     <string name="wind">رياح</string>
-    <string name="kmh">كم/س</string>
+    <string name="desc">الوصف:</string>
+    <string name="event">الحدث:</string>
+    <string name="favourite">المفضلة</string>
+    <string name="_48_hours">48 ساعة</string>
+    <string name="notification">ملاحظة</string>
+    <string name="alarm">منبه</string>
+    <string name="date">التاريخ:</string>
+    <string name="time">الوقت:</string>
+    <string name="m_s">م/ث</string>
+    <string name="f">ف°</string>
 </resources>

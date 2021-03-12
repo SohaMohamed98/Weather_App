@@ -1,7 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Weather_App</string>
     <string name="hello_blank_fragment">weatherFragment</string>
-    <string name="kmh">KmH</string>
     <string name="feels">Feels</string>
     <string name="sunset">Sunset</string>
     <string name="sunrise">Sunrise</string>
@@ -13,9 +12,7 @@
     <string name="longtuide">Longtuide</string>
     <string name="temperature_unit">Temperature unit</string>
     <string name="c">°C</string>
-    <string name="f">°F</string>
     <string name="wind_speed">Wind Speed</string>
-    <string name="m_s">m/s</string>
     <string name="km_h">Km/h</string>
     <string name="language">Language</string>
     <string name="arabic">Arabic</string>
@@ -27,4 +24,14 @@
     <string name="pressure">Pressure</string>
     <string name="humidity">Humidity</string>
     <string name="wind">Wind</string>
+    <string name="desc">Description:</string>
+    <string name="event">Event:</string>
+    <string name="favourite">Favourite</string>
+    <string name="_48_hours">48 Hours</string>
+    <string name="notification">notification</string>
+    <string name="alarm">alarm</string>
+    <string name="date">Date:</string>
+    <string name="time">Time:</string>
+    <string name="m_s">m/s</string>
+    <string name="f">°F</string>
 </resources>

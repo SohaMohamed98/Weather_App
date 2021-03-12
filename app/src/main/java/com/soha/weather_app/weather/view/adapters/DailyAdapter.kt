@@ -1,7 +1,8 @@
-package com.soha.weather_app.weather.view.fragments.seven_days
+package com.soha.weather_app.weather.view.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.soha.weather_app.databinding.SevenDayCardBinding
 import com.soha.weather_app.weather.db.model.Daily
@@ -14,7 +15,7 @@ class DailyAdapter(var daysList: List<Daily>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DailyViewHolder {
 
-        val view =SevenDayCardBinding.inflate(
+        val view = SevenDayCardBinding.inflate(
             LayoutInflater.from(parent.context),
             parent, false)
 
@@ -29,6 +30,7 @@ class DailyAdapter(var daysList: List<Daily>) :
     override fun onBindViewHolder(holder: DailyViewHolder, position: Int) {
 
         holder.bind(daysList[position])
+
     }
 
 

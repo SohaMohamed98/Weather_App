@@ -2,7 +2,6 @@ package com.soha.weather_app.weather.db.remotely
 
 import com.soha.weather_app.weather.db.entity.WeatherResponse
 import com.soha.weather_app.weather.db.entity.FavouriteData
-import com.soha.weather_app.weather.db.model.GeoModel.GeoModel
 import com.soha.weather_app.weather.utils.Constants.Companion.API_KEY
 import retrofit2.Call
 import retrofit2.Response
@@ -36,11 +35,5 @@ interface WeatherAPI {
         @Query("APPID") app_id: String = API_KEY,
     ): Response<FavouriteData>
 
-
-    @GET("direct")
-    fun getPlaceData(
-        @Query("q")citName:String="القاهرة",
-        @Query("appid")key:String
-    ): Call<List<GeoModel>>
 
 }

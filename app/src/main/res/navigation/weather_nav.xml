@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.soha.weather_app.weather.view.fragments.current.HomeWeather"
+        android:name="com.soha.weather_app.weather.view.fragments.home.HomeWeather"
         android:label="fragment_home_weather"
         tools:layout="@layout/fragment_home_weather" />
     <fragment
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/alertsFragment"
-        android:name="com.soha.weather_app.weather.view.activities.AlertsFragment"
+        android:name="com.soha.weather_app.weather.view.fragments.alarm.AlertsFragment"
         android:label="AlertsFragment" />
     <fragment
         android:id="@+id/favouriteFragment"

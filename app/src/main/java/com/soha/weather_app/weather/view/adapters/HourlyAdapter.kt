@@ -1,18 +1,22 @@
-package com.soha.weather_app.weather.view.fragments.current
+package com.soha.weather_app.weather.view.adapters
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.soha.weather_app.R
 import com.soha.weather_app.databinding.ForecastWeatherHourlyItemBinding
 import com.soha.weather_app.weather.db.model.Hourly
 import com.soha.weather_app.weather.utils.dayConverter
-import com.soha.weather_app.weather.utils.getImage
 import com.soha.weather_app.weather.utils.setImage
 
 class HourlyAdapter(var forecastList: List<Hourly>) :
     RecyclerView.Adapter<HourlyAdapter.ForecatViewHolder>() {
 
+    lateinit var context: Context
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ForecatViewHolder {
 
         val view = ForecastWeatherHourlyItemBinding.inflate(
@@ -26,17 +30,38 @@ class HourlyAdapter(var forecastList: List<Hourly>) :
         return forecastList.size
     }
 
+    fun setData(hourList: List<Hourly>, context: Context) {
+        this.context = context
+        this.forecastList = hourList
+        notifyDataSetChanged()
+
+    }
+
     override fun onBindViewHolder(holder: ForecatViewHolder, position: Int) {
 
         holder.bind(forecastList[position])
-      //  Glide.with(it).load(getImage(forecastList[position].weather.get(0).icon)).into(holder.view.imgForecastItem)
+
+//        if (position % 2 == 0) {
+//            holder.view.cardHourly.setCardBackgroundColor(ContextCompat.getColor(context,
+//                R.drawable.background_cloudly_weather));
+//        } else {
+//            holder.view.cardHourly.setCardBackgroundColor(ContextCompat.getColor(context,
+//                R.drawable.background_rainy_weather));
+//        }
+
+
+        val sp = PreferenceManager.getDefaultSharedPreferences(context)
+
+        holder.view.textCelcius.text = sp.getString("cel", "")
+
+
 
     }
 
 
     class ForecatViewHolder(var view: ForecastWeatherHourlyItemBinding) :
         RecyclerView.ViewHolder(view.root) {
-       private val imageview = view.imgForecastItem
+        val imageview = view.imgForecastItem
 
 
         fun bind(forecast: Hourly) {
@@ -47,11 +72,8 @@ class HourlyAdapter(var forecastList: List<Hourly>) :
             view.tvForecastPressure.text = (Math.round(forecast.pressure)).toString()
             view.tvForecastTime.text = dayConverter((forecast.dt).toLong())
             view.tvForecastFeelsTemp.text = (Math.round(forecast.feelsLike)).toString()
-            view.tvVisibility.text= forecast.visibility.toString()
-
-
-
-
+            view.tvVisibility.text = forecast.visibility.toString()
+            view.tvMain.text=forecast.weather.get(0).main
 
             val url = forecast.weather.get(0).icon
             setImage(imageview, url)

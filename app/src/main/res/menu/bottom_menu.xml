@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/homeFragment"
         android:title="Weather"
-        android:icon="@drawable/ic_breaking_news" />
+        android:icon="@drawable/ic_cloud" />
 
     <item android:id="@+id/sevenDayFragment"
         android:title="7Day"
-        android:icon="@drawable/ic_one_day" />
+        android:icon="@drawable/ic_date" />
 
     <item android:id="@+id/alertsFragment"
         android:title="Alarm"
-        android:icon="@drawable/ic_all_news" />
+        android:icon="@drawable/ic_add_alert" />
 
     <item android:id="@+id/favouriteFragment"
         android:title="Favourite"
@@ -18,7 +18,7 @@
 
     <item android:id="@+id/settingFragment"
         android:title="Setting"
-        android:icon="@drawable/ic_breaking_news" />
+        android:icon="@drawable/ic_settings" />
 
 
 

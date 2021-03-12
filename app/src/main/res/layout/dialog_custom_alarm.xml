@@ -1,107 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linLay_progressBar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:background="#a8000000"
+    app:cardCornerRadius="25dp"
+    android:layout_margin="10dp"
     android:paddingHorizontal="8dp"
     tools:targetApi="o">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:layout_centerInParent="true"
         android:layout_marginTop="16dp"
         android:orientation="vertical"
         android:paddingHorizontal="24dp"
         android:paddingVertical="8dp"
-        android:background="@color/white"
+        android:background="@drawable/background_dialogue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
 
+
         <ImageView
             android:id="@+id/img_close"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:src="@drawable/ic_sunrise"
+            android:src="@drawable/close_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/dialog_senderName"
+            android:id="@+id/text_event"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:visibility="gone"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:gravity="center"
-            tools:text="NWS Tulsa (Eastern Oklahoma)"
+            tools:text="@string/event"
             android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="18dp"
+            app:layout_constraintTop_toBottomOf="@+id/img_close"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/dialog_event"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="60dp"
             android:gravity="center"
-            tools:text="Heat Advisory"
-            android:textColor="@color/black"
+            tools:hint="Event"
+            android:textColor="@color/white"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dialog_senderName" />
+            app:layout_constraintStart_toEndOf= "@+id/text_event"
+            app:layout_constraintTop_toTopOf="@+id/text_event"/>
 
 
 
         <TextView
-            android:id="@+id/dialog_time"
+            android:id="@+id/text_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="16dp"
             android:gravity="center"
-            android:visibility="gone"
-            tools:text="From 8PM to 9PM"
+            tools:text="@string/desc"
             android:textColor="@color/black"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dialog_event" />
+            app:layout_constraintTop_toBottomOf="@+id/text_event"
+            app:layout_constraintStart_toStartOf="@+id/text_event"/>
 
         <TextView
             android:id="@+id/dialog_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:visibility="gone"
-            android:layout_marginEnd="16dp"
             android:gravity="center"
-            tools:text="HEAT ADVISORY REMAINS IN EFFECT FROM 1 PM THIS AFTERNOON TO\n8 PM CDT THIS EVENING"
-            android:textColor="@color/black"
+            android:hint="Description"
+            android:textColor="@color/white"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="@+id/dialog_event"
+            app:layout_constraintTop_toTopOf="@+id/text_desc"/>
+
+        <ImageView
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:src="@drawable/danger"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_desc"
+            android:layout_marginTop="25dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dialog_time" />
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
