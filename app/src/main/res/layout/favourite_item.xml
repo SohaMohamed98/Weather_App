@@ -80,10 +80,12 @@
 
                     <TextView
                         android:id="@+id/textCelcius"
-                        android:layout_width="7dp"
-                        android:layout_height="15dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:text="@string/c"
-                        android:textSize="8sp"
+                        android:layout_marginStart="5dp"
+                        android:gravity="center"
+                        android:textSize="10sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/tvForecastTemp"
                         app:layout_constraintTop_toTopOf="@+id/tvForecastTemp" />

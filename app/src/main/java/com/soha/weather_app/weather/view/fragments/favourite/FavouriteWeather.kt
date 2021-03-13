@@ -124,11 +124,11 @@ class FavouriteWeather : Fragment(R.layout.fragment_favourite_weather),
     }
 
 
-    override fun onItemClick(contact: FavouriteData) {
-        val Add = getAddressGeocoder(contact.lat, contact.lon, context)
+    override fun onItemClick(favouriteData: FavouriteData) {
+        val Add = getAddressGeocoder(favouriteData.lat, favouriteData.lon, context)
         context?.let {
-            settingViewModel.writeDataWeatherInSharedPreference(contact.lat.toString(),
-                contact.lon.toString(),
+            settingViewModel.writeDataWeatherInSharedPreference(favouriteData.lat.toString(),
+                favouriteData.lon.toString(),
                 Add!!,
                 it)
             binding.btnFav.visibility = View.GONE

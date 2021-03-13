@@ -37,11 +37,11 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 class AlertsFragment : Fragment(R.layout.fragment_alerts) {
-    var myHour: Int? = null
-    var myMin: Int? = null
-    var myYear: Int? = null
-    var myMon: Int? = null
-    var myDay: Int? = null
+    var myHour: Int? = 0
+    var myMin: Int? = 0
+    var myYear: Int? = 0
+    var myMon: Int? = 0
+    var myDay: Int? = 0
     lateinit var sp:SharedPreferences
     private lateinit var binding: FragmentAlertsBinding
     private lateinit var alarmManager: AlarmManager
@@ -111,7 +111,6 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
                 if (alertList.size > 0) {
                     for (alertItem in alertList) {
                         if (dateLong / 1000 > alertItem.start!! && dateLong / 1000 < alertItem.end!!) {
-                            //"From ${formateTime(alertItem.start)} to ${formateTime(alertItem.end)}"
                             if (notificationOrAlarm.equals("notification")) {
                                 setNotification(myHour!!, myMin!!,
                                     myDay!!, myMon!!, myYear!!,
@@ -129,7 +128,7 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
                     if (notificationOrAlarm.equals("notification")) {
                         setNotification(myHour!!, myMin!!,
                             myDay!!, myMon!!, myYear!!,
-                            "NOT Event", "NOT Dangerous Weather!!")
+                            "No event now.", "NOT Dangerous Weather!!")
                     } else {
                         setAlaram("NOT Event", "NOT Dangerous Weather!!",
                             myHour!!, myMin!!,
@@ -261,7 +260,6 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
 
                     myHour = h
                     myMin = m
-                    Log.v("alert", "" + myHour + ":" + myMin)
                 } else {
                     Toast.makeText(requireActivity(), "Invalide Date or Time", Toast.LENGTH_LONG)
                         .show()

@@ -10,7 +10,7 @@ import com.soha.weather_app.weather.db.model.Hourly
 import com.soha.weather_app.weather.utils.dayConverter
 import com.soha.weather_app.weather.utils.setImage
 
-class HourlyAdapter(var forecastList: List<Hourly>) :
+class HourlyAdapter(var hourList: List<Hourly>) :
     RecyclerView.Adapter<HourlyAdapter.ForecatViewHolder>() {
 
     lateinit var context: Context
@@ -24,19 +24,19 @@ class HourlyAdapter(var forecastList: List<Hourly>) :
     }
 
     override fun getItemCount(): Int {
-        return forecastList.size
+        return hourList.size
     }
 
     fun setData(hourList: List<Hourly>, context: Context) {
         this.context = context
-        this.forecastList = hourList
+        this.hourList = hourList
         notifyDataSetChanged()
 
     }
 
     override fun onBindViewHolder(holder: ForecatViewHolder, position: Int) {
 
-        holder.bind(forecastList[position])
+        holder.bind(hourList[position])
 
 //        if (position % 2 == 0) {
 //            holder.view.cardHourly.setCardBackgroundColor(ContextCompat.getColor(context,

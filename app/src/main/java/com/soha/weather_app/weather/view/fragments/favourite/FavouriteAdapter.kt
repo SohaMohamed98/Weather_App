@@ -18,7 +18,7 @@ class FavouriteAdapter(var favList: MutableList<FavouriteData>, listener: OnItem
     private var listenerContact: OnItemClickListener = listener
 
     interface OnItemClickListener {
-        fun onItemClick(contact: FavouriteData)
+        fun onItemClick(favouriteData: FavouriteData)
     }
 
 
