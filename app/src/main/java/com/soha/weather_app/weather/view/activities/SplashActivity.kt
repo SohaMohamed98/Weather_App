@@ -20,8 +20,8 @@ class SplashActivity : AppCompatActivity() {
 
         GlobalScope.launch {
 
-            var animCloud = AnimationUtils.loadAnimation(this@SplashActivity, R.anim.amin_splash_cloud)
-            var animSun = AnimationUtils.loadAnimation(this@SplashActivity, R.anim.anim_splash_sun)
+            var animCloud = AnimationUtils.loadAnimation(this@SplashActivity, R.anim.splash_cloud)
+            var animSun = AnimationUtils.loadAnimation(this@SplashActivity, R.anim.splash_sun)
 
             binding.imgSplashCloud.animation = animCloud
             binding.imgSplashSun.animation = animSun
