@@ -14,24 +14,37 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.soha.weather_app.R
+import com.soha.weather_app.databinding.ActivityDialogBinding
 
 import java.util.*
 
 class DialogActivity : AppCompatActivity() {
 
     private lateinit var ringtone: Ringtone
-    var event = ""
-    var desc = ""
+    var event = " "
+    var desc =  " "
+    lateinit var txtEvent:TextView
+    lateinit var txtDesc:TextView
+    lateinit var imgClose:ImageView
+   lateinit var dialog:Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dialog)
+        dialog = Dialog(this, R.style.ThemeOverlay_AppCompat_Dialog_Alert)
+        dialog.setContentView(R.layout.dialog_custom_alarm)
+
+         txtEvent = dialog.findViewById<TextView>(R.id.dialog_event)
+         txtDesc = dialog.findViewById<TextView>(R.id.dialog_desc)
+         imgClose = dialog.findViewById<ImageView>(R.id.img_close)
+
         val notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
         ringtone = RingtoneManager.getRingtone(applicationContext, notification)
         if (intent.extras != null) {
-           // senderName = intent.getStringExtra("sender_name").toString()
-            event = intent.getStringExtra("event").toString()
+           event = intent.getStringExtra("event").toString()
             desc = intent.getStringExtra("desc").toString()
+            txtDesc.text= desc
+            txtEvent.text= event
             showDialogAlart(event, desc)
         }
 
@@ -40,12 +53,8 @@ class DialogActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun showDialogAlart(events:String, descs:String) {
+
         ringtone.play()
-        val dialog = Dialog(this, R.style.ThemeOverlay_AppCompat_Dialog_Alert)
-        dialog.setContentView(R.layout.dialog_custom_alarm)
-        val txtEvent = dialog.findViewById<TextView>(R.id.dialog_event)
-        val txtDesc = dialog.findViewById<TextView>(R.id.dialog_desc)
-        val imgClose = dialog.findViewById<ImageView>(R.id.img_close)
 
         imgClose.setOnClickListener {
             if (ringtone.isPlaying) {
@@ -54,12 +63,8 @@ class DialogActivity : AppCompatActivity() {
             dialog.dismiss()
             finish()
         }
-
-
             txtEvent.visibility = View.VISIBLE
             txtDesc.visibility = View.VISIBLE
-            txtEvent.text = events
-            txtDesc.text = descs
 
 
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

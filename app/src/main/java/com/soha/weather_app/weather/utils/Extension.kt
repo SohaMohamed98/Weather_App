@@ -12,9 +12,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-fun getImage(icon: String): String {
-    return "http://openweathermap.org/img/w/${icon}.png"
-}
 
 fun setLocale(activity: Activity, languageCode: String?): Unit {
     val locale = Locale(languageCode)
@@ -55,12 +52,7 @@ fun dayConverter(time: Long) : String{
     return convertedDay
 }
 
-fun formateTime(format: Int): String {
-    val dateFormat = SimpleDateFormat("HH:mm a")
-    val date = Date()
-    date.time = format.toLong() * 1000
-    return dateFormat.format(date)
-}
+
 
 fun setImage(imageview:ImageView,url:String?){
     when (url) {

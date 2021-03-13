@@ -11,8 +11,8 @@ import com.soha.weather_app.weather.db.remotely.RetrofitInstance
 
 public class Repository {
 
-    public suspend fun retrofitWeatherCall(lat:String="31.25654", lon:String="32.28411",
-                                           units:String="metric", long:String="ar") =
+    public suspend fun retrofitWeatherCall(lat:String, lon:String,
+                                           units:String="metric", long:String="en") =
         RetrofitInstance.api.getWeatherData(lat,lon,units,long)
 
     public suspend fun insertWeatherToRoom(context: Context, weather: WeatherResponse) {
@@ -26,7 +26,7 @@ public class Repository {
 
 
 
-    public suspend fun retrofitFavCall(lat:String="31.25654", lon:String="32.28411",
+    public suspend fun retrofitFavCall(lat:String, lon:String,
                                            units:String="metric", long:String="ar")=
         RetrofitInstance.api.getFavData(lat,lon,units,long)
 
@@ -43,9 +43,9 @@ public class Repository {
 
 
 
-    public suspend fun addAlert(alertDatabase: AlertEntity, context: Context) {
-        val database = WeatherDatabase.getInstance(context).getWeatherDao().insertAlert(alertDatabase)
-    }
+    public suspend fun addAlert(alertDatabase: AlertEntity, context: Context) =
+         WeatherDatabase.getInstance(context).getWeatherDao().insertAlert(alertDatabase)
+
 
     public fun getAlert(context: Context): LiveData<MutableList<AlertEntity>> =
          WeatherDatabase.getInstance(context).getWeatherDao().getAlerts()

@@ -4,16 +4,14 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
-import com.soha.weather_app.weather.provider.NotificationHelper
+import com.soha.weather_app.weather.provider.Notification
 
 class AlertReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
 
-        val notificationHelper =
-            NotificationHelper(context,intent)
-        val builder: NotificationCompat.Builder =
-            notificationHelper.channelNotification
-        notificationHelper.manager?.notify(1, builder.build())
+        val notification = Notification(context,intent)  //go to notification with event & desc
+        val builder: NotificationCompat.Builder = notification.channelNotification
+        notification.manager?.notify(1, builder.build())
 
     }
 }

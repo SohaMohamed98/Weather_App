@@ -121,8 +121,7 @@ class FavouriteWeather : Fragment(R.layout.fragment_favourite_weather),
 
     private fun showErrorMessage(message: String?) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show()
-        System.out.println("Error is  :  ---->  " + message)
-        //binding.progressBar.visibility = View.INVISIBLE
+        System.out.println("Error is  :" + message)
     }
 
 

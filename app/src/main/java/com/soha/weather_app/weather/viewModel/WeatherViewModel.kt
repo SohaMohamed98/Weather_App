@@ -20,7 +20,6 @@ import java.io.IOException
 class WeatherViewModel(application: Application) : AndroidViewModel(application) {
     lateinit var sp: SharedPreferences
     private val newRepo: Repository
-    val locationViewModel = SettingViewModel(application)
 
     val checkRoom=MutableLiveData<Boolean>()
 
@@ -115,5 +114,6 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
         }
         return false
     }
+
 
 }

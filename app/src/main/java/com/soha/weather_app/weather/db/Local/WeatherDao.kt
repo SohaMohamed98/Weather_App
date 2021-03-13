@@ -17,6 +17,8 @@ interface WeatherDao {
     fun getAllWeathers(): WeatherResponse
 
 
+    ////////////////////////////////////////////////////////////
+    //Favourite
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFavWeatherData(fav : FavouriteData)
 
@@ -31,6 +33,7 @@ interface WeatherDao {
 
    /////////////////////////////////////////////////////////////
 
+    //Alert
     @Insert(onConflict = OnConflictStrategy.REPLACE)
 
     suspend fun insertAlert(alertDatabase: AlertEntity)

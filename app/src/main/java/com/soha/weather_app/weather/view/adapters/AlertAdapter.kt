@@ -36,9 +36,8 @@ class AlertAdapter(val context: Context) : RecyclerView.Adapter<AlertAdapter.Vie
         holder.time.text = alertList[position].start
     }
 
-    /*
-  SetUp Of Delete Item
-   */
+
+
     fun getItemByVH(viewHolder: RecyclerView.ViewHolder): AlertEntity {
         return alertList.get(viewHolder.adapterPosition)
     }

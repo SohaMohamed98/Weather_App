@@ -29,7 +29,7 @@ import com.soha.weather_app.weather.db.Resource
 import com.soha.weather_app.weather.db.model.Hourly
 import com.soha.weather_app.weather.db.entity.WeatherResponse
 import com.soha.weather_app.weather.receiver.AlertReceiver
-import com.soha.weather_app.weather.utils.AlertWork
+import com.soha.weather_app.weather.provider.AlertBuild
 import com.soha.weather_app.weather.utils.dayConverter
 import com.soha.weather_app.weather.utils.setImage
 import com.soha.weather_app.weather.utils.timeConverter
@@ -72,14 +72,12 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
         weatherViewModel.weatherLiveData.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
-                    //binding.cardHello.visibility = View.GONE
                     binding.mainContainer.visibility = View.VISIBLE
                     hideProgressBar()
                     it.data?.let {
                     }
                 }
                 is Resource.Loading -> {
-                  //  binding.cardHello.visibility = View.VISIBLE
                     showProgressBar()
                 }
                 is Resource.Error -> {
@@ -97,7 +95,6 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
         weatherViewModel.weatherFromRoomLiveData.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
-                   // binding.cardHello.visibility = View.GONE
                     binding.mainContainer.visibility = View.VISIBLE
                     it.data?.let {
                         displayDailyWeatherToRecycleView(it.hourly)
@@ -118,10 +115,6 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
         binding.tvAddress.text = sp.getString("address", "")
         binding.textCelcius.text = sp.getString("cel", "")
 
-
-
-
-        setUpAlerts()
 
         return root
     }
@@ -168,7 +161,7 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
     }
 
     private fun showErrorMessage(message: String?) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show()
+        //Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show()
         System.out.println("Error is: " + message)
         binding.progressBar.visibility = View.INVISIBLE
     }
@@ -181,62 +174,8 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
         binding.progressBar.visibility = View.INVISIBLE
     }
 
-    private fun setUpAlerts() {
-        if (sharedPreferences.getBoolean("ALERT", true) && sp.getString("alerts", "yes")
-                .equals("yes")
-        ) {
-            setUpFetchFromApiWorker()
-            editor.putString("alerts", "no")
-            editor.commit()
-            editor.apply()
-        } else if (!sharedPreferences.getBoolean("ALERT", true)) {
-            val requestCodeListJson = sp.getString("requestsOfAlerts", " ")
-            val type: Type = object : TypeToken<List<Int>>() {}.type
 
-            if (Gson().fromJson<List<Int>>(requestCodeListJson, type) != null) {
-                var requestCodeList: List<Int> = Gson().fromJson(requestCodeListJson, type)
-                for (requestCodeItem in requestCodeList) {
-                    cancelAlarm(requestCodeItem)
 
-                }
-                workManager.cancelAllWorkByTag("PeriodicWork")
-                editor.putString("alerts", "yes")
-                editor.commit()
-                editor.apply()
-            }
-
-        }
-    }
-
-    fun cancelAlarm(requestCode: Int) {
-        val intent = Intent(requireContext(), AlertReceiver::class.java)
-        val sender = PendingIntent.getBroadcast(context, requestCode, intent, 0)
-        val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.cancel(sender)
-    }
-
-    private fun setUpFetchFromApiWorker() {
-        val data: Data = Data.Builder().putString("lat", sp.getString("lat", "")).putString(
-            "lon",
-            sp.getString("lon", "")
-        ).putString("lang",  sp.getString("lang", "")).putString("units",  sp.getString("temp", ""))
-            .build()
-        val constrains = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
-        val repeatingRequest = PeriodicWorkRequest.Builder(
-            AlertWork::class.java, 1,
-            TimeUnit.HOURS
-        )
-            .addTag("PeriodicWork")
-            .setConstraints(constrains)
-            .setInputData(data)
-            .build()
-        workManager.enqueue(repeatingRequest)
-        workManager.getWorkInfoByIdLiveData(repeatingRequest.id).observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer {
-                Log.v("state", it.state.name)
-            })
-    }
 
 
 
