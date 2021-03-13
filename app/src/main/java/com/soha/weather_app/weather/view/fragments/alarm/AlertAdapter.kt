@@ -1,4 +1,4 @@
-package com.soha.weather_app.weather.view.adapters
+package com.soha.weather_app.weather.view.fragments.alarm
 
 import android.content.Context
 import android.view.LayoutInflater

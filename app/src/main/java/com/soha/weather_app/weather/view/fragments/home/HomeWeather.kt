@@ -2,17 +2,11 @@ package com.soha.weather_app.weather.view.fragments.home
 
 
 import android.annotation.SuppressLint
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -21,23 +15,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.work.*
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.soha.weather_app.R
 import com.soha.weather_app.databinding.FragmentHomeWeatherBinding
 import com.soha.weather_app.weather.db.Resource
 import com.soha.weather_app.weather.db.model.Hourly
 import com.soha.weather_app.weather.db.entity.WeatherResponse
-import com.soha.weather_app.weather.receiver.AlertReceiver
-import com.soha.weather_app.weather.provider.AlertBuild
 import com.soha.weather_app.weather.utils.dayConverter
 import com.soha.weather_app.weather.utils.setImage
 import com.soha.weather_app.weather.utils.timeConverter
-import com.soha.weather_app.weather.view.adapters.HourlyAdapter
 import com.soha.weather_app.weather.viewModel.SettingViewModel
 import com.soha.weather_app.weather.viewModel.WeatherViewModel
-import java.lang.reflect.Type
-import java.util.concurrent.TimeUnit
 
 
 class HomeWeather : Fragment(R.layout.fragment_home_weather) {
@@ -114,6 +101,7 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
         sp = PreferenceManager.getDefaultSharedPreferences(context)
         binding.tvAddress.text = sp.getString("address", "")
         binding.textCelcius.text = sp.getString("cel", "")
+        binding.textWind.text= sp.getString("km","")
 
 
         return root
@@ -121,9 +109,9 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
 
     private fun displayCurrentWeatherToCard(it1: WeatherResponse) {
 
-        binding.tvTemp.text = Math.round(it1.daily.get(0).temp.day).toString()
-        binding.tvTempMax.text = Math.round(it1.daily.get(0).temp.max).toString()
-        binding.tvTempMin.text = Math.round(it1.daily.get(0).temp.min).toString()
+        binding.tvTemp.text = it1.daily.get(0).temp.day.toString()
+        binding.tvTempMax.text = it1.daily.get(0).temp.max.toString()
+        binding.tvTempMin.text = it1.daily.get(0).temp.min.toString()
         binding.tvHumidity.text = Math.round(it1.current.humidity).toString()
         binding.tvUpdatedAt.text = dayConverter(it1.current.dt.toLong())
         binding.tvStatus.text = it1.current.weather.get(0).description
@@ -166,6 +154,7 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
         binding.progressBar.visibility = View.INVISIBLE
     }
 
+
     private fun showProgressBar() {
         binding.progressBar.visibility = View.VISIBLE
     }
@@ -173,11 +162,6 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
     private fun hideProgressBar() {
         binding.progressBar.visibility = View.INVISIBLE
     }
-
-
-
-
-
 
 }
 

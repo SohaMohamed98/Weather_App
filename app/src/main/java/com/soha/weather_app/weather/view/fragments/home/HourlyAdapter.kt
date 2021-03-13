@@ -1,13 +1,10 @@
-package com.soha.weather_app.weather.view.adapters
+package com.soha.weather_app.weather.view.fragments.home
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
-import com.soha.weather_app.R
 import com.soha.weather_app.databinding.ForecastWeatherHourlyItemBinding
 import com.soha.weather_app.weather.db.model.Hourly
 import com.soha.weather_app.weather.utils.dayConverter
@@ -53,8 +50,8 @@ class HourlyAdapter(var forecastList: List<Hourly>) :
         val sp = PreferenceManager.getDefaultSharedPreferences(context)
 
         holder.view.textCelcius.text = sp.getString("cel", "")
-
-
+        holder.view.texCelcius.text = sp.getString("cel", "")
+        holder.view.textWind.text= sp.getString("km","")
 
     }
 
@@ -66,8 +63,9 @@ class HourlyAdapter(var forecastList: List<Hourly>) :
 
         fun bind(forecast: Hourly) {
 
+            view.tvForecastWind.text= forecast.windSpeed.toString()
             view.tvForecastState.text = forecast.weather.get(0).description
-            view.tvForecastTemp.text = (Math.round(forecast.temp).toString())
+            view.tvForecastTemp.text = (forecast.temp).toString()
             view.tvForecastHumidity.text = (Math.round(forecast.humidity)).toString()
             view.tvForecastPressure.text = (Math.round(forecast.pressure)).toString()
             view.tvForecastTime.text = dayConverter((forecast.dt).toLong())

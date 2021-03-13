@@ -14,7 +14,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.soha.weather_app.R
-import com.soha.weather_app.databinding.ActivityDialogBinding
 
 import java.util.*
 
@@ -34,8 +33,8 @@ class DialogActivity : AppCompatActivity() {
         dialog = Dialog(this, R.style.ThemeOverlay_AppCompat_Dialog_Alert)
         dialog.setContentView(R.layout.dialog_custom_alarm)
 
-         txtEvent = dialog.findViewById<TextView>(R.id.dialog_event)
-         txtDesc = dialog.findViewById<TextView>(R.id.dialog_desc)
+         txtEvent = dialog.findViewById<TextView>(R.id.tv_event)
+         txtDesc = dialog.findViewById<TextView>(R.id.tv_desc)
          imgClose = dialog.findViewById<ImageView>(R.id.img_close)
 
         val notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)

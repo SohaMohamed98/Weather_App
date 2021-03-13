@@ -35,4 +35,6 @@
     <string name="time">الوقت:</string>
     <string name="m_s">م/ث</string>
     <string name="f">ف°</string>
+    <string name="please_go_to_settings_to_select_your_location">من فضلك, اذهب الي الاعدادات لتحديد موقعك. </string>
+    <string name="hello">مرحبا</string>
 </resources>

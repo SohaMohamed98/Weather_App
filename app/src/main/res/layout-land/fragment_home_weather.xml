@@ -38,14 +38,15 @@
             android:gravity="center"
             />
     </androidx.cardview.widget.CardView>
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:orientation="vertical"
-        android:weightSum="6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -65,7 +66,6 @@
                 android:id="@+id/mainContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight=".25"
                 android:orientation="vertical"
                 android:weightSum="3">
 
@@ -73,7 +73,6 @@
                     android:id="@+id/addressContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -97,53 +96,51 @@
                     android:id="@+id/overviewContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:weightSum="2">
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:orientation="horizontal"
-                        android:weightSum="3">
+                        android:weightSum="4"
+                        >
 
                         <TextView
                             android:id="@+id/tvTemp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:layout_marginLeft="20dp"
-                            android:layout_weight=".75"
                             android:fontFamily="sans-serif-thin"
                             android:padding="8dp"
                             android:text="29°C"
                             android:textStyle="bold" />
 
                         <TextView
+                            android:layout_weight=".5"
                             android:id="@+id/textCelcius"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight=".25"
                             android:hint="@string/c"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
+                            android:layout_weight="1"
                             android:id="@+id/tvStatus"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_weight="1"
                             android:padding="8dp"
                             android:hint="Status"
                             android:textSize="16dp" />
 
                         <ImageView
+                            android:layout_weight="1.5"
                             android:id="@+id/imgCurrentItem"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_gravity="center"
-                            android:layout_weight="1"
                             android:padding="8dp" />
 
 
@@ -314,7 +311,7 @@
                                         android:id="@+id/tvWind"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text=""
+                                        android:text="66 K/m"
                                         android:textSize="14dp" />
 
                                     <TextView
@@ -326,6 +323,7 @@
                                         app:layout_constraintTop_toTopOf="@+id/tvWind"
                                         android:text="@string/km_h"/>
                                 </androidx.constraintlayout.widget.ConstraintLayout>
+
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
 
@@ -489,6 +487,8 @@
 
 
     </LinearLayout>
+</ScrollView>
+
 
     <ProgressBar
         android:id="@+id/progressBar"

@@ -1,5 +1,7 @@
-package com.soha.weather_app.weather.view.adapters
+package com.soha.weather_app.weather.view.fragments.seven_days
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.preference.PreferenceManager
@@ -12,6 +14,8 @@ import com.soha.weather_app.weather.utils.timeConverter
 
 class DailyAdapter(var daysList: List<Daily>) :
     RecyclerView.Adapter<DailyAdapter.DailyViewHolder>() {
+    lateinit var sp:SharedPreferences
+    lateinit var context:Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DailyViewHolder {
 
@@ -26,12 +30,23 @@ class DailyAdapter(var daysList: List<Daily>) :
         return daysList.size
     }
 
+    fun setData(daily: List<Daily>, context: Context){
+        this.daysList= daily
+        this.context= context
+        notifyDataSetChanged()
+    }
 
     override fun onBindViewHolder(holder: DailyViewHolder, position: Int) {
 
         holder.bind(daysList[position])
+        sp = PreferenceManager.getDefaultSharedPreferences(context)
+        holder.view.textCelcius.text = sp.getString("cel", "")
+        holder.view.texCelcius.text = sp.getString("cel", "")
+        holder.view.textWind.text= sp.getString("km","")
+
 
     }
+
 
 
     class DailyViewHolder(var view: SevenDayCardBinding) :
@@ -40,6 +55,7 @@ class DailyAdapter(var daysList: List<Daily>) :
 
 
         fun bind(forecast: Daily) {
+
             view.tvForecastState.text = forecast.weather.get(0).description
             view.tvForecastTemp.text = (Math.round(forecast.temp.day)).toString()
             view.tvForecastHumidity.text = (Math.round(forecast.humidity)).toString()

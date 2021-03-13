@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.work.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.soha.weather_app.weather.view.adapters.AlertAdapter
 import com.soha.alert.viewModel.AlertsViewModel
 import com.soha.weather_app.R
 import com.soha.weather_app.databinding.FragmentAlertsBinding

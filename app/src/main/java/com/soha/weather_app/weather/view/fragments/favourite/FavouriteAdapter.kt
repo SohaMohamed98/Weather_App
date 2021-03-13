@@ -1,11 +1,11 @@
-package com.soha.weather_app.weather.view.adapters
+package com.soha.weather_app.weather.view.fragments.favourite
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.soha.weather_app.databinding.FavouriteItemBinding
 import com.soha.weather_app.weather.db.entity.FavouriteData
 import com.soha.weather_app.weather.utils.dayConverter
@@ -43,11 +43,15 @@ class FavouriteAdapter(var favList: MutableList<FavouriteData>, listener: OnItem
         context?.let {
             holder.view.tvFavAddress.text =getAddressGeocoder( favList[position].lat, favList[position].lon, it)
             holder.view.textCelcius.text = sp.getString("cel", "")
-
+           // Glide.with(it).load(getImage(favList[position].daily.get(position).weather.get(position).icon)).into(holder.view.imgForecastItem)
         }
 
 
+
     }
+//    fun getImage(icon: String): String {
+//        return "http://openweathermap.org/img/w/${icon}.png"
+//    }
 
     public fun getFavByVH(viewHolder: RecyclerView.ViewHolder): FavouriteData {
         return favList.get(viewHolder.adapterPosition)

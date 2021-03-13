@@ -52,7 +52,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/dialog_event"
+            android:id="@+id/tv_event"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="45dp"
@@ -78,21 +78,21 @@
             app:layout_constraintStart_toStartOf="@+id/text_event"/>
 
         <TextView
-            android:id="@+id/dialog_desc"
+            android:id="@+id/tv_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:hint="Description"
             android:textColor="@color/white"
             android:textSize="18sp"
-           app:layout_constraintStart_toStartOf="@+id/dialog_event"
+           app:layout_constraintStart_toStartOf="@+id/tv_event"
             app:layout_constraintTop_toTopOf="@+id/text_desc"/>
 
         <ImageView
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:src="@drawable/danger"
-            app:layout_constraintTop_toBottomOf="@+id/dialog_desc"
+            app:layout_constraintTop_toBottomOf="@+id/tv_desc"
             android:layout_marginTop="25dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

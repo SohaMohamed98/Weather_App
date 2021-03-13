@@ -17,7 +17,6 @@ import com.soha.weather_app.databinding.FragmentSevenDayWeatherBinding
 import com.soha.weather_app.weather.db.Repository
 import com.soha.weather_app.weather.db.Resource
 import com.soha.weather_app.weather.db.model.Daily
-import com.soha.weather_app.weather.view.adapters.DailyAdapter
 import com.soha.weather_app.weather.viewModel.SettingViewModel
 import com.soha.weather_app.weather.viewModel.WeatherViewModel
 
@@ -76,6 +75,7 @@ class SevenDayWeather : Fragment(R.layout.fragment_seven_day_weather) {
         var dailyAdapter = DailyAdapter(data)
         binding.recyclerViewDaily.apply {
             layoutManagDaily = LinearLayoutManager(context)
+            dailyAdapter.setData(data, context)
             layoutManager = layoutManagDaily
             adaptDaily = dailyAdapter
             adapter = adaptDaily

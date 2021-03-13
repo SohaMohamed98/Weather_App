@@ -72,13 +72,13 @@ class SettingViewModel(application: Application) : AndroidViewModel(application)
         editor.commit()
     }
 
-    fun writeTempDegreeInSharedPreference(tempDegree: String, status: String, context: Context) {
+    fun writeTempDegreeInSharedPreference(tempDegree: String, status: String,windDegree:String,degree:String, context: Context) {
         SP = PreferenceManager.getDefaultSharedPreferences(context)
         var editor = SP.edit()
         editor.putString("temp", tempDegree)
         editor.putString("cel", status)
-        editor.putString("wind", tempDegree)
-        editor.putString("km", status)
+        editor.putString("wind", windDegree)
+        editor.putString("km", degree)
         editor.commit()
     }
 

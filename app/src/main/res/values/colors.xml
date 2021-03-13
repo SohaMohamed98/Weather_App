@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="colorAccent">#673AB7</color>
     <color name="purpleBase">#9C27B0</color>
+    <color name="red">#FB1F0F</color>
 </resources>

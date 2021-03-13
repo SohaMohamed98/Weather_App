@@ -83,18 +83,18 @@ class SettingWeather : Fragment(R.layout.fragment_setting_weather) {
 
         binding.groubTemp.setOnCheckedChangeListener { group, checkedId ->
             if (checkedId == R.id.btnCelicious) {
-                context?.let { model.writeTempDegreeInSharedPreference("metric", "°C", it) }
+                context?.let { model.writeTempDegreeInSharedPreference("metric", "°C","metric","m/s", it) }
             } else if (checkedId == R.id.btnKelven) {
-                context?.let { model.writeTempDegreeInSharedPreference("imperial", "°F", it) }
+                context?.let { model.writeTempDegreeInSharedPreference("imperial", "°F","imperial","Km/h", it) }
 
             }
         }
 
         binding.groubWind.setOnCheckedChangeListener { group, checkedId ->
             if (checkedId == R.id.btnMs) {
-                context?.let { model.writeTempDegreeInSharedPreference("metric", "m/s", it) }
+                context?.let { model.writeTempDegreeInSharedPreference("metric", "°C","metric","m/s", it) }
             } else if (checkedId == R.id.btnKmh) {
-                context?.let { model.writeTempDegreeInSharedPreference("metric", "Km/h", it) }
+                context?.let { model.writeTempDegreeInSharedPreference("imperial", "°F","imperial","Km/h", it) }
             }
         }
 

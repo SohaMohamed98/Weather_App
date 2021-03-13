@@ -35,4 +35,6 @@
     <string name="time">Time:</string>
     <string name="m_s">m/s</string>
     <string name="f">°F</string>
+    <string name="please_go_to_settings_to_select_your_location">Please, Go to Settings to select your location.</string>
+    <string name="hello">Hello</string>
 </resources>

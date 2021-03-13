@@ -20,7 +20,6 @@ import com.soha.weather_app.weather.db.Repository
 import com.soha.weather_app.weather.db.Resource
 import com.soha.weather_app.weather.db.entity.FavouriteData
 import com.soha.weather_app.weather.utils.getAddressGeocoder
-import com.soha.weather_app.weather.view.adapters.FavouriteAdapter
 import com.soha.weather_app.weather.view.fragments.home.HomeWeather
 import com.soha.weather_app.weather.viewModel.SettingViewModel
 import com.soha.weather_app.weather.view.fragments.setting.MapFragment.SettingWeather
