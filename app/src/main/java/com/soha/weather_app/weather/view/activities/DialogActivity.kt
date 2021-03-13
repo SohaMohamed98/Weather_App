@@ -49,7 +49,6 @@ class DialogActivity : AppCompatActivity() {
 
     }
 
-
     @SuppressLint("SetTextI18n")
     private fun showDialogAlart(events:String, descs:String) {
 

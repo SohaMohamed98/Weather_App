@@ -3,6 +3,7 @@ package com.soha.weather_app.weather.db.Local
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.soha.weather_app.weather.db.entity.AlertEntity
+import com.soha.weather_app.weather.db.entity.CustomAlert
 import com.soha.weather_app.weather.db.entity.FavouriteData
 import com.soha.weather_app.weather.db.entity.WeatherResponse
 
@@ -35,7 +36,6 @@ interface WeatherDao {
 
     //Alert
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-
     suspend fun insertAlert(alertDatabase: AlertEntity)
 
     @Query("select * from alert_table")
@@ -45,5 +45,15 @@ interface WeatherDao {
      fun deleteAlert(alertDatabase: AlertEntity)
 
 
+//=====================================================================
+    //CustomAlert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCustomAlert(alertDatabase: CustomAlert)
+
+    @Query("select * from custom_alert_table")
+    fun getCustomAlerts(): LiveData<MutableList<CustomAlert>>
+
+    @Delete
+    fun deleteCustomAlert(alertDatabase: CustomAlert)
 
 }

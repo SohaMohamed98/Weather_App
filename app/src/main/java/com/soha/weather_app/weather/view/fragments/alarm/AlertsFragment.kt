@@ -4,7 +4,6 @@ import android.app.*
 import android.content.*
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -67,7 +66,8 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
         alarmManager =
             requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alertList = ArrayList()
-        binding.alertRV.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        //  layoutManag = LinearLayoutManager(context, OrientationHelper.HORIZONTAL, false)
+        binding.alertRV.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         binding.alertRV.setHasFixedSize(true)
         alertAdapter = AlertAdapter(requireContext())
         ItemTouchHelper(itemTouchHelper).attachToRecyclerView(binding.alertRV)
