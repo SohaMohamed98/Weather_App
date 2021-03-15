@@ -50,4 +50,6 @@
     <string name="please_go_to_settings_to_select_your_location">Please, Go to Settings to select your location.</string>
     <string name="hello">Hello</string>
     <string name="time">Time:</string>
+    <string name="to">To:</string>
+    <string name="from">From:</string>
 </resources>

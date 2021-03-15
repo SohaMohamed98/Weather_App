@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -21,12 +22,17 @@ import com.google.gson.reflect.TypeToken
 import com.soha.alert.viewModel.AlertsViewModel
 import com.soha.weather_app.R
 import com.soha.weather_app.databinding.FragmentAlertsBinding
+import com.soha.weather_app.weather.db.entity.AlarmEntity
 import com.soha.weather_app.weather.db.entity.AlertEntity
 import com.soha.weather_app.weather.db.model.Alert
+import com.soha.weather_app.weather.db.model.Daily
+import com.soha.weather_app.weather.db.model.Weather
 import com.soha.weather_app.weather.provider.AlertBuild
 import com.soha.weather_app.weather.receiver.AlertReceiver
 import com.soha.weather_app.weather.receiver.DialogReceiver
+import com.soha.weather_app.weather.view.fragments.custom_alarm.Alarmadabter
 import com.soha.weather_app.weather.viewModel.WeatherViewModel
+import kotlinx.android.synthetic.main.fragment_alerts.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,35 +48,40 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
     var myMon: Int? = 0
     var myDay: Int? = 0
     lateinit var sp:SharedPreferences
-    private lateinit var binding: FragmentAlertsBinding
     private lateinit var alarmManager: AlarmManager
     lateinit var sharedPreferences: SharedPreferences
     lateinit var editor: SharedPreferences.Editor
     private lateinit var weatherViewModel: WeatherViewModel
     private lateinit var alertViewModel: AlertsViewModel
-    private lateinit var alertAdapter: AlertAdapter
-    private lateinit var alertList: List<Alert>
+  //  private lateinit var alertAdapter: AlertAdapter
+    private lateinit var alarmAdapter: Alarmadabter
+   // private lateinit var alertList: List<Alert>
+    private lateinit var alarmList: List<Daily>
+
+    lateinit var binding: FragmentAlertsBinding
     private var notificationOrAlarm = "notification"
     lateinit var prefs: SharedPreferences
 
-    private lateinit var workManager: WorkManager
+  //  private lateinit var workManager: WorkManager
 
 
 
     private fun init() {
         sp = PreferenceManager.getDefaultSharedPreferences(context)
-        workManager = WorkManager.getInstance(requireContext())
+      //  workManager = WorkManager.getInstance(requireContext())
         sharedPreferences = requireActivity().getSharedPreferences(
             "prefs", Context.MODE_PRIVATE)
         editor = sharedPreferences.edit()
         alarmManager =
             requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alertList = ArrayList()
+        //alertList = ArrayList()
+        alarmList = ArrayList()
         //  layoutManag = LinearLayoutManager(context, OrientationHelper.HORIZONTAL, false)
-        binding.alertRV.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-        binding.alertRV.setHasFixedSize(true)
-        alertAdapter = AlertAdapter(requireContext())
-        ItemTouchHelper(itemTouchHelper).attachToRecyclerView(binding.alertRV)
+        binding.recyclaerViewAlarm.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        binding.recyclaerViewAlarm.setHasFixedSize(true)
+       // alertAdapter = AlertAdapter(requireContext())
+        alarmAdapter= Alarmadabter(requireContext())
+        ItemTouchHelper(itemTouchHelper).attachToRecyclerView(binding.recyclaerViewAlarm)
         alertViewModel = ViewModelProvider(this).get(AlertsViewModel::class.java)
         weatherViewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
         prefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -82,11 +93,17 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
     ): View? {
         binding = FragmentAlertsBinding.inflate(layoutInflater)
         binding.layoutDate.setOnClickListener {
-            getDate()
+            getDateFrom()
         }
-        binding.layoutTime.setOnClickListener {
-            getTime()
+        binding.layoutTimeFrom.setOnClickListener {
+            getTimeFrom()
         }
+
+        binding.layoutTimeTo.setOnClickListener {
+            getTimeTo()
+        }
+
+
         binding.radioGroupNOrA.setOnCheckedChangeListener({ group, checkedId ->
             if (checkedId == R.id.notification) {
                 notificationOrAlarm = "notification"
@@ -96,11 +113,12 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
         })
         init()
 
-        getAlertFromDBToRecyclerView()
+        //getAlertFromDBToRecyclerView()
+        getAlarmFromDBToRecyclerView()
 
 
         binding.btnAdd.setOnClickListener {
-            binding.tvTime.text = " "
+            binding.tvTimeFrom.text = " "
             binding.tvDate.text = " "
             if (myHour != null && myMin != null && myDay != null && myMon != null && myYear != null) {
                 val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm")
@@ -108,15 +126,15 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
                 val date: String =
                     myDay.toString() + "-" + myMon + "-" + myYear + " " + myHour + ":" + myMin
                 val dateLong = sdf.parse(date)!!.time
-                if (alertList.size > 0) {
-                    for (alertItem in alertList) {
-                        if (dateLong / 1000 > alertItem.start!! && dateLong / 1000 < alertItem.end!!) {
+                if (alarmList.size > 0) {
+                    for (alertItem in alarmList) {
+                        if (dateLong / 1000 > alertItem.dt!!) {
                             if (notificationOrAlarm.equals("notification")) {
-                                setNotification(myHour!!, myMin!!,
+                                setCustomNotification(myHour!!, myMin!!,
                                     myDay!!, myMon!!, myYear!!,
-                                    alertItem.event!!, alertItem.description!!)
+                                    alertItem.weather.get(0).main!!)
                             } else {
-                                setAlaram(alertItem.event!!, alertItem.description!!,
+                                setCustomAlaram(alertItem.weather.get(0).main!!,
                                     myHour!!, myMin!!,
                                     myDay!!, myMon!!, myYear!!
                                 )
@@ -126,11 +144,11 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
                     }
                 } else {
                     if (notificationOrAlarm.equals("notification")) {
-                        setNotification(myHour!!, myMin!!,
+                        setCustomNotification(myHour!!, myMin!!,
                             myDay!!, myMon!!, myYear!!,
-                            "No event now.", "NOT Dangerous Weather!!")
+                            "No Main now.")
                     } else {
-                        setAlaram("NOT Event", "NOT Dangerous Weather!!",
+                        setCustomAlaram("NOT Main",
                             myHour!!, myMin!!,
                             myDay!!, myMon!!, myYear!!)
                     }
@@ -140,16 +158,20 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
             }
         }
 
-        setUpAlerts()
+        //setUpAlerts()
         return binding.root
     }
 
 
-    private fun getAlertFromDBToRecyclerView() {
+
+
+//====================================Alert============================
+
+   /* private fun getAlertFromDBToRecyclerView() {
         alertViewModel.getAlert(requireContext()).observe(viewLifecycleOwner, {
             it?.let {
                 alertAdapter.fetchData(it, requireContext())
-                binding.alertRV.adapter = alertAdapter
+                binding.recyclaerViewAlarm.adapter = alertAdapter
             }
 
         })
@@ -167,8 +189,8 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
     }
 
     private fun setAlaram(event: String, desc: String,
-        hour: Int, min: Int,
-        day: Int, month: Int, year: Int, ) {
+                          hour: Int, min: Int,
+                          day: Int, month: Int, year: Int, ) {
         val intentDialogueReciever = Intent(context, DialogReceiver::class.java)
         intentDialogueReciever.putExtra("event", event)
         intentDialogueReciever.putExtra("desc", desc)
@@ -193,12 +215,11 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
     }
 
 
+
     @RequiresApi(Build.VERSION_CODES.KITKAT)
-    fun setNotification(
-        hour: Int, min: Int,
-        day: Int, month: Int, year: Int,
-        event: String, description: String,
-    ) {
+    fun setNotification(hour: Int, min: Int,
+                        day: Int, month: Int, year: Int,
+                        event: String, description: String, ) {
         val intentAlertReciever = Intent(context, AlertReceiver::class.java)
         intentAlertReciever.putExtra("event", event)
         intentAlertReciever.putExtra("desc", description)
@@ -222,8 +243,12 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
         addAlert(requestCode, event, date, description, true)
     }
 
+    suspend fun deleteFavoriteItemFromDB(alertDB: AlertEntity) {
+        alertViewModel.deleteAlert(alertDB, requireContext())
+    }*/
+//==================================================================================
 
-    private fun getDate() {
+    private fun getDateFrom() {
         val c = Calendar.getInstance()
         var year = c.get(Calendar.YEAR)
         var month = c.get(Calendar.MONTH)
@@ -243,7 +268,7 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
     }
 
 
-    private fun getTime() {
+    private fun getTimeFrom() {
         val c = Calendar.getInstance()
         var hour = c.get(Calendar.HOUR)
         val minute = c.get(Calendar.MINUTE)
@@ -255,16 +280,16 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
                 c[Calendar.HOUR] = h
                 c[Calendar.MINUTE] = m
                 if (c.timeInMillis >= datetime.timeInMillis) {
-                    binding.tvTime.setText("" + h + ":" + m)
-                    binding.tvTime.visibility = View.VISIBLE
+                    binding.tvTimeFrom.setText("" + h + ":" + m)
+                    binding.tvTimeFrom.visibility = View.VISIBLE
 
                     myHour = h
                     myMin = m
                 } else {
                     Toast.makeText(requireActivity(), "Invalide Date or Time", Toast.LENGTH_LONG)
                         .show()
-                    binding.tvTime.setText(" ")
-                    binding.tvTime.visibility = View.VISIBLE
+                    binding.tvTimeFrom.setText(" ")
+                    binding.tvTimeFrom.visibility = View.VISIBLE
                 }
             }), hour, minute, false)
 
@@ -272,7 +297,116 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
     }
 
 
-    // swipe for delete
+
+    private fun getTimeTo() {
+        val c = Calendar.getInstance()
+        var hour = c.get(Calendar.HOUR)
+        val minute = c.get(Calendar.MINUTE)
+        val datetime = Calendar.getInstance()
+
+        val timePickerDialog = TimePickerDialog(requireContext(),
+            TimePickerDialog.OnTimeSetListener(function = { view, h, m ->
+                //Hour_of_Day
+                c[Calendar.HOUR] = h
+                c[Calendar.MINUTE] = m
+                if (c.timeInMillis >= datetime.timeInMillis) {
+                    binding.tvTimeTo.setText("" + h + ":" + m)
+                    binding.tvTimeTo.visibility = View.VISIBLE
+
+                    myHour = h
+                    myMin = m
+                } else {
+                    Toast.makeText(requireActivity(), "Invalide Date or Time", Toast.LENGTH_LONG)
+                        .show()
+                    binding.tvTimeTo.setText(" ")
+                    binding.tvTimeTo.visibility = View.VISIBLE
+                }
+            }), hour, minute, false)
+
+        timePickerDialog.show()
+    }
+
+
+
+    //=========================================Alarm=================================================
+
+    private fun getAlarmFromDBToRecyclerView() {
+        alertViewModel.getAlarm(requireContext()).observe(viewLifecycleOwner, {
+            it?.let {
+                alarmAdapter.fetchData(it, requireContext())
+                binding.recyclaerViewAlarm.adapter = alarmAdapter
+            }
+
+        })
+
+    }
+
+
+    private fun addAlarm(requestCode: Int, main: String, date:String,timeFrom: String, timeTo:String) {
+        val alarm = AlarmEntity(requestCode, main, date, timeFrom, timeTo)
+        CoroutineScope(Dispatchers.IO).launch {
+            alertViewModel.addAlarm(alarm, requireContext())
+        }
+
+    }
+
+
+    private fun setCustomAlaram(main: String, hour: Int, min: Int,
+                                day: Int, month: Int, year: Int, ) {
+        val intentDialogueReciever = Intent(context, DialogReceiver::class.java)
+        intentDialogueReciever.putExtra("main", main)
+        val random = Random()
+        val requestCode = random.nextInt(99)
+        val pendingIntentDialogueReciever =
+            PendingIntent.getBroadcast(context, requestCode, intentDialogueReciever, 0)
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, hour)
+        calendar.set(Calendar.MINUTE, min)
+        calendar[Calendar.MONTH] = month - 1
+        calendar[Calendar.DATE] = day
+        calendar[Calendar.YEAR] = year
+        calendar[Calendar.SECOND] = 0
+        val alarmtime: Long = calendar.timeInMillis
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmtime, pendingIntentDialogueReciever)
+        Toast.makeText(context, "Alarm is Done!", Toast.LENGTH_LONG).show()
+        requireActivity().registerReceiver(DialogReceiver(), IntentFilter())
+        var date = day.toString() + "_" + month + "_" + year + " " + hour + ":" + min
+        var timeFrom ="$hour : $min"
+        var timeTo ="$hour : $min"
+
+        addAlarm(requestCode, main, date,  timeFrom, timeTo)
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    fun setCustomNotification(hour: Int, min: Int,
+                              day: Int, month: Int, year: Int,
+                              main: String) {
+        val intentAlertReciever = Intent(context, AlertReceiver::class.java)
+        intentAlertReciever.putExtra("main", main)
+        val random = Random()
+        val requestCode = random.nextInt(99)
+        val pendingIntentAlertReciever =
+            PendingIntent.getBroadcast(context, requestCode, intentAlertReciever, 0)
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, hour)
+        calendar.set(Calendar.MINUTE, min)
+        calendar[Calendar.MONTH] = month - 1
+        calendar[Calendar.DATE] = day
+        calendar[Calendar.YEAR] = year
+        calendar[Calendar.SECOND] = 0
+        val alarmtime: Long = calendar.timeInMillis
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmtime, pendingIntentAlertReciever)
+        Toast.makeText(context, "Alarm is done!", Toast.LENGTH_LONG).show()
+        requireActivity().registerReceiver(AlertReceiver(), IntentFilter())
+        var date = day.toString() + "/" + month + "/" + year
+        var timeFrom="$hour : $min"
+        var timeTo="$hour: $min"
+
+        addAlarm(requestCode, main, date, timeFrom, timeTo)
+    }
+
+
     var itemTouchHelper: ItemTouchHelper.SimpleCallback =
         object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
             override fun onMove(
@@ -287,27 +421,33 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
                 AlertDialog.Builder(activity).setMessage("Do You Want to Delete this Alert ?!")
                     .setPositiveButton("Yes",
                         DialogInterface.OnClickListener { dialog, id ->
-                            val alertItemDeleted = alertAdapter.getItemByVH(viewHolder)
+                            val alertItemDeleted = alarmAdapter.getItemByVH(viewHolder)
                             cancelAlarm(alertItemDeleted.requestCode)
-                            setUpAlerts()
+                            //setUpAlerts()
                             CoroutineScope(Dispatchers.IO).launch {
-                                deleteFavoriteItemFromDB(alertItemDeleted)
+                               // deleteFavoriteItemFromDB(alertItemDeleted)
+                                deleteAlarmItemFromDB(alertItemDeleted)
                             }
-                            alertAdapter.removeAlertItem(viewHolder)
+                           // alertAdapter.removeAlertItem(viewHolder)
+                            alarmAdapter.removeAlarmItem(viewHolder)
                         })
                     .setNegativeButton("No",
                         DialogInterface.OnClickListener { dialog, id ->
-                            getAlertFromDBToRecyclerView()
+                          //  getAlertFromDBToRecyclerView()
+                            getAlarmFromDBToRecyclerView()
                         }).show()
 
             }
         }
 
-
-    // delete favorite item
-    suspend fun deleteFavoriteItemFromDB(alertDB: AlertEntity) {
-        alertViewModel.deleteAlert(alertDB, requireContext())
+    suspend fun deleteAlarmItemFromDB(alertDB: AlarmEntity) {
+        alertViewModel.deleteAlarm(alertDB, requireContext())
     }
+
+
+    //=================================================================================
+
+
 
 
     fun cancelAlarm(requestCode: Int) {
@@ -317,7 +457,7 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
         alarmManager.cancel(sender)
     }
 
-    private fun setUpAlerts() {
+   /* private fun setUpAlerts() {
         if (sharedPreferences.getBoolean("ALERT", true) && sp.getString("alerts", "yes")
                 .equals("yes")
         ) {
@@ -358,5 +498,5 @@ class AlertsFragment : Fragment(R.layout.fragment_alerts) {
             .build()
         workManager.enqueue(repeatingRequest)
 
-    }
+    }*/
 }

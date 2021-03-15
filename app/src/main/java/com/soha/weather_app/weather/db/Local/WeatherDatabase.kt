@@ -6,12 +6,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.soha.weather_app.weather.db.entity.AlertEntity
-import com.soha.weather_app.weather.db.entity.CustomAlert
+import com.soha.weather_app.weather.db.entity.AlarmEntity
 import com.soha.weather_app.weather.db.entity.FavouriteData
 import com.soha.weather_app.weather.db.entity.WeatherResponse
 
 @Database(
-    entities = [WeatherResponse::class, FavouriteData::class, AlertEntity::class, CustomAlert::class],
+    entities = [WeatherResponse::class, FavouriteData::class, AlertEntity::class, AlarmEntity::class],
     version = 5)
 @TypeConverters(TypeConvertDataBase::class)
 abstract class WeatherDatabase : RoomDatabase() {

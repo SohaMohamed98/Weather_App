@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import com.soha.weather_app.weather.db.Local.WeatherDatabase
 import com.soha.weather_app.weather.db.entity.AlertEntity
-import com.soha.weather_app.weather.db.entity.CustomAlert
+import com.soha.weather_app.weather.db.entity.AlarmEntity
 import com.soha.weather_app.weather.db.entity.WeatherResponse
 import com.soha.weather_app.weather.db.entity.FavouriteData
 import com.soha.weather_app.weather.db.remotely.RetrofitInstance
@@ -56,13 +56,13 @@ public class Repository {
 
     //============================================================================================
 
-    public suspend fun addCustomAlert(alertDatabase: CustomAlert, context: Context) =
-        WeatherDatabase.getInstance(context).getWeatherDao().insertCustomAlert(alertDatabase)
+    public suspend fun addAlarm(alertDatabase: AlarmEntity, context: Context) =
+        WeatherDatabase.getInstance(context).getWeatherDao().insertAlarm(alertDatabase)
 
 
-    public fun getCustomAlert(context: Context): LiveData<MutableList<CustomAlert>> =
-        WeatherDatabase.getInstance(context).getWeatherDao().getCustomAlerts()
+    public fun getAlarm(context: Context): LiveData<MutableList<AlarmEntity>> =
+        WeatherDatabase.getInstance(context).getWeatherDao().getAlarm()
 
-    public suspend fun deleteCustomAlert(alertDatabase: CustomAlert, context: Context) =
-        WeatherDatabase.getInstance(context).getWeatherDao().deleteCustomAlert(alertDatabase)
+    public suspend fun deleteAlarm(alertDatabase: AlarmEntity, context: Context) =
+        WeatherDatabase.getInstance(context).getWeatherDao().deleteAlarm(alertDatabase)
     }

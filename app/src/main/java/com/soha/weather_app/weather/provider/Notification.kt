@@ -49,7 +49,7 @@ class Notification(base: Context?, intent: Intent) : ContextWrapper(base) {
     val channelNotification: NotificationCompat.Builder
         get() = NotificationCompat.Builder(applicationContext, channelID)
             .setContentTitle("Alert")
-            .setContentText(intent.getStringExtra("event") + " " + intent.getStringExtra("desc"))
+            .setContentText(intent.getStringExtra("main")) // + " " + intent.getStringExtra("desc"))
             .setSmallIcon(R.drawable.ic_notification)
 
 }

@@ -22,6 +22,7 @@ class DialogActivity : AppCompatActivity() {
     private lateinit var ringtone: Ringtone
     var event = " "
     var desc =  " "
+    var main= ""
     lateinit var txtEvent:TextView
     lateinit var txtDesc:TextView
     lateinit var imgClose:ImageView
@@ -40,8 +41,8 @@ class DialogActivity : AppCompatActivity() {
         val notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
         ringtone = RingtoneManager.getRingtone(applicationContext, notification)
         if (intent.extras != null) {
-           event = intent.getStringExtra("event").toString()
-            desc = intent.getStringExtra("desc").toString()
+           event = intent.getStringExtra("main").toString()
+           // desc = intent.getStringExtra("desc").toString()
             txtDesc.text= desc
             txtEvent.text= event
             showDialogAlart(event, desc)

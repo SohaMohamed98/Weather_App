@@ -124,10 +124,10 @@ class AlertBuild(context: Context, workerParams: WorkerParameters) :
     }
 
 
-    fun setCustomNotification(startTime: Int, main: String, description: String) {
+    fun setCustomNotification(startTime: Int, main: String) {
         val intent = Intent(context, AlertReceiver::class.java)
         intent.putExtra("main", main)
-        intent.putExtra("description", description)
+       // intent.putExtra("description", description)
         val r = Random()
         val i1 = r.nextInt(99)
 
@@ -145,12 +145,10 @@ class AlertBuild(context: Context, workerParams: WorkerParameters) :
             val now = System.currentTimeMillis()
             if (weather.dt!! > now / 1000) {
                 setCustomNotification(weather.dt,
-                    weather.weather.get(0).main!!,
-                    weather.weather.get(0).description!!)
+                    weather.weather.get(0).main!!)
             } else if (weather.dt!! > now / 1000) {
 
-                setNotification(weather.dt, weather.weather.get(0).main!!,
-                    weather.weather.get(0).description!!)
+                setCustomNotification(weather.dt, weather.weather.get(0).main!!)
 
             }
 
