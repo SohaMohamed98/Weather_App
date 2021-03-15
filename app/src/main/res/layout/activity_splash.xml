@@ -8,15 +8,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#9C27B0"> <!--#24CDF3-->
+        android:background="@drawable/background_dialogue"> <!--#24CDF3-->
 
 
         <ImageView
             android:id="@+id/imgSplashSun"
             android:layout_width="126dp"
             android:layout_height="126dp"
-            android:layout_marginEnd="32dp"
-            android:src="@drawable/ic_01d"
+            android:layout_marginEnd="28dp"
+            android:src="@drawable/sunny"
             app:layout_constraintBottom_toBottomOf="@+id/imgSplashCloud"
             app:layout_constraintEnd_toEndOf="@+id/imgSplashCloud"
             app:layout_constraintTop_toTopOf="@+id/imgSplashCloud"

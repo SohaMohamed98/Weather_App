@@ -1,5 +1,19 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Weather_App</string>
+
+    <string-array name="main">
+        <item>Rain</item>
+        <item>Wind</item>
+        <item>Fog</item>
+        <item>Snow</item>
+        <item>Clouds</item>
+        <item>Thunderstorm</item>
+        <item>Clear</item>
+        <item>Drizzle</item>
+        <item>Dust</item>
+        <item>Mist</item>
+    </string-array>
+
     <string name="hello_blank_fragment">weatherFragment</string>
     <string name="feels">Feels</string>
     <string name="sunset">Sunset</string>

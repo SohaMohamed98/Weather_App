@@ -43,7 +43,8 @@ class FavouriteAdapter(var favList: MutableList<FavouriteData>, listener: OnItem
         context?.let {
             holder.view.tvFavAddress.text =getAddressGeocoder( favList[position].lat, favList[position].lon, it)
             holder.view.textCelcius.text = sp.getString("cel", "")
-           // Glide.with(it).load(getImage(favList[position].daily.get(position).weather.get(position).icon)).into(holder.view.imgForecastItem)
+//            Glide.with(it).load("http://openweathermap.org/img/w/"+"01d" +".png")
+//                .into(holder.view.imgForecastItem)
         }
 
 
@@ -76,7 +77,7 @@ class FavouriteAdapter(var favList: MutableList<FavouriteData>, listener: OnItem
             val img = favList.daily.get(0).weather.get(0).icon
 
 
-            setImage(view.imgForecastItem, img)
+         setImage(view.imgForecastItem, img)
 
             itemView.setOnClickListener {
                 listener.onItemClick(favList)

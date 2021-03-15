@@ -151,6 +151,14 @@
                         app:layout_constraintTop_toTopOf="@+id/btn_time" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <Spinner
+
+                    android:id="@+id/spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/main"
+                    android:outlineSpotShadowColor="@color/purpleBase" />
+
             </LinearLayout>
 
 

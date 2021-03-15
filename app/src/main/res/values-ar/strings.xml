@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="main">
+        <item>مطر</item>
+        <item>رياح</item>
+        <item>Fog</item>
+        <item>Snow</item>
+        <item>Clouds</item>
+        <item>Thunderstorm</item>
+        <item>Clear</item>
+        <item>Drizzle</item>
+        <item>Dust</item>
+        <item>Mist</item>
+    </string-array>
     <string name="app_name">الطقس</string>
     <string name="hello_blank_fragment">weatherFragment</string>
     <string name="feels">شعور</string>
