@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/alertsFragment"
-        android:name="com.soha.weather_app.weather.view.fragments.alarm.AlertsFragment"
+        android:name="com.soha.weather_app.weather.view.fragments.alarm.AlarmFragment"
         android:label="AlertsFragment" />
     <fragment
         android:id="@+id/favouriteFragment"

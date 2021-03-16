@@ -34,7 +34,6 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
     private var layoutManag: RecyclerView.LayoutManager? = null
     private lateinit var weatherViewModel: WeatherViewModel
     private lateinit var settingViewModel: SettingViewModel
-    private lateinit var workManager: WorkManager
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
 
@@ -44,7 +43,6 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        workManager = WorkManager.getInstance(requireContext())
 
         weatherViewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
         settingViewModel = ViewModelProvider(this).get(SettingViewModel::class.java)

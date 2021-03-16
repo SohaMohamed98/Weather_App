@@ -67,6 +67,12 @@ class SevenDayWeather : Fragment(R.layout.fragment_seven_day_weather) {
         sp = PreferenceManager.getDefaultSharedPreferences(context)
         binding.tvCountry.text = sp.getString("address", "")
 
+        weatherViewModel.checkRoom.observe(viewLifecycleOwner, Observer {
+            if (it == true){
+                binding.cardSeven.visibility = View.VISIBLE
+            }
+        })
+
         return root
     }
 

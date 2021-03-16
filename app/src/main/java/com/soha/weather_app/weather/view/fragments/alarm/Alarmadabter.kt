@@ -1,22 +1,23 @@
-package com.soha.weather_app.weather.view.fragments.custom_alarm
+package com.soha.weather_app.weather.view.fragments.alarm
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.soha.weather_app.R
 import com.soha.weather_app.weather.db.entity.AlarmEntity
-import com.soha.weather_app.weather.db.entity.AlertEntity
 import java.util.ArrayList
 
 class Alarmadabter(val context: Context) : RecyclerView.Adapter<Alarmadabter.ViewHolder>(){
         private var alarmList: MutableList<AlarmEntity>
-
-
+        lateinit var sp:SharedPreferences
         init {
             alarmList = ArrayList<AlarmEntity>()
+            sp= PreferenceManager.getDefaultSharedPreferences(context)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

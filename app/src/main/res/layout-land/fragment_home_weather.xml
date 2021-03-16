@@ -20,24 +20,21 @@
             android:background="@drawable/background_dialo2">
 
             <LinearLayout
-                android:background="@drawable/background_dialogue"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:weightSum="2"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="180dp"
-                    android:layout_weight="1"
+                    android:layout_margin="25dp"
+                    android:layout_width="420dp"
+                    android:layout_gravity="center"
+                    android:layout_height="160dp"
                     android:background="@drawable/ic_location"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_weight="1"
                     android:layout_width="match_parent"
-                    android:background="@drawable/background_dialo2"
                     android:layout_height="wrap_content">
 
 
