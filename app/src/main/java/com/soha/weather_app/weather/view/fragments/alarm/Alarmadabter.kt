@@ -9,19 +9,22 @@ import android.widget.TextView
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.soha.weather_app.R
+import com.soha.weather_app.databinding.AlertItemBinding
 import com.soha.weather_app.weather.db.entity.AlarmEntity
+import kotlinx.android.synthetic.main.alert_item.view.*
 import java.util.ArrayList
 
 class Alarmadabter(val context: Context) : RecyclerView.Adapter<Alarmadabter.ViewHolder>(){
         private var alarmList: MutableList<AlarmEntity>
         lateinit var sp:SharedPreferences
         init {
-            alarmList = ArrayList<AlarmEntity>()
+
+            alarmList= ArrayList<AlarmEntity>()
             sp= PreferenceManager.getDefaultSharedPreferences(context)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val v = LayoutInflater.from(parent.context).inflate(R.layout.alert_item, parent, false)
+            val v = AlertItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             return ViewHolder(v)
         }
 
@@ -34,8 +37,8 @@ class Alarmadabter(val context: Context) : RecyclerView.Adapter<Alarmadabter.Vie
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.time.text = alarmList[position].TimeFrom
-            holder.state.text=alarmList[position].main
+            holder.bind(alarmList[position])
+
         }
 
 
@@ -50,9 +53,15 @@ class Alarmadabter(val context: Context) : RecyclerView.Adapter<Alarmadabter.Vie
 
         }
 
-        class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            val time = itemView.findViewById(R.id.time) as TextView
-            val state = itemView.findViewById(R.id.tv_status) as TextView
+        class ViewHolder(itemView: AlertItemBinding) : RecyclerView.ViewHolder(itemView.root) {
+
+            fun bind(alarmEntity: AlarmEntity){
+                itemView.timeFrom.text =alarmEntity.TimeFrom
+                itemView.timeTo.text =alarmEntity.TimeTo
+                itemView.tv_status.text= alarmEntity.main
+
+
+            }
 
 
         }

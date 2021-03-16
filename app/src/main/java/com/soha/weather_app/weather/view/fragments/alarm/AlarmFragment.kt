@@ -24,6 +24,7 @@ import com.soha.weather_app.weather.db.model.Daily
 import com.soha.weather_app.weather.db.model.Hourly
 import com.soha.weather_app.weather.receiver.AlertReceiver
 import com.soha.weather_app.weather.receiver.DialogReceiver
+import com.soha.weather_app.weather.utils.timeConverter
 import com.soha.weather_app.weather.viewModel.WeatherViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,9 +35,13 @@ import java.util.*
 class AlarmFragment : Fragment(R.layout.fragment_alerts) {
     var myHour: Int? = 0
     var myMin: Int? = 0
+    var myHour2: Int? = 0
+    var myMin2: Int? = 0
     var myYear: Int? = 0
     var myMon: Int? = 0
     var myDay: Int? = 0
+
+
     lateinit var sp:SharedPreferences
     private lateinit var alarmManager: AlarmManager
     private lateinit var weatherViewModel: WeatherViewModel
@@ -48,7 +53,8 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
     private var notificationOrAlarm = "notification"
 
   //  private lateinit var workManager: WorkManager
-
+    var startTime =""
+    var endTime = ""
     var event:String=""
 
 
@@ -76,6 +82,7 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
 
         binding.layoutTimeTo.setOnClickListener {
             getTimeTo()
+
         }
 
 
@@ -118,11 +125,12 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
                     for (item in alarmList) {
                         if (dateLong / 1000 > item.dt!!) {
                             if (notificationOrAlarm.equals("notification")) {
-                                setCustomNotification(event, myHour!!, myMin!!,
+                                setCustomNotification(event, myHour!!, myMin!!,myHour2!!,myMin2!!,
                                     myDay!!, myMon!!, myYear!!)
                             } else {
                                 setCustomAlaram(event,
                                     myHour!!, myMin!!,
+                                    myHour2!!,myMin2!!,
                                     myDay!!, myMon!!, myYear!!
                                 )
                             }
@@ -131,11 +139,12 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
                     }
                 } else {
                     if (notificationOrAlarm.equals("notification")) {
-                        setCustomNotification("no data", myHour!!, myMin!!,
+                        setCustomNotification("no data", myHour!!, myMin!!,myHour2!!, myMin2!!,
                             myDay!!, myMon!!, myYear!!)
                     } else {
                         setCustomAlaram("no data",
                             myHour!!, myMin!!,
+                            myHour2!!,myMin2!!,
                             myDay!!, myMon!!, myYear!!)
                     }
                 }
@@ -213,10 +222,13 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
                 c[Calendar.MINUTE] = m
                 if (c.timeInMillis >= datetime.timeInMillis) {
                     binding.tvTimeFrom.setText("" + h + ":" + m)
+
                     binding.tvTimeFrom.visibility = View.VISIBLE
 
                     myHour = h
                     myMin = m
+                    startTime = "$myHour : $myMin"
+
                 } else {
                     Toast.makeText(requireActivity(), "Invalide Date or Time", Toast.LENGTH_LONG)
                         .show()
@@ -243,10 +255,12 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
                 c[Calendar.MINUTE] = m
                 if (c.timeInMillis >= datetime.timeInMillis) {
                     binding.tvTimeTo.setText("" + h + ":" + m)
+                    endTime = ""
                     binding.tvTimeTo.visibility = View.VISIBLE
 
-                    myHour = h
-                    myMin = m
+                    myHour2 = h
+                    myMin2 = m
+                    endTime= "$myHour2 : $myMin2"
                 } else {
                     Toast.makeText(requireActivity(), "Invalide Date or Time", Toast.LENGTH_LONG)
                         .show()
@@ -284,6 +298,7 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
 
 
     private fun setCustomAlaram(main: String, hour: Int, min: Int,
+                                hour2: Int, min2: Int,
                                 day: Int, month: Int, year: Int, ) {
         val intentDialogueReciever = Intent(context, DialogReceiver::class.java)
         intentDialogueReciever.putExtra("main", main)
@@ -298,13 +313,22 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
         calendar[Calendar.DATE] = day
         calendar[Calendar.YEAR] = year
         calendar[Calendar.SECOND] = 0
+
+        val calendar2 = Calendar.getInstance()
+        calendar2.set(Calendar.HOUR_OF_DAY, hour2)
+        calendar2.set(Calendar.MINUTE, min2)
+        calendar2[Calendar.MONTH] = month - 1
+        calendar2[Calendar.DATE] = day
+        calendar2[Calendar.YEAR] = year
+        calendar2[Calendar.SECOND] = 0
         val alarmtime: Long = calendar.timeInMillis
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmtime, pendingIntentDialogueReciever)
+        val alarmtime2: Long = calendar2.timeInMillis
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, alarmtime, alarmtime2,pendingIntentDialogueReciever)
         Toast.makeText(context, "Alarm is Done!", Toast.LENGTH_LONG).show()
         requireActivity().registerReceiver(DialogReceiver(), IntentFilter())
         var date = day.toString() + "_" + month + "_" + year + " " + hour + ":" + min
         var timeFrom ="$hour : $min"
-        var timeTo ="$hour : $min"
+        var timeTo ="$hour2 : $min2"
 
         addAlarm(requestCode, main, date,  timeFrom, timeTo)
     }
@@ -312,6 +336,7 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     fun setCustomNotification( main: String, hour: Int, min: Int,
+                               hour2: Int, min2: Int,
                               day: Int, month: Int, year: Int,
                              ) {
         
@@ -328,13 +353,24 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
         calendar[Calendar.DATE] = day
         calendar[Calendar.YEAR] = year
         calendar[Calendar.SECOND] = 0
+
+        val calendar2 = Calendar.getInstance()
+        calendar2.set(Calendar.HOUR_OF_DAY, hour2)
+        calendar2.set(Calendar.MINUTE, min2)
+        calendar2[Calendar.MONTH] = month - 1
+        calendar2[Calendar.DATE] = day
+        calendar2[Calendar.YEAR] = year
+        calendar2[Calendar.SECOND] = 0
+
         val alarmtime: Long = calendar.timeInMillis
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmtime, pendingIntentAlertReciever)
+        val alarmtime2: Long = calendar2.timeInMillis
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, alarmtime, alarmtime2,
+            pendingIntentAlertReciever)
         Toast.makeText(context, "Alarm is done!", Toast.LENGTH_LONG).show()
         requireActivity().registerReceiver(AlertReceiver(), IntentFilter())
         var date = day.toString() + "/" + month + "/" + year
         var timeFrom="$hour : $min"
-        var timeTo="$hour: $min"
+        var timeTo="$hour2: $min2"
 
         addAlarm(requestCode, main, date, timeFrom, timeTo)
     }
