@@ -27,97 +27,57 @@
                 />
 
             <TextView
-                android:id="@+id/tv_temp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_status"
-                android:gravity="right"
-                app:layout_constraintStart_toEndOf="@+id/tv_status"
-                android:layout_marginStart="35dp"
-                android:textStyle="bold"
-                android:textSize="24dp"
-                android:hint="192c"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
-            <TextView
-                android:id="@+id/textCelcius"
-                android:text="@string/c"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:textSize="14dp"
-                app:layout_constraintStart_toEndOf="@id/tv_temp"
-                app:layout_constraintTop_toTopOf="@id/tv_temp"
-                android:layout_margin="5dp"
-                />
-
-            <TextView
-                android:id="@+id/textTime"
+                android:id="@+id/textTimeFrom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_time"
                 android:textSize="18sp"
-                android:text="@string/time"
+                android:text="@string/from"
                 android:layout_marginTop="18dp"
                 app:layout_constraintStart_toStartOf="@id/tv_status"
-                app:layout_constraintTop_toBottomOf="@+id/tv_temp"/>
+                app:layout_constraintTop_toBottomOf="@+id/tv_status"/>
 
             <TextView
-                android:id="@+id/time"
+                android:id="@+id/timeFrom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toEndOf="@+id/textTimeFrom"
+                app:layout_constraintTop_toTopOf="@id/textTimeFrom"/>
+
+
+            <TextView
+                android:id="@+id/textTimeTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_time"
+                android:textSize="18sp"
+                android:text="@string/to"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/textTimeFrom"
+                app:layout_constraintTop_toBottomOf="@+id/timeFrom"/>
+
+            <TextView
+                android:id="@+id/timeTo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:layout_marginStart="35dp"
-                app:layout_constraintStart_toEndOf="@+id/textTime"
-                app:layout_constraintTop_toTopOf="@id/textTime"/>
+                app:layout_constraintStart_toEndOf="@+id/textTimeTo"
+                app:layout_constraintTop_toTopOf="@id/textTimeTo"/>
 
-            <TextView
-                android:id="@+id/text_sunrise"
-                android:text="@string/sunrise"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_sunrise"
-                app:layout_constraintTop_toBottomOf="@+id/textTime"
-                app:layout_constraintStart_toStartOf="@id/textTime"
-                android:layout_marginTop="8dp"
-                android:textSize="18sp"/>
-
-            <TextView
-                android:id="@+id/tv_sunrise"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@+id/text_sunrise"
-                app:layout_constraintStart_toEndOf="@+id/text_sunrise"
-                android:layout_marginStart="10dp"
-                />
-
-            <TextView
-                android:id="@+id/text_sunset"
-                android:text="@string/sunset"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/text_sunrise"
-                app:layout_constraintStart_toStartOf="@id/textTime"
-                android:layout_marginTop="8dp"
-                android:textSize="18sp"
-                android:drawableLeft="@drawable/ic_sunset"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="8dp"/>
-
-            <TextView
-                android:id="@+id/tv_sunset"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@+id/text_sunset"
-                app:layout_constraintStart_toEndOf="@+id/text_sunset"
-                android:layout_marginStart="14dp"
-                />
 
             <ImageView
                 android:id="@+id/imgWeather"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@+id/textCelcius"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="25dp"
+                android:layout_marginTop="35dp"
                 android:src="@drawable/ic_alarm"
 
                 />

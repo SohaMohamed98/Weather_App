@@ -4,13 +4,13 @@
         <item>مطر</item>
         <item>رياح</item>
         <item>Fog</item>
-        <item>Snow</item>
-        <item>Clouds</item>
-        <item>Thunderstorm</item>
-        <item>Clear</item>
-        <item>Drizzle</item>
-        <item>Dust</item>
-        <item>Mist</item>
+        <item>ثلج</item>
+        <item>سحاب</item>
+        <item>رعد</item>
+        <item>صافي</item>
+        <item>رذاذ</item>
+        <item>غبار</item>
+        <item>شبورة</item>
     </string-array>
     <string name="app_name">الطقس</string>
     <string name="hello_blank_fragment">weatherFragment</string>
@@ -49,4 +49,24 @@
     <string name="f">ف°</string>
     <string name="please_go_to_settings_to_select_your_location">من فضلك, اذهب الي الاعدادات لتحديد موقعك. </string>
     <string name="hello">مرحبا</string>
+    <string name="to">الي:</string>
+    <string name="from">من:</string>
+    <string name="toastLoc">"من فضلك, ادخل موقعك."</string>
+    <string name="error">"خطأ"</string>
+    <string name="permission">"لم تتمكن من تحديد موقعك!! الاذن مطلوب."</string>
+
+    <string name="favMsg">هل تريد حذف هذا؟؟</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
+    <string name="alert">هل تريد حذف المنبه؟؟</string>
+    <string name="alarmDone">المنبه تم.</string>
+    <string name="invalidDorT">الوقت والتاريخ غير صالحين.</string>
+    <string name="dialogAlarm">لم توجد بيانات</string>
+    <string name="weather">الطقس</string>
+    <string name="_7day">7 اياام</string>
+    <string name="alarmNav">المنبه</string>
+    <string name="favouriteNav">المفضلة</string>
+    <string name="setting">الاعدادات</string>
+
+
 </resources>

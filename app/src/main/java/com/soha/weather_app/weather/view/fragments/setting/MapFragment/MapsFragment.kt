@@ -130,8 +130,7 @@ class MapsFragment : Fragment(R.layout.fragment_maps) {
                 if (grantResults.isEmpty() || grantResults[0] !=
                     PackageManager.PERMISSION_GRANTED
                 ) {
-                    Toast.makeText(context,
-                        "Unable to show location - permission required",
+                    Toast.makeText(context, R.string.permission.toString(),
                         Toast.LENGTH_LONG).show()
                 }
             }

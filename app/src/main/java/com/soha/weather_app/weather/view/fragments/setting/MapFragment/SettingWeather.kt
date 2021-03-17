@@ -111,7 +111,7 @@ class SettingWeather : Fragment(R.layout.fragment_setting_weather) {
 
         binding.fbtnLocation.setOnClickListener {
             if (binding.tvLat.text == null || binding.tvLon.text == null) {
-                Toast.makeText(context, "please, Enter Your Location", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, R.string.toastLoc, Toast.LENGTH_LONG).show()
             } else {
 
                 context?.let {
@@ -124,7 +124,7 @@ class SettingWeather : Fragment(R.layout.fragment_setting_weather) {
                 weatherViewModel.weatherLiveData.observe(viewLifecycleOwner, Observer {
                     when (it) {
                         is Resource.Error -> {
-                            Toast.makeText(context, "Error!!", Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, R.string.error, Toast.LENGTH_LONG).show()
                             //showErrorMessage(it.message)
                         }
                     }
@@ -148,7 +148,7 @@ class SettingWeather : Fragment(R.layout.fragment_setting_weather) {
                 favViewModel.favLiveData.observe(viewLifecycleOwner, Observer {
                     when (it) {
                         is Resource.Error -> {
-                            Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, R.string.error, Toast.LENGTH_LONG).show()
                             //showErrorMessage(it.message)
                         }
                     }

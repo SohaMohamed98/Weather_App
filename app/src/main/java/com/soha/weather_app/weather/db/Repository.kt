@@ -3,7 +3,7 @@ package com.soha.weather_app.weather.db
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.soha.weather_app.weather.db.Local.WeatherDatabase
-import com.soha.weather_app.weather.db.entity.AlertEntity
+import com.soha.weather_app.weather.db.entity.AlarmEntity
 import com.soha.weather_app.weather.db.entity.WeatherResponse
 import com.soha.weather_app.weather.db.entity.FavouriteData
 import com.soha.weather_app.weather.db.remotely.RetrofitInstance
@@ -41,16 +41,17 @@ public class Repository {
     public suspend fun deleteFav(favData: FavouriteData, context: Context) =
         WeatherDatabase.getInstance(context).getWeatherDao().deleteFav(favData)
 
+   //=======================================================================================
+
+    //============================================================================================
+
+    public suspend fun addAlarm(alertDatabase: AlarmEntity, context: Context) =
+        WeatherDatabase.getInstance(context).getWeatherDao().insertAlarm(alertDatabase)
 
 
-    public suspend fun addAlert(alertDatabase: AlertEntity, context: Context) =
-         WeatherDatabase.getInstance(context).getWeatherDao().insertAlert(alertDatabase)
+    public fun getAlarm(context: Context): LiveData<MutableList<AlarmEntity>> =
+        WeatherDatabase.getInstance(context).getWeatherDao().getAlarm()
 
-
-    public fun getAlert(context: Context): LiveData<MutableList<AlertEntity>> =
-         WeatherDatabase.getInstance(context).getWeatherDao().getAlerts()
-
-    public suspend fun deleteAlert(alertDatabase: AlertEntity, context: Context) =
-        WeatherDatabase.getInstance(context).getWeatherDao().deleteAlert(alertDatabase)
-
+    public suspend fun deleteAlarm(alertDatabase: AlarmEntity, context: Context) =
+        WeatherDatabase.getInstance(context).getWeatherDao().deleteAlarm(alertDatabase)
     }

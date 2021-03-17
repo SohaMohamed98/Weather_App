@@ -19,18 +19,32 @@ class Notification(base: Context?, intent: Intent) : ContextWrapper(base) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             this.intent = intent
             createChannel()
+            createChannel2()
         }
     }
 
     companion object {
         const val channelID = "channelID"
         const val channelName = "Channel Name"
+        const val channelID2 = "channelID2"
+        const val channelName2 = "Channel Name2"
+
     }
 
     @TargetApi(Build.VERSION_CODES.O)
     private fun createChannel() {
 
         val channel = NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_HIGH)
+        channel.enableLights(true)
+        channel.setLightColor(Color.RED)
+        channel.enableVibration(true)
+        manager!!.createNotificationChannel(channel)
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
+    private fun createChannel2() {
+
+        val channel = NotificationChannel(channelID2, channelName2, NotificationManager.IMPORTANCE_HIGH)
         channel.enableLights(true)
         channel.setLightColor(Color.RED)
         channel.enableVibration(true)
@@ -48,8 +62,14 @@ class Notification(base: Context?, intent: Intent) : ContextWrapper(base) {
 
     val channelNotification: NotificationCompat.Builder
         get() = NotificationCompat.Builder(applicationContext, channelID)
+            .setContentTitle("Alarm")
+            .setContentText(intent.getStringExtra("main")) // + " " + intent.getStringExtra("desc"))
+            .setSmallIcon(R.drawable.ic_notification)
+
+    val channelNotificationAlert: NotificationCompat.Builder
+        get() = NotificationCompat.Builder(applicationContext, channelID2)
             .setContentTitle("Alert")
-            .setContentText(intent.getStringExtra("event") + " " + intent.getStringExtra("desc"))
+            .setContentText(intent.getStringExtra("event")+ " " + intent.getStringExtra("desc"))
             .setSmallIcon(R.drawable.ic_notification)
 
 }

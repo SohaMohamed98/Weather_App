@@ -12,32 +12,68 @@
         android:id="@+id/cardHello"
         android:visibility="gone"
         android:layout_width="match_parent"
-        app:cardCornerRadius="25dp"
         android:layout_height="match_parent">
 
-        <TextView
-            android:background="@drawable/background_dialogue"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/please_go_to_settings_to_select_your_location"
-            android:layout_margin="16dp"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="28dp"
-            android:textStyle="bold"
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/hello"
-            android:layout_gravity="top"
-            android:layout_marginTop="70dp"
-            android:textSize="40dp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:gravity="center"
-            />
+            android:background="@drawable/background_dialo2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_margin="25dp"
+                    android:layout_width="420dp"
+                    android:layout_gravity="center"
+                    android:layout_height="160dp"
+                    android:background="@drawable/ic_location"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:id="@+id/tx"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/hello"
+                        android:textSize="40dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/please_go_to_settings_to_select_your_location"
+                        android:layout_marginTop="22dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        app:layout_constraintTop_toBottomOf="@+id/tx"
+                        android:textSize="28dp"
+                        android:textStyle="bold"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
     </androidx.cardview.widget.CardView>
+
+
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent">
