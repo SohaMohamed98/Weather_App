@@ -149,8 +149,8 @@ class FavouriteWeather : Fragment(R.layout.fragment_favourite_weather),
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                AlertDialog.Builder(activity).setMessage("Do You Want to Delete this Favourite ?!")
-                    .setPositiveButton("Yes",
+                AlertDialog.Builder(activity).setMessage(R.string.favMsg)
+                    .setPositiveButton(R.string.yes,
                         DialogInterface.OnClickListener { dialog, id -> //when delete item from tripDatabase, add tripHistoryDB
                             val alertItemDeleted = dailyAdapter.getFavByVH(viewHolder)
 
@@ -159,7 +159,7 @@ class FavouriteWeather : Fragment(R.layout.fragment_favourite_weather),
                             }
                             dailyAdapter.removeFavItem(viewHolder)
                         })
-                    .setNegativeButton("No",
+                    .setNegativeButton(R.string.no,
                         DialogInterface.OnClickListener { dialog, id ->
 
                             getFavDataFromRoom()

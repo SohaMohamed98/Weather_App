@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/homeFragment"
-        android:title="Weather"
+        android:title="@string/weather"
         android:icon="@drawable/ic_cloud" />
 
     <item android:id="@+id/sevenDayFragment"
-        android:title="7Day"
+        android:title="@string/_7day"
         android:icon="@drawable/ic_date" />
 
     <item android:id="@+id/alertsFragment"
-        android:title="Alarm"
+        android:title="@string/alarmNav"
         android:icon="@drawable/ic_add_alert" />
 
     <item android:id="@+id/favouriteFragment"
-        android:title="Favourite"
+        android:title="@string/favourite"
         android:icon="@drawable/ic_favorite" />
 
     <item android:id="@+id/settingFragment"
-        android:title="Setting"
+        android:title="@string/setting"
         android:icon="@drawable/ic_settings" />
 
 

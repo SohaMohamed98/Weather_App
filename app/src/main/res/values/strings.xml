@@ -52,4 +52,20 @@
     <string name="time">Time:</string>
     <string name="to">To:</string>
     <string name="from">From:</string>
+
+    <string name="toastLoc">please, Enter Your Location</string>
+    <string name="error">Error!!</string>
+    <string name="permission">Unable to show location - permission required</string>
+    <string name="favMsg">Do You Want to Delete this Favourite ?!</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="alert">Do You Want to Delete this Alert ?!</string>
+    <string name="alarmDone">Alarm is done!</string>
+    <string name="invalidDorT">Invalide Date or Time</string>
+    <string name="dialogAlarm">no data</string>
+    <string name="weather">Weather</string>
+    <string name="_7day">7Day</string>
+    <string name="alarmNav">Alarm</string>
+    <string name="favouriteNav">Favourite</string>
+    <string name="setting">Setting</string>
 </resources>

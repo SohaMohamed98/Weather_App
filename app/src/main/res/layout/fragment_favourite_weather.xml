@@ -57,6 +57,7 @@
 
     <LinearLayout
         android:id="@+id/cardFav"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -84,6 +85,7 @@
             android:textStyle="bold"
             android:textSize="28dp"
             android:text="Your Favourite Location is empty."/>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

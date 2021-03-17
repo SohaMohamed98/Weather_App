@@ -1,11 +1,16 @@
 package com.soha.weather_app.weather.viewModel
 
+import android.app.AlarmManager
 import android.app.Application
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
@@ -16,22 +21,28 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class WeatherViewModel(application: Application) : AndroidViewModel(application) {
     lateinit var sp: SharedPreferences
     private val newRepo: Repository
 
+    lateinit var context: Context
     val checkRoom=MutableLiveData<Boolean>()
+    lateinit var alarmManager:AlarmManager
 
     init {
         newRepo = Repository()
         sp = PreferenceManager.getDefaultSharedPreferences(getApplication())
+
     }
 
     val lat1 = sp.getString("lat", "")
     val lon1 = sp.getString("lon", "")
     val temp = sp.getString("temp", "")
     val long = sp.getString("lang", "")
+
 
     val weatherLiveData = MutableLiveData<Resource<WeatherResponse>>()
     val weatherFromRoomLiveData = MutableLiveData<Resource<WeatherResponse>>()
@@ -40,6 +51,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
         context: Context, lat: String = lat1.toString(), lon: String = lon1.toString(),
         units: String = temp.toString(), long: String = this.long.toString(),
     ) {
+        this.context=context
         CoroutineScope(Dispatchers.IO).launch {
             weatherLiveData.postValue(Resource.Loading())
             try {
@@ -115,5 +127,16 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
         return false
     }
 
+
+
+    fun getDateTime(s: String , pattern:String): String? {
+        try {
+            val sdf = SimpleDateFormat(pattern , Locale.getDefault())
+            val netDate = java.util.Date(s.toLong() * 1000)
+            return sdf.format(netDate)
+        } catch (e: Exception) {
+            return e.toString()
+        }
+    }
 
 }

@@ -24,6 +24,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Weather_App">
+        <activity android:name=".weather.view.activities.DialogueAlert"></activity>
         <activity android:name=".weather.view.activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,29 +32,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <receiver
-            android:name="com.soha.weather_app.weather.receiver.DialogReceiver"
+            android:name=".weather.receiver.DialogReceiver"
             android:enabled="true"
-            android:exported="true">
-
-        </receiver>
+            android:exported="true" />
         <receiver
-            android:name="com.soha.weather_app.weather.receiver.AlertReceiver"
+            android:name=".weather.receiver.AlertReceiver"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true" />
+        <receiver
+            android:name=".weather.receiver.AlReciever"
+            android:enabled="true"
+            android:exported="true" />
 
-        </receiver>
-
-        <activity android:name="com.soha.weather_app.weather.view.activities.DialogActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.Dialog" android:launchMode="singleTop"/>
+        <activity
+            android:name=".weather.view.activities.DialogActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".weather.view.activities.WeatherActivity">
-
-        </activity>
+        <activity android:name=".weather.view.activities.WeatherActivity" />
     </application>
 
 </manifest>

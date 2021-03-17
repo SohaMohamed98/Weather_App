@@ -20,17 +20,21 @@ import com.soha.weather_app.R
 import com.soha.weather_app.databinding.FragmentAlertsBinding
 import com.soha.weather_app.weather.db.Resource
 import com.soha.weather_app.weather.db.entity.AlarmEntity
+import com.soha.weather_app.weather.db.model.Alert
 import com.soha.weather_app.weather.db.model.Daily
 import com.soha.weather_app.weather.db.model.Hourly
 import com.soha.weather_app.weather.receiver.AlertReceiver
 import com.soha.weather_app.weather.receiver.DialogReceiver
+import com.soha.weather_app.weather.utils.dayConverter
 import com.soha.weather_app.weather.utils.timeConverter
 import com.soha.weather_app.weather.viewModel.WeatherViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.LocalTime
 import java.util.*
+import kotlin.collections.ArrayList
 
 class AlarmFragment : Fragment(R.layout.fragment_alerts) {
     var myHour: Int? = 0
@@ -40,6 +44,11 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
     var myYear: Int? = 0
     var myMon: Int? = 0
     var myDay: Int? = 0
+
+    var hourAlert:Int?=0
+    var minAlert:Int?=0
+    var timeAlert:String=""
+
 
 
     lateinit var sp:SharedPreferences
@@ -62,6 +71,7 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
         sp = PreferenceManager.getDefaultSharedPreferences(context)
         alarmManager = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmList = ArrayList()
+
         binding.recyclaerViewAlarm.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         binding.recyclaerViewAlarm.setHasFixedSize(true)
         alarmAdapter= Alarmadabter(requireContext())
@@ -96,6 +106,7 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
         init()
 
 
+      //  Toast.makeText(context, timeConverter,Toast.LENGTH_LONG).show()
         alarmViewModel.getWeatherFromRoom()
         alarmViewModel.weatherFromRoomLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             when (it) {
@@ -115,42 +126,7 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
             binding.tvTimeFrom.text = " "
             binding.tvTimeTo.text=""
             binding.tvDate.text = " "
-            if (myHour != null && myMin != null && myDay != null && myMon != null && myYear != null) {
-                val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm")
-
-                val date: String = myDay.toString() + "-" + myMon + "-" + myYear + " " + myHour + ":" + myMin
-
-                val dateLong = sdf.parse(date)!!.time
-                if (alarmList.size > 0) {
-                    for (item in alarmList) {
-                        if (dateLong / 1000 > item.dt!!) {
-                            if (notificationOrAlarm.equals("notification")) {
-                                setCustomNotification(event, myHour!!, myMin!!,myHour2!!,myMin2!!,
-                                    myDay!!, myMon!!, myYear!!)
-                            } else {
-                                setCustomAlaram(event,
-                                    myHour!!, myMin!!,
-                                    myHour2!!,myMin2!!,
-                                    myDay!!, myMon!!, myYear!!
-                                )
-                            }
-                            break
-                        }
-                    }
-                } else {
-                    if (notificationOrAlarm.equals("notification")) {
-                        setCustomNotification("no data", myHour!!, myMin!!,myHour2!!, myMin2!!,
-                            myDay!!, myMon!!, myYear!!)
-                    } else {
-                        setCustomAlaram("no data",
-                            myHour!!, myMin!!,
-                            myHour2!!,myMin2!!,
-                            myDay!!, myMon!!, myYear!!)
-                    }
-                }
-            } else {
-                Toast.makeText(requireActivity(), "Data is empty", Toast.LENGTH_LONG).show()
-            }
+           checkAlarm()
         }
 
 
@@ -177,11 +153,11 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
                 TODO("Not yet implemented")
             }
         })
-        //setUpAlerts()
 
 
     return binding.root
     }
+
 
 
 
@@ -208,7 +184,6 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
         datePickerDialog.show()
     }
 
-
     private fun getTimeFrom() {
         val c = Calendar.getInstance()
         var hour = c.get(Calendar.HOUR)
@@ -230,7 +205,7 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
                     startTime = "$myHour : $myMin"
 
                 } else {
-                    Toast.makeText(requireActivity(), "Invalide Date or Time", Toast.LENGTH_LONG)
+                    Toast.makeText(requireActivity(), R.string.invalidDorT, Toast.LENGTH_LONG)
                         .show()
                     binding.tvTimeFrom.setText(" ")
                     binding.tvTimeFrom.visibility = View.VISIBLE
@@ -239,8 +214,6 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
 
         timePickerDialog.show()
     }
-
-
 
     private fun getTimeTo() {
         val c = Calendar.getInstance()
@@ -275,6 +248,49 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
 
 
     //=========================================Alarm=================================================
+
+
+    fun checkAlarm(){
+
+        if (myHour != null && myMin != null && myDay != null && myMon != null && myYear != null) {
+            val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm")
+
+            val date: String = myDay.toString() + "-" + myMon + "-" + myYear + " " + myHour + ":" + myMin
+
+            val dateLong = sdf.parse(date)!!.time
+            if (alarmList.size > 0) {
+                for (item in alarmList) {
+                    if (dateLong / 1000 > item.dt!!) {
+                        if (notificationOrAlarm.equals("notification")) {
+                            setCustomNotification(event, myHour!!, myMin!!,myHour2!!,myMin2!!,
+                                myDay!!, myMon!!, myYear!!)
+                        } else {
+                            setCustomAlaram(event,
+                                myHour!!, myMin!!,
+                                myHour2!!,myMin2!!,
+                                myDay!!, myMon!!, myYear!!
+                            )
+                        }
+                        break
+                    }
+                }
+            } else {
+                if (notificationOrAlarm.equals("notification")) {
+                    setCustomNotification(R.string.dialogAlarm.toString(), myHour!!, myMin!!,myHour2!!, myMin2!!,
+                        myDay!!, myMon!!, myYear!!)
+                } else {
+                    setCustomAlaram(R.string.dialogAlarm.toString(),
+                        myHour!!, myMin!!,
+                        myHour2!!,myMin2!!,
+                        myDay!!, myMon!!, myYear!!)
+                }
+            }
+        } else {
+            Toast.makeText(requireActivity(), "Data is empty", Toast.LENGTH_LONG).show()
+        }
+
+    }
+
 
     private fun getAlarmFromDBToRecyclerView() {
         alarmViewModel.getAlarm(requireContext()).observe(viewLifecycleOwner, {
@@ -366,7 +382,7 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
         val alarmtime2: Long = calendar2.timeInMillis
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, alarmtime, alarmtime2,
             pendingIntentAlertReciever)
-        Toast.makeText(context, "Alarm is done!", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, R.string.alarmDone, Toast.LENGTH_LONG).show()
         requireActivity().registerReceiver(AlertReceiver(), IntentFilter())
         var date = day.toString() + "/" + month + "/" + year
         var timeFrom="$hour : $min"
@@ -387,8 +403,8 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                AlertDialog.Builder(activity).setMessage("Do You Want to Delete this Alert ?!")
-                    .setPositiveButton("Yes",
+                AlertDialog.Builder(activity).setMessage(R.string.alert)
+                    .setPositiveButton(R.string.yes,
                         DialogInterface.OnClickListener { dialog, id ->
                             val alertItemDeleted = alarmAdapter.getItemByVH(viewHolder)
                             cancelAlarm(alertItemDeleted.requestCode)
@@ -400,7 +416,7 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
                            // alertAdapter.removeAlertItem(viewHolder)
                             alarmAdapter.removeAlarmItem(viewHolder)
                         })
-                    .setNegativeButton("No",
+                    .setNegativeButton(R.string.no,
                         DialogInterface.OnClickListener { dialog, id ->
                           //  getAlertFromDBToRecyclerView()
                             getAlarmFromDBToRecyclerView()
@@ -414,11 +430,6 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
     }
 
 
-    //=================================================================================
-
-
-
-
     fun cancelAlarm(requestCode: Int) {
         val intent = Intent(requireContext(), AlertReceiver::class.java)
         val sender = PendingIntent.getBroadcast(context, requestCode, intent, 0)
@@ -426,46 +437,80 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
         alarmManager.cancel(sender)
     }
 
-   /* private fun setUpAlerts() {
-        if (sharedPreferences.getBoolean("ALERT", true) && sp.getString("alerts", "yes")
-                .equals("yes")
-        ) {
-            setUpFetchFromApiWorker()
-            editor.putString("alerts", "no")
-            editor.commit()
-            editor.apply()
-        } else if (!sharedPreferences.getBoolean("ALERT", true)) {
-            val requestCodeListJson = sp.getString("requestsOfAlerts", " ")
-            val type: Type = object : TypeToken<List<Int>>() {}.type
 
-            if (Gson().fromJson<List<Int>>(requestCodeListJson, type) != null) {
-                var requestCodeList: List<Int> = Gson().fromJson(requestCodeListJson, type)
-                for (requestCodeItem in requestCodeList) {
-                    cancelAlarm(requestCodeItem)
+    //=================================Alert==================================
 
-                }
-                workManager.cancelAllWorkByTag("PeriodicWork")
-                editor.putString("alerts", "yes")
-                editor.commit()
-                editor.apply()
-            }
 
-        }
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    fun setAlertNotification( event: String, description: String,
+                              hour: Int?, min: Int?) {
+
+        val intentAlertReciever = Intent(context, AlertReceiver::class.java)
+        intentAlertReciever.putExtra("event", event)
+        intentAlertReciever.putExtra("desc", description)
+        val random = Random()
+        val requestCode = random.nextInt(99)
+        val pendingIntentAlertReciever =
+            PendingIntent.getBroadcast(context, requestCode, intentAlertReciever, 0)
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, hour!!)
+        calendar.set(Calendar.MINUTE, min!!)
+        calendar[Calendar.SECOND] = 0
+
+        val alarmtime: Long = calendar.timeInMillis
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmtime, pendingIntentAlertReciever)
+        Toast.makeText(context, R.string.alarmDone, Toast.LENGTH_LONG).show()
+        requireActivity().registerReceiver(AlertReceiver(), IntentFilter())
+
     }
 
-    private fun setUpFetchFromApiWorker() {
-        val data: Data = Data.Builder().putString("lat", sp.getString("lat", ""))
-            .putString("lon", sp.getString("lon", ""))
-            .putString("temp",  sp.getString("temp", ""))
-            .putString("lang",  sp.getString("lang", ""))
-            .build()
-        val constrains = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
-        val repeatingRequest = PeriodicWorkRequest.Builder(AlertBuild::class.java, 1, TimeUnit.HOURS)
-            .addTag("PeriodicWork")
-            .setConstraints(constrains)
-            .setInputData(data)
-            .build()
-        workManager.enqueue(repeatingRequest)
 
-    }*/
+
+    fun getAlertFromRoom(){
+        weatherViewModel.weatherLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            when(it){
+                is Resource.Success ->{
+
+                    val alertList = it.data!!.alerts
+                    if (hourAlert != null && minAlert != null) {
+                        val sdf = SimpleDateFormat("HH:mm")
+
+                        val date: String = " "+ myHour + ":" + myMin
+
+                        val dateLong = sdf.parse(date)!!.time
+                        if (alarmList.size > 0) {
+                            for (item in alertList!!) {
+                                if (dateLong / 1000 > item.start!!) {
+                                    if (notificationOrAlarm.equals("notification")) {
+                                        setAlertNotification(alertList.get(0).event!!, alertList.get(0).description!!,
+                                        hourAlert, minAlert)
+                                    }
+                                    break
+                                }
+                            }
+                        } else {
+                            if (notificationOrAlarm.equals("notification")) {
+                                setAlertNotification("null", "null",
+                                    hourAlert, minAlert)
+                            }
+                        }
+                    } else {
+                        Toast.makeText(requireActivity(), "Data is empty", Toast.LENGTH_LONG).show()
+                    }
+
+
+                }
+                is Resource.Error -> {
+                    Toast.makeText(context, R.string.error, Toast.LENGTH_LONG).show()
+                }
+            }
+
+        })
+    }
+
+
+
+
+
 }

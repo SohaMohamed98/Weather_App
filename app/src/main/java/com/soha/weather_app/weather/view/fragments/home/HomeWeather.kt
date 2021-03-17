@@ -2,11 +2,18 @@ package com.soha.weather_app.weather.view.fragments.home
 
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -20,11 +27,13 @@ import com.soha.weather_app.databinding.FragmentHomeWeatherBinding
 import com.soha.weather_app.weather.db.Resource
 import com.soha.weather_app.weather.db.model.Hourly
 import com.soha.weather_app.weather.db.entity.WeatherResponse
+import com.soha.weather_app.weather.receiver.AlReciever
 import com.soha.weather_app.weather.utils.dayConverter
 import com.soha.weather_app.weather.utils.setImage
 import com.soha.weather_app.weather.utils.timeConverter
 import com.soha.weather_app.weather.viewModel.SettingViewModel
 import com.soha.weather_app.weather.viewModel.WeatherViewModel
+import java.util.*
 
 
 class HomeWeather : Fragment(R.layout.fragment_home_weather) {
@@ -36,13 +45,18 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
     private lateinit var settingViewModel: SettingViewModel
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
-
+    var values: String = ""
+    lateinit var calendar : Calendar
+    lateinit var alarmManager:AlarmManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+
+        alarmManager = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        calendar = Calendar.getInstance()
 
         weatherViewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
         settingViewModel = ViewModelProvider(this).get(SettingViewModel::class.java)
@@ -81,6 +95,22 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
             when (it) {
                 is Resource.Success -> {
                     binding.mainContainer.visibility = View.VISIBLE
+
+                    if(it.data!!.alerts!=null){
+                        it.data!!.alerts?.let { it1 ->
+                            for(item in it1)
+                            values = values+item.event+ " from "+weatherViewModel
+                                .getDateTime(item.start.toString(),"dd-MM-yyyy  hh:mm a")+" to "+
+                                    weatherViewModel.getDateTime(item.end.toString(),"dd-MM-yyyy  hh:mm a")+"\n"
+                            setAlertNotification(calendar.timeInMillis, values, it1.get(0).description!!)
+                        }
+                    }
+                    else{
+
+                        setAlertNotification(calendar.timeInMillis, values, "no")
+
+
+                    }
                     it.data?.let {
                         displayDailyWeatherToRecycleView(it.hourly)
                         displayCurrentWeatherToCard(it)
@@ -147,7 +177,6 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
     }
 
     private fun showErrorMessage(message: String?) {
-        //Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show()
         System.out.println("Error is: " + message)
         binding.progressBar.visibility = View.INVISIBLE
     }
@@ -160,6 +189,25 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
     private fun hideProgressBar() {
         binding.progressBar.visibility = View.INVISIBLE
     }
+
+
+
+
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    fun setAlertNotification(st: Long, event: String, description: String, ) {
+        val intentAlertReciever = Intent(context,AlReciever::class.java)
+        intentAlertReciever.putExtra("event", event)
+        intentAlertReciever.putExtra("desc", description)
+        val random = Random()
+        val requestCode = random.nextInt(99)
+        val pendingIntentAlertReciever =
+            PendingIntent.getBroadcast(context, requestCode, intentAlertReciever, 0)
+        val calendar = Calendar.getInstance().timeInMillis
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar, pendingIntentAlertReciever)
+            requireActivity().registerReceiver(AlReciever(), IntentFilter())
+
+    }
+
 
 }
 
