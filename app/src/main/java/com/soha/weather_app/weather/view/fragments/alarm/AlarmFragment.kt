@@ -45,12 +45,6 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
     var myMon: Int? = 0
     var myDay: Int? = 0
 
-    var hourAlert:Int?=0
-    var minAlert:Int?=0
-    var timeAlert:String=""
-
-
-
     lateinit var sp:SharedPreferences
     private lateinit var alarmManager: AlarmManager
     private lateinit var weatherViewModel: WeatherViewModel
@@ -61,7 +55,6 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
     lateinit var binding: FragmentAlertsBinding
     private var notificationOrAlarm = "notification"
 
-  //  private lateinit var workManager: WorkManager
     var startTime =""
     var endTime = ""
     var event:String=""
@@ -106,7 +99,6 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
         init()
 
 
-      //  Toast.makeText(context, timeConverter,Toast.LENGTH_LONG).show()
         alarmViewModel.getWeatherFromRoom()
         alarmViewModel.weatherFromRoomLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             when (it) {
@@ -142,7 +134,6 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
 
                 var arrayOfEvent = resources.getStringArray(R.array.main)
                 event = arrayOfEvent[position]
-          //      Toast.makeText(context, event, Toast.LENGTH_LONG).show()
                 val editor =sp.edit()
                 editor.putString("main", event)
                 editor.commit()
@@ -157,9 +148,6 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
 
     return binding.root
     }
-
-
-
 
 
 
@@ -408,17 +396,13 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
                         DialogInterface.OnClickListener { dialog, id ->
                             val alertItemDeleted = alarmAdapter.getItemByVH(viewHolder)
                             cancelAlarm(alertItemDeleted.requestCode)
-                            //setUpAlerts()
                             CoroutineScope(Dispatchers.IO).launch {
-                               // deleteFavoriteItemFromDB(alertItemDeleted)
                                 deleteAlarmItemFromDB(alertItemDeleted)
                             }
-                           // alertAdapter.removeAlertItem(viewHolder)
                             alarmAdapter.removeAlarmItem(viewHolder)
                         })
                     .setNegativeButton(R.string.no,
                         DialogInterface.OnClickListener { dialog, id ->
-                          //  getAlertFromDBToRecyclerView()
                             getAlarmFromDBToRecyclerView()
                         }).show()
 
@@ -436,81 +420,5 @@ class AlarmFragment : Fragment(R.layout.fragment_alerts) {
         val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.cancel(sender)
     }
-
-
-    //=================================Alert==================================
-
-
-    @RequiresApi(Build.VERSION_CODES.KITKAT)
-    fun setAlertNotification( event: String, description: String,
-                              hour: Int?, min: Int?) {
-
-        val intentAlertReciever = Intent(context, AlertReceiver::class.java)
-        intentAlertReciever.putExtra("event", event)
-        intentAlertReciever.putExtra("desc", description)
-        val random = Random()
-        val requestCode = random.nextInt(99)
-        val pendingIntentAlertReciever =
-            PendingIntent.getBroadcast(context, requestCode, intentAlertReciever, 0)
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, hour!!)
-        calendar.set(Calendar.MINUTE, min!!)
-        calendar[Calendar.SECOND] = 0
-
-        val alarmtime: Long = calendar.timeInMillis
-
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmtime, pendingIntentAlertReciever)
-        Toast.makeText(context, R.string.alarmDone, Toast.LENGTH_LONG).show()
-        requireActivity().registerReceiver(AlertReceiver(), IntentFilter())
-
-    }
-
-
-
-    fun getAlertFromRoom(){
-        weatherViewModel.weatherLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            when(it){
-                is Resource.Success ->{
-
-                    val alertList = it.data!!.alerts
-                    if (hourAlert != null && minAlert != null) {
-                        val sdf = SimpleDateFormat("HH:mm")
-
-                        val date: String = " "+ myHour + ":" + myMin
-
-                        val dateLong = sdf.parse(date)!!.time
-                        if (alarmList.size > 0) {
-                            for (item in alertList!!) {
-                                if (dateLong / 1000 > item.start!!) {
-                                    if (notificationOrAlarm.equals("notification")) {
-                                        setAlertNotification(alertList.get(0).event!!, alertList.get(0).description!!,
-                                        hourAlert, minAlert)
-                                    }
-                                    break
-                                }
-                            }
-                        } else {
-                            if (notificationOrAlarm.equals("notification")) {
-                                setAlertNotification("null", "null",
-                                    hourAlert, minAlert)
-                            }
-                        }
-                    } else {
-                        Toast.makeText(requireActivity(), "Data is empty", Toast.LENGTH_LONG).show()
-                    }
-
-
-                }
-                is Resource.Error -> {
-                    Toast.makeText(context, R.string.error, Toast.LENGTH_LONG).show()
-                }
-            }
-
-        })
-    }
-
-
-
-
 
 }
