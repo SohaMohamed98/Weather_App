@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/relativeSetting"
-        tools:ignore="MissingConstraints" >
+        tools:ignore="MissingConstraints">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -33,7 +33,9 @@
                     android:layout_height="wrap_content">
 
                     <LinearLayout
-
+                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
@@ -45,7 +47,7 @@
                             android:layout_margin="8dp"
                             android:text="@string/location_mode"
                             android:textSize="18dp"
-                            android:textColor="@color/purpleBase"
+                            android:textColor="@color/purpleText"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -117,43 +119,46 @@
 
                                 <TextView
                                     android:id="@+id/tvAddressLocation"
-                                    android:hint="@string/address"
-                                    android:textSize="18dp"
                                     android:layout_width="wrap_content"
-                                    app:layout_constraintTop_toTopOf="parent"
+                                    android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
+                                    android:padding="2dp"
+                                    android:gravity="left"
+                                    android:hint="@string/address"
+                                    android:textSize="14dp"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    android:layout_height="wrap_content" />
+                                    app:layout_constraintTop_toTopOf="parent" />
 
                                 <TextView
                                     android:id="@+id/tvLat"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
                                     android:hint="@string/latitude"
                                     android:textSize="18dp"
-                                    android:layout_width="wrap_content"
-                                    app:layout_constraintTop_toBottomOf="@+id/tvAddressLocation"
-                                    android:layout_marginTop="5dp"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    android:layout_height="wrap_content" />
+                                    app:layout_constraintTop_toBottomOf="@+id/tvAddressLocation" />
+
                                 <TextView
                                     android:id="@+id/tvLon"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
                                     android:hint="@string/longtuide"
                                     android:textSize="18dp"
-                                    android:layout_width="wrap_content"
-                                    app:layout_constraintTop_toBottomOf="@+id/tvLat"
-                                    android:layout_marginTop="5dp"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    android:layout_height="wrap_content" />
+                                    app:layout_constraintTop_toBottomOf="@+id/tvLat" />
 
                                 <RadioButton
                                     android:id="@+id/checkFav"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginEnd="16dp"
                                     android:text="@string/favourite"
+                                    android:textColor="@color/purpleText"
                                     android:textStyle="bold"
-                                    android:textColor="@color/purpleBase"
-                                    app:layout_constraintTop_toBottomOf="@+id/tvLon"
                                     app:layout_constraintEnd_toEndOf="parent"
-                                    android:layout_marginEnd="16dp"/>
+                                    app:layout_constraintTop_toBottomOf="@+id/tvLon" />
 
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -174,6 +179,8 @@
                     android:layout_height="wrap_content">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -185,7 +192,7 @@
                             android:text="@string/temperature_unit"
                             android:textSize="18dp"
                             android:textStyle="bold"
-                            android:textColor="@color/purpleBase"
+                            android:textColor="@color/purpleText"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             tools:ignore="MissingConstraints" />
@@ -229,6 +236,8 @@
                     android:layout_height="wrap_content">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -240,7 +249,7 @@
                             android:text="@string/wind_speed"
                             android:textSize="18dp"
                             android:textStyle="bold"
-                            android:textColor="@color/purpleBase"
+                            android:textColor="@color/purpleText"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             tools:ignore="MissingConstraints" />
@@ -282,6 +291,8 @@
                     android:layout_height="wrap_content">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -292,7 +303,7 @@
                             android:layout_margin="8dp"
                             android:text="@string/language"
                             android:textSize="18dp"
-                            android:textColor="@color/purpleBase"
+                            android:textColor="@color/purpleText"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
