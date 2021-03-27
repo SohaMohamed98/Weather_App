@@ -328,7 +328,7 @@
                             android:id="@+id/textTemp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Feels"
+                            android:text="@string/feels"
                             android:textSize="8dp"
                             android:layout_gravity="center"
                             android:gravity="center"/>
@@ -346,9 +346,7 @@
                             <TextView
                                 android:id="@+id/tvMain"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textStyle="bold"
-                                android:hint="clear" />
+                                android:layout_height="wrap_content" />
 
                         </LinearLayout>
 

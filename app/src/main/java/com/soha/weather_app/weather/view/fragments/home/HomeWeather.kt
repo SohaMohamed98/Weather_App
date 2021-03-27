@@ -105,12 +105,12 @@ class HomeWeather : Fragment(R.layout.fragment_home_weather) {
                             setAlertNotification(calendar.timeInMillis, values, it1.get(0).description!!)
                         }
                     }
-                    else{
-
-                        setAlertNotification(calendar.timeInMillis, values, "no")
-
-
-                    }
+//                    else{
+//
+//                        setAlertNotification(calendar.timeInMillis, values, "no")
+//
+//
+//                    }
                     it.data?.let {
                         displayDailyWeatherToRecycleView(it.hourly)
                         displayCurrentWeatherToCard(it)

@@ -71,7 +71,7 @@ class HourlyAdapter(var hourList: List<Hourly>) :
             view.tvForecastTime.text = dayConverter((forecast.dt).toLong())
             view.tvForecastFeelsTemp.text = (Math.round(forecast.feelsLike)).toString()
             view.tvVisibility.text = forecast.visibility.toString()
-            view.tvMain.text=forecast.weather.get(0).main
+            view.tvMain.text=forecast.feelsLike.toString()
 
             val url = forecast.weather.get(0).icon
             setImage(imageview, url)
