@@ -24,8 +24,6 @@ import java.util.*
 class AlarmViewModel(application: Application) : AndroidViewModel(application) {
     private var repo: Repository
 
-
-    val weatherViewMode=WeatherViewModel(getApplication())
     val weatherFromRoomLiveData = MutableLiveData<Resource<WeatherResponse>>()
     init {
         repo = Repository()
@@ -62,68 +60,5 @@ class AlarmViewModel(application: Application) : AndroidViewModel(application) {
     suspend fun deleteAlarm(alertDatabase: AlarmEntity, context: Context) {
         return repo.deleteAlarm(alertDatabase, context)
     }
-
-
-
-
-    fun convertAndCheck(date: String, startTime: String, endTime: String): Boolean {
-        val dateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm")
-        var convertedDate: Date?
-        var convertedDate2: Date?
-        var convertedDate3: Date?
-        try {
-            convertedDate = dateFormat.parse(date)
-            convertedDate2 = dateFormat.parse(startTime)
-            convertedDate3 = dateFormat.parse(endTime)
-            if ((convertedDate2.before(convertedDate)&&convertedDate3.after(convertedDate))
-                ||convertedDate2.equals(convertedDate)||convertedDate3.equals(convertedDate)) {
-                return true
-            }
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
-        return false
-    }
-    fun getDateTime(s: String , pattern:String): String {
-        try {
-            val sdf = SimpleDateFormat(pattern)
-            val netDate = Date(s.toLong() * 1000)
-            return sdf.format(netDate)
-        } catch (e: Exception) {
-            return e.toString()
-        }
-    }
-
-    private fun setAlarm(callback: (Long) -> Unit) {
-        TimePickerDialog(
-            getApplication(),
-            0,
-            { _, hour, minute ->
-                Calendar.getInstance().set(Calendar.HOUR_OF_DAY, hour)
-                Calendar.getInstance().set(Calendar.MINUTE, minute)
-                timeConverter( Calendar.getInstance().timeInMillis)
-            },
-            Calendar.getInstance().get(Calendar.HOUR_OF_DAY),
-            Calendar.getInstance().get(Calendar.MINUTE),
-            false
-        ).show()
-    }
-
-    fun search(alarmHours: List<Hourly>, startTime: String, endTime: String, event: String): Hourly? {
-        var i: Int = 0
-        while (i < alarmHours.size) {
-            var timeInList = dayConverter(alarmHours.get(i).dt.toLong())
-            if (convertAndCheck(timeInList!!, startTime!!, endTime)
-                && alarmHours.get(i).weather.get(0).main.equals(event))
-            {
-                return alarmHours.get(i)
-            } else {
-                i++
-            }
-        }
-        return null
-    }
-
-
 
 }

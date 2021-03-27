@@ -21,7 +21,6 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
-import androidx.work.*
 import com.soha.weather_app.R
 import com.soha.weather_app.databinding.FragmentHomeWeatherBinding
 import com.soha.weather_app.weather.db.Resource
@@ -38,13 +37,13 @@ import java.util.*
 
 class HomeWeather : Fragment(R.layout.fragment_home_weather) {
     lateinit var binding: FragmentHomeWeatherBinding
-    lateinit var sp: SharedPreferences
     private var hourAdapter: RecyclerView.Adapter<HourlyAdapter.ForecatViewHolder>? = null
     private var layoutManag: RecyclerView.LayoutManager? = null
     private lateinit var weatherViewModel: WeatherViewModel
     private lateinit var settingViewModel: SettingViewModel
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
+    lateinit var sp: SharedPreferences
     var values: String = ""
     lateinit var calendar : Calendar
     lateinit var alarmManager:AlarmManager

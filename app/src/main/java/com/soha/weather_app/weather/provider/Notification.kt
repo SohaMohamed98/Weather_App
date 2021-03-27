@@ -63,7 +63,7 @@ class Notification(base: Context?, intent: Intent) : ContextWrapper(base) {
     val channelNotification: NotificationCompat.Builder
         get() = NotificationCompat.Builder(applicationContext, channelID)
             .setContentTitle("Alarm")
-            .setContentText(intent.getStringExtra("main")) // + " " + intent.getStringExtra("desc"))
+            .setContentText(intent.getStringExtra("main"))
             .setSmallIcon(R.drawable.ic_notification)
 
     val channelNotificationAlert: NotificationCompat.Builder

@@ -42,7 +42,6 @@ class DialogActivity : AppCompatActivity() {
         ringtone = RingtoneManager.getRingtone(applicationContext, notification)
         if (intent.extras != null) {
            event = intent.getStringExtra("main").toString()
-           // desc = intent.getStringExtra("desc").toString()
             txtDesc.text= desc
             txtEvent.text= event
             showDialogAlart(event, desc)

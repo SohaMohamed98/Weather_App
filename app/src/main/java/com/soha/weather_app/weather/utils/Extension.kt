@@ -30,13 +30,7 @@ fun getAddressGeocoder(lat: Double, lon:Double, context:Context?): String? {
 
 }
 
-fun dateConverter(): String {
-    var date = Calendar.getInstance().time
-    var converter = SimpleDateFormat("EEE, d MMM yyyy", Locale("en"))
-    var convertedDate = converter.format(date)
 
-    return convertedDate
-}
 
 fun timeConverter(time: Long): String {
     var converter = SimpleDateFormat("hh:mm a")
